@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proveedores</title>
+</head>
+<body>
+    <h1>Proveedores</h1>
+    <br>
+
+    {% if providers_list %}
+        
+        {% for provider in providers_list %}
+        {{provider.rif}} - {{provider.nickname}} - {{provider.name}}: {{provider.taxtype}}: - Deuda: ${{provider.dollar_debt}} 
+        <a href="{% url 'providers:provider_detail'  provider.id %}">view</a> 
+        <a href="{% url 'providers:update_provider'  provider.id %}">update</a> 
+        <a href="{% url 'providers:delete_provider'  provider.id %}">delete</a> 
+        <br>
+        {% endfor %}
+    {% else %}
+        Aun no has agregado Proveedores
+    {% endif %}
+    
+    <br><br>
+    <a href="{% url 'providers:new_provider' %}">Nuevo Proveedor</a> - - - 
+<br>
+    <!-- <a href="#">Nuevo Gasto</a> <br><br>
+    <a href="#">Nueva Transferencia</a><br><br>
+    <a href="#">Nueva Cuenta</a><br><br>
+    <a href="#">Ver Categorias</a><br><br>
+    -->
+    
+    <a href="#">volver a inicio</a>
+
+</body>
+</html>
