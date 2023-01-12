@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'providers.apps.ProvidersConfig',
+    'bills.apps.BillsConfig',
 ]
 
 MIDDLEWARE = [
