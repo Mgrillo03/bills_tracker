@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Factura</title>
+</head>
+<body>
+    <h1>Nueva Factura</h1>
+    <form action="{% url 'bills:new_bill_calc' %}" method="post">
+        {% csrf_token %}
+
+        <label for="provider_rif" >Proveedor:</label>
+        <input   list="providers-list" name="provider_rif" placeholder="Selccione Opcion.." required>
+            <datalist id="providers-list">
+                {% for provider in providers_list  %}
+                    <option value="{{provider.rif}}">{{provider.rif}} | {{provider.nickname}}</option>                
+                {% endfor %}  
+            </datalist><br><br>
+
+        <label for="bill_number">Numero de Factura</label><br>
+        <input type="text" name="bill_number" placeholder="Numero de Factura" required><br>
+        
+        <label for="emission_date">Fecha de emision </label><br>
+        <input type="date" name="emission_date" value="{{date}}" required><br>
+
+        <label for="due_date">fecha de vencimiento</label><br>
+        <input type="date" name="due_date" value="{{date}}" required><br>
+
+        <label for="total_amount_bs">Total Bs:</label>
+        <input type="number" step="0.01"  name="total_amount_bs" placeholder="Total.." required><br>
+  
+        <label for="exchange_rate">Tasa de Cambio Bs</label>
+        <input type="number" step="0.01" name="exchange_rate" placeholder="Tasa" required><br>
+        
+        <input type="submit" value="Calcular"><br><br>
+
+        <label for="sub_total_amount">SubTotal: Bs</label>
+        <input type="number" step="0.01" name="sub_total_amount" placeholder="SubTotal" readonly><br>
+
+        <label for="tax_bs">IVA Bs</label>
+        <input type="number" step="0.01" name="tax_bs" placeholder="IVA" readonly><br>
+
+        <label for="retained_tax_bs">Iva Retenido Bs</label>
+        <input type="number" step="0.01" name="retained_tax_bs" placeholder="Retenido" readonly><br>
+        
+        <label for="amount_to_pay_bs">Total a Pagar</label>
+        <input type="number" step="0.01" name="amount_to_pay_bs" placeholder="a Pagar" readonly><br>
+
+        <label for="total_amount_dollar">Total factura en divisa $</label>
+        <input type="number" step="0.01" name="total_amount_dollar" placeholder="Divisa" readonly><br>
+
+        <label for="amount_to_pay_dollar">Total a pagar en divisa $</label>
+        <input type="number" step="0.01" name="amount_to_pay_dollar" placeholder="Divisa" readonly><br>
+       
+        <br><br>
+        <label for="note">Nota</label><br>
+        <input type="text" name="note" placeholder="Nota"><br>
+
+        <input type="submit" value="Create" disabled>
+
+
+    </form>
+    {{ request.session.error_message }} <br>
+    {{ request.session.message }} <br>
+
+
+    <a href="{% url 'bills:index' %}">Cancelar</a>
+</body>
+</html>

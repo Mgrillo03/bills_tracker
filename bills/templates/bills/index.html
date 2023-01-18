@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturas</title>
+</head>
+<body>
+    <h1>Facturas</h1>
+    <br>
+
+    {% if bills_list %}
+        
+        {% for bill in bills_list %}
+        {{bill.bill_number}} - {{bill.emission_date}} - {{bill.provider.name}}: {{bill.due_date}}: - Deuda: ${{bill.amount_to_pay_dollar}} - pagado: {{bill.paid}}
+        <a href="{% url 'bills:bill_detail'  bill.id %}">view</a> 
+        <a href="{% url 'bills:update_bill'  bill.id %}">update</a> 
+        <a href="{% url 'bills:delete_bill'  bill.id %}">delete</a> 
+        <br>
+        {% endfor %}
+    {% else %}
+        Aun no has Creado Facturas
+        Crea una aqui
+    {% endif %}
+    
+    <br><br>
+    <a href="{% url 'bills:new_bill' %}">Nueva Factura</a> - - - 
+<br>
+    <!-- <a href="#">Nuevo Gasto</a> <br><br>
+    <a href="#">Nueva Transferencia</a><br><br>
+    <a href="#">Nueva Cuenta</a><br><br>
+    <a href="#">Ver Categorias</a><br><br>
+    -->
+    
+    <a href="#">volver a inicio</a>
+
+</body>
+</html>

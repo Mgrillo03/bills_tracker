@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Nombre: {{bill.provider.name}} - {{bill.provider.rif}}</h1>
+    <h3>Alias: {{bill.provider.nickname}}</h3>
+    <div>
+      <br>
+        Factura: {{bill.bill_number}} <br>
+        Fecha de emision: {{bill.emission_date}} --
+        Fecha de vencimiento: {{bill.due_date}}
+    </div> 
+    <br>
+        Sub total: Bs.{{bill.sub_total_bs}} <br>
+        I.V.A.: Bs.{{bill.tax_bs}} <br>
+        I.V.A. retenido: Bs.{{bill.retained_tax_bs}} <br>
+        --------------------------------------------------------
+        <h4>Total: Bs.{{bill.total_amount_bs}}</h4>
+        <h3>A pagar: Bs.{{bill.amount_to_pay_bs}}</h3>
+        <br><br><br>
+
+        -------------------------------------------------------- 
+        <h4>Total: ${{bill.total_amount_dollar}}</h4>
+        <h3>A pagar: ${{bill.amount_to_pay_dollar}}</h3>
+        <br>
+
+        Pagada: {{bill.paid}}
+    <br>
+    <div>
+
+    </div>
+    <br><br>
+    <a href="{% url 'bills:update_bill' bill.id %}">Editar</a>
+    <a href="{% url 'bills:index' %}">Volver</a>
+
+
+
+</body>
+</html>
