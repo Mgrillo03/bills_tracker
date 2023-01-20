@@ -78,8 +78,6 @@ def update_provider_save(request, provider_id):
     providers_list = Provider.objects.all().exclude(pk=provider_id)
     new_provider_rif = request.POST['rif']
     providers_rif_unique = check_name(new_provider_rif, providers_list)
-    print('camino a guardar')
-    print(providers_rif_unique)
     request = reset_messages(request)
    
     if providers_rif_unique :
@@ -94,17 +92,16 @@ def update_provider_save(request, provider_id):
         provider.save()
         request.session['message'] = 'Cambios guardados satisfactoriamente'
         request.session['message_shown'] = False
-        print('guardado')
         return redirect('providers:update_provider', provider_id)
     else : 
-        print('error')
         request.session['message'] = f'El RIF {new_provider_rif} no esta disponible'
         request.session['message_shown'] = False
         return redirect('providers:update_provider', provider_id)
 
 def delete_provider(request,provider_id):
     request = reset_messages(request)
-    return render(request, 'providers/delete_provider.html',{'provider_id':provider_id})    
+    provider = Provider.objects.get(pk=provider_id)
+    return render(request, 'providers/delete_provider.html',{'provider':provider})    
 
 def delete_provider_save(request,provider_id):
     request = reset_messages(request)

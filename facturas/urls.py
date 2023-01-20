@@ -24,5 +24,6 @@ urlpatterns=[
     path('', providers_views.index, name='index'),
     path('providers/', include('providers.urls')),
     path('bills/', include('bills.urls')),
+    path('payments/', include('payments.urls')),
 
 ]

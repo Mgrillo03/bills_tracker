@@ -7,11 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Estas a punto de eliminar el Proveedor {{provider.nickname}} permanentemente</h1>
+    <h1>Estas a punto de eliminar la factura {{bill.bill_number}} del proveedor {{bill.provider.nickname}} permanentemente</h1>
     <h3>Deseas continuar?</h3>
 
-    <a href="{% url 'providers:provider_deleted' provider.id %}">Si</a><br><br>
-    <a href="{% url 'providers:index' %}">No</a><br><br>
+    <a href="{% url 'bills:bill_deleted' bill.id %}">Si</a><br><br>
+    <a href="{% url 'bills:index' %}">No</a><br><br>
     
 </body>
 </html>

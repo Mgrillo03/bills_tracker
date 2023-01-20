@@ -17,12 +17,14 @@ urlpatterns = [
 
     # #bill/bill-id/update
     path('<str:bill_id>/update/', views.update_bill, name='update_bill'),
-    # #bill/bill-id/update
-    # path('<str:bill_id>/update-save/', views.update_bill_save, name='bill_updated'),
+    # #bill/bill-id/update-calc/
+    path('<str:bill_id>/update-calc/', views.update_bill_calc, name='update_bill_calc'),
+    # bill/bill-id/update-save/
+    path('<str:bill_id>/update-save/', views.update_bill_save, name='update_bill_save'),
 
     # #bill/bill-id/delete
     path('<str:bill_id>/delete/', views.delete_bill, name='delete_bill'),
     # #bill/bill-id/delete
-    # path('<str:bill_id>/delete-success/', views.delete_bill_save, name='bill_deleted'),
+    path('<str:bill_id>/delete-success/', views.delete_bill_save, name='bill_deleted'),
 
 ]
