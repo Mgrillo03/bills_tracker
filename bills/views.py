@@ -37,8 +37,7 @@ def index(request):
 def new_bill(request):
     request = reset_messages(request)
     providers_list = Provider.objects.all()
-    date = datetime.date.today().isoformat()   
-
+    date = datetime.date.today().isoformat()
     return render(request, 'bills/new_bill.html',{
         'providers_list':providers_list,
         'date' : date,        
@@ -78,6 +77,7 @@ def new_bill_calc(request):
             exchange_rate = float(request.POST['exchange_rate'])
             total_amount_dollar = round(total_amount_bs / exchange_rate,2)
             amount_to_pay_dollar = round(amount_to_pay_bs / exchange_rate, 2)
+            rest_to_pay_dollar = amount_to_pay_dollar
             note = request.POST['note']
             return render(request,'bills/new_bill_2.html',{            
             'bill_number':bill_number, 
@@ -119,7 +119,8 @@ def new_bill_save(request):
         exchange_rate = request.POST['exchange_rate'],
         total_amount_dollar = request.POST['total_amount_dollar'],
         amount_to_pay_dollar = request.POST['amount_to_pay_dollar'],
-        note = request.POST['note']    
+        rest_to_pay_dollar = request.POST['amount_to_pay_dollar'],
+        note = request.POST['note'],
     )
     request.session['message'] = f'Factura N°{bill_number} creada existosamente'
     request.session['message_shown'] = False

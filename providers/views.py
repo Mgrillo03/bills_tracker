@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 
+from bills.views import reset_messages
+
 from .models import Provider
 
-def check_name(rif,list):
+def check_rif(rif,list):
     """
     check if provider RIF is available in users account list
     """    
@@ -10,19 +12,6 @@ def check_name(rif,list):
         if rif.lower() == i.rif.lower():
             return False
     return True
-
-def reset_messages(request):
-    try : 
-        aux = request.session['message_shown']
-    except KeyError:
-        request.session['message_shown'] = False
-        request.session['message'] = ''
-    else:
-        if not request.session['message_shown'] :
-            request.session['message_shown'] = True
-        else:
-            request.session['message'] = ''
-        return request
 
 def index(request):
     providers_list = Provider.objects.all()
@@ -38,7 +27,7 @@ def new_provider(request):
 def new_provider_save(request):
     providers_list = Provider.objects.all()
     rif = request.POST['rif']
-    provider_rif_unique = check_name(rif, providers_list)
+    provider_rif_unique = check_rif(rif, providers_list)
     request = reset_messages(request)
 
     if provider_rif_unique:
@@ -77,7 +66,7 @@ def update_provider(request, provider_id):
 def update_provider_save(request, provider_id):
     providers_list = Provider.objects.all().exclude(pk=provider_id)
     new_provider_rif = request.POST['rif']
-    providers_rif_unique = check_name(new_provider_rif, providers_list)
+    providers_rif_unique = check_rif(new_provider_rif, providers_list)
     request = reset_messages(request)
    
     if providers_rif_unique :
