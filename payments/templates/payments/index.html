@@ -13,7 +13,7 @@
     {% if payments_list %}
         
         {% for payment in payments_list %}
-        {{payment.bill.provider.nickname}} - {{payment.date}} - Pagado: {{payment.amount_bs}}Bs  {{payment.amount_dollar}}Bs - {{payment.exchange_rate}}Bs
+        {{payment.bill.provider.nickname}} - {{payment.date}} - Pagado: {{payment.amount_bs}}Bs  {{payment.amount_dollar}}Bs - Cambio: {{payment.exchange_rate}}Bs
         <a href="{% url 'payments:payment_detail'  payment.id %}">view</a> 
         <a href="{% url 'payments:update_payment'  payment.id %}">update</a> 
         <a href="{% url 'payments:delete_payment'  payment.id %}">delete</a> 

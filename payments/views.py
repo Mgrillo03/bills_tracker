@@ -35,8 +35,7 @@ def new_payment_save(request):
         exchange_rate = float(request.POST['exchange_rate'])
         amount_dollar = float(request.POST['amount_dollar'])
         amount_bs = float(request.POST['amount_bs'])
-        paid_total = False
-        paid_total = request.POST['paid_total']
+        paid_total = request.POST.get('paid_total',False)
         if paid_total:
             bill.paid = True
             bill.rest_to_pay_dollar = 0
@@ -70,7 +69,12 @@ def payment_detail(request, payment_id):
         request.session['message_shown'] = False
         return redirect('payments:index')
     else:
-        return render(request, 'payments/payment_detail.html',{'payment':payment})
+        total_paid = round(payment.amount_dollar + payment.amount_bs / payment.exchange_rate,2)
+        return render(request, 'payments/payment_detail.html',{
+            'payment':payment,
+            'total_paid': total_paid
+            
+            })
 
 def update_payment(request, payment_id):
     try:
@@ -88,18 +92,20 @@ def update_payment(request, payment_id):
             })
 
 def update_payment_save(request, payment_id):
+    print('actualizar')
     payment = Payment.objects.get(pk=payment_id)
     date = datetime.date.fromisoformat(request.POST['date'])
     exchange_rate = float(request.POST['exchange_rate'])
     amount_dollar = float(request.POST['amount_dollar'])
     amount_bs = float(request.POST['amount_bs'])
-    paid_total = False
-    paid_total = request.POST['paid_total']
+    paid_total = request.POST.get('paid_total',False)
     if paid_total:
+        print('pago total')
         payment.bill.paid = True
         payment.bill.rest_to_pay_dollar = 0
         payment.bill.save()
     else: 
+        print('pago parcial')
         #Update payment, first revert the payment, then make the new one
         #revert
         payment.bill.paid = False
@@ -122,6 +128,7 @@ def update_payment_save(request, payment_id):
     payment.paid_total = paid_total
     payment.description = request.POST['description']
     payment.transfer_id = request.POST['transfer_id']
+    payment.save()
     
     request.session['message'] = 'Cambios guardados'
     request.session['message_shown'] = False
@@ -138,7 +145,7 @@ def delete_payment(request, payment_id):
     else:
         return render(request, 'payments/delete_payment.html',{'payment':payment})
 
-def delete_payment_dave(request, payment_id):
+def delete_payment_save(request, payment_id):
     request = reset_messages(request)
     payment = Payment.objects.get(pk=payment_id)
     payment.bill.paid = False

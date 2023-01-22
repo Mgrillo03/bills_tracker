@@ -19,14 +19,17 @@
         Sub total: Bs.{{bill.sub_total_bs}} <br>
         I.V.A.: Bs.{{bill.tax_bs}} <br>
         I.V.A. retenido: Bs.{{bill.retained_tax_bs}} <br>
-        --------------------------------------------------------
+        -------------------------------------------------------- <br>
+        <strong> Bolivares:</strong>
         <h4>Total: Bs.{{bill.total_amount_bs}}</h4>
         <h3>A pagar: Bs.{{bill.amount_to_pay_bs}}</h3>
-        <br><br><br>
-
-        -------------------------------------------------------- 
+        
+        -------------------------------------------------------- <br>
+        <strong> Dolares: </strong>
         <h4>Total: ${{bill.total_amount_dollar}}</h4>
         <h3>A pagar: ${{bill.amount_to_pay_dollar}}</h3>
+
+        <h3> Restante por pagar: ${{bill.rest_to_pay_dollar}}</h3>
         <br>
 
         Pagada: {{bill.paid}}
