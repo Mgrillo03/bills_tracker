@@ -16,3 +16,4 @@ class Payment(models.Model):
     paid_total = models.BooleanField(default='False')
     description = models.CharField(max_length=200, default='')
     transfer_id = models.CharField(max_length=50, default='')
+    total_dollar = models.FloatField(default=0)

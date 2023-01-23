@@ -1,0 +1,36 @@
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+<body>
+    <h1>Facturas</h1>
+  
+
+    {% if bills_list %}
+        
+        {% for bill in bills_list %}
+        {{bill.bill_number}} - {{bill.emission_date}} - {{bill.provider.name}}: {{bill.due_date}}: - Deuda: ${{bill.amount_to_pay_dollar}} - pagado: {{bill.paid}}
+        <a href="{% url 'bills:bill_detail'  bill.id %}">view</a> 
+        <a href="{% url 'bills:update_bill'  bill.id %}">update</a> 
+        <a href="{% url 'bills:delete_bill'  bill.id %}">delete</a> 
+        {% endfor %}
+    {% else %}
+        Aun no has Creado Facturas
+        Crea una aqui
+
+
+
+
+
+
+        
+    {% endif %}
+    
+    
+    <a href="{% url 'bills:new_bill' %}">Nueva Factura</a> 
+
+    <a href="{% url 'payments:index' %}">Pagos</a> <br>
+    <a href="{% url 'payments:new_payment' %}">Nuevo Pago</a>
+    
+
+</body>
+{% endblock %}

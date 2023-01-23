@@ -9,7 +9,7 @@ import datetime
 def index(request):
     request = reset_messages(request)
     payments_list = Payment.objects.all()
-    return render(request, 'payments/index.html',{
+    return render(request, 'payments/new_index.html',{
         'payments_list':payments_list
         })
 

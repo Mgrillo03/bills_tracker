@@ -16,12 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from providers import views as providers_views
+from bills import views as bills_views
 
 urlpatterns=[
     path('admin/', admin.site.urls),
     #facturas
-    path('', providers_views.index, name='index'),
+    path('', bills_views.index, name='index'),
     path('providers/', include('providers.urls')),
     path('bills/', include('bills.urls')),
     path('payments/', include('payments.urls')),

@@ -28,7 +28,7 @@ def reset_messages(request):
         return request
 
 def index(request):
-    bills_list = Bill.objects.all()
+    bills_list = Bill.objects.all().order_by('paid','due_date')
     request = reset_messages(request)    
     return render(request, 'bills/index.html',{
         'bills_list': bills_list,

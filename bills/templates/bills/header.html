@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bills/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'bills/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Bill</title>
+    
+</head>
+<body>
+    <header>
+        <nav >
+            <figure>
+            <img src="{% static 'bills/images/menu.png'  %}" alt="menu" class="menu">
+            </figure>
+            <ul class="main-nav">
+                <li><a href="{% url 'bills:index'%}">Facturas</a></li>
+                <li><a href="{% url 'payments:index'%}">Pagos</a></li>
+                <li><a href="{% url 'providers:index'%}">Proveedores</a></li>                
+            </ul>
+        </nav>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

@@ -1,41 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facturas</title>
-</head>
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
 <body>
-    <h1>Facturas</h1>
-    <br>
+ 
 
-    {% if bills_list %}
-        
+<div class="bills">
+    <div class="bills-container">    
+
         {% for bill in bills_list %}
-        {{bill.bill_number}} - {{bill.emission_date}} - {{bill.provider.name}}: {{bill.due_date}}: - Deuda: ${{bill.amount_to_pay_dollar}} - pagado: {{bill.paid}}
-        <a href="{% url 'bills:bill_detail'  bill.id %}">view</a> 
-        <a href="{% url 'bills:update_bill'  bill.id %}">update</a> 
-        <a href="{% url 'bills:delete_bill'  bill.id %}">delete</a> 
-        <br>
+        <div class="bill-content">
+            <div class="bill-head">
+                <div class="bill-head-left">
+                    <p>{{bill.bill_number}}   |</p>
+                    <p>Em: {{bill.emission_date}}  -</p>
+                    <p>Vto: {{bill.due_date}}</p>
+                </div>
+                <div class="bill-head-right">
+                    <figure>
+                        <a href="{% url 'bills:delete_bill'  bill.id %}">
+                            <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                        </a>
+                    </figure>
+                </div>
+            </div>
+            <div class="bill-body">
+                <div class="bill-body-sub-left">
+                    <div class="bill-detail">
+                        <p>Proveedor:</p>
+                        <p>{{bill.provider.nickname}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Comentario:</p>
+                        <p>{{bill.note}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Estado:</p>
+                        {% if bill.paid %}
+                        <p>Pagado</p>
+                        {% else %}
+                        <p>Pendiente</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="bill-body-sub">
+                    <div class="bill-detail">
+                        <p>Total:</p>
+                        <p>${{bill.total_amount_dollar}}</p>
+                        <p>Bs.{{bill.total_amount_bs}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Pagar:</p>
+                        <p>${{bill.amount_to_pay_dollar}}</p>
+                        <p>Bs.{{bill.amount_to_pay_bs}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Restante:</p>
+                        <p>${{bill.rest_to_pay_dollar}}</p>
+                    </div>
+                </div>
+
+                <div class="bill-body-buttons">
+                    <a href="{% url 'bills:bill_detail'  bill.id %}" class="link-primary-button">Detalle</a>
+                    <a href="{% url 'bills:update_bill'  bill.id %}" class="link-secondary-button">Editar</a> 
+                </div>
+            </div>
+        </div>
+         
         {% endfor %}
-    {% else %}
-        Aun no has Creado Facturas
-        Crea una aqui
-    {% endif %}
-    
-    <br><br>
-    <a href="{% url 'bills:new_bill' %}">Nueva Factura</a> - - - 
-<br>
-    <!-- <a href="#">Nuevo Gasto</a> <br><br>
-    <a href="#">Nueva Transferencia</a><br><br>
-    <a href="#">Nueva Cuenta</a><br><br>
-    <a href="#">Ver Categorias</a><br><br>
-    -->
-    <br>
-    <a href="{% url 'payments:index' %}">Pagos</a> <br>
-    <a href="{% url 'payments:new_payment' %}">Nuevo Pago</a> - - - 
-    <br>
+    </div>
+    <div class="add">
+        <p class="hint"> Nueva Factura</p>
+        <div></div>
+        <a href="{% url 'bills:new_bill' %}">
+            <figure>            
+                <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+            </figure>
+        </a>
+    </div>
+</div>
+
 
 </body>
-</html>
+{% endblock %}
