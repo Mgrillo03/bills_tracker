@@ -1,0 +1,67 @@
+.hint {
+    position: fixed;
+    display: flex;
+    width: 120px;
+    height: 60px;
+    right: 0px;
+    bottom: 11vh;
+    border-radius: 5px;
+}
+.hint p{    
+    display: block;
+    padding-top: 6px;
+    padding-left: 8px;
+    box-sizing: border-box;
+    width: 60px;
+    height: 35px;
+    font-size: var(--sm);
+    background: var(--secondary-pink);
+    opacity: 40%;
+    color: var(--white);
+    border-radius: 5px;
+}
+.add div figure{    
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--secondary-pink);
+    display: grid;
+    place-items: center;
+}
+.add figure{
+    position: fixed;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: var(--secondary-pink);
+    display: grid;
+    place-items: center;
+    right: 45px;
+    bottom: 5vh;
+}
+.add figure img{
+    width: 12px;
+    height: auto;
+    opacity: 100%;
+}
+
+.hint{
+    display: flex;
+    justify-content: space-between;
+    margin-top: -80px;
+    margin-left: -0px;
+    width: 100px;
+}
+
+:root{
+    --font-color:          #5E5E5E;
+    --primary-pink:        #FFB5DD;
+    --secondary-pink:      #FF70BD;
+    --division:            #BAB0B0;
+    --backgorund:          #F0F0F0;
+    --white:               #FFFFFF;
+    --black:               #000000;
+    --sm:   14px;
+    --md:   16px;
+    --lg:   18px;
+}

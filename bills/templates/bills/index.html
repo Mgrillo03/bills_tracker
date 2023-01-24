@@ -1,6 +1,7 @@
 {% extends 'bills/header.html' %}
 {% block content %}
 {% load static %}
+
 <body>
  
 
@@ -70,16 +71,41 @@
         {% endfor %}
     </div>
     <div class="add">
-        <p class="hint"> Nueva Factura</p>
-        <div></div>
-        <a href="{% url 'bills:new_bill' %}">
-            <figure>            
-                <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
-            </figure>
-        </a>
+        <div class="hint inactive">
+                <div>
+                    <p>Proveedor</p>
+                    <a href="{% url 'providers:new_provider' %}">
+                        <figure >                    
+                            <img src="{% static 'bills/images/user.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>     
+                <div>
+                    <p>Pago</p>
+                    <a href="{% url 'payments:new_payment' %}">
+                        <figure >                    
+                            <img src="{% static 'bills/images/coin.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+                <div>
+                    <p>Factura</p>
+                    <a href="{% url 'bills:new_bill' %}">
+                        <figure >                    
+                            <img src="{% static 'bills/images/bill.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+        </div>
+        
+        <figure class="figure">            
+            <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+        </figure>
+    
     </div>
 </div>
 
 
 </body>
+<script src="{% static 'bills/js/main.js' %}"></script>
 {% endblock %}
