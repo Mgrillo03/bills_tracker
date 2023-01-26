@@ -28,7 +28,7 @@ def reset_messages(request):
         return request
 
 def index(request):
-    bills_list = Bill.objects.all()
+    bills_list = Bill.objects.all().order_by('paid','due_date')
     request = reset_messages(request)    
     return render(request, 'bills/index.html',{
         'bills_list': bills_list,
@@ -106,6 +106,9 @@ def new_bill_save(request):
     emission_date = datetime.date.fromisoformat(request.POST['emission_date'])
     due_date = datetime.date.fromisoformat(request.POST['due_date'])
     bill_number = request.POST['bill_number']
+    amount_to_pay_dollar = float(request.POST['amount_to_pay_dollar'])
+    provider.dollar_debt = round(provider.dollar_debt + amount_to_pay_dollar,2)
+    provider.save()
     bill = Bill.objects.create(
         bill_number = bill_number, 
         emission_date = emission_date,
@@ -136,7 +139,7 @@ def bill_detail(request, bill_id):
         request.session['message_shown'] = False
         return redirect('bills:index')
     else:
-        return render(request, 'bills/bill_detail.html',{
+        return render(request, 'bills/bill_detail_2.html',{
             'bill': bill,
         })
 
@@ -203,6 +206,12 @@ def update_bill_calc(request, bill_id):
 
 def update_bill_save(request, bill_id):
     bill = Bill.objects.get(pk=bill_id)
+    #update provider debt
+    update_debt = bill.provider.dollar_debt - bill.amount_to_pay_dollar
+    new_amount_to_pay_dollar = float(request.POST['amount_to_pay_dollar'])
+    bill.provider.dollar_debt = round(update_debt + new_amount_to_pay_dollar,2)
+    bill.provider.save()
+
     bill.bill_number = request.POST['bill_number']
     bill.emission_date = datetime.date.fromisoformat(request.POST['emission_date'])
     bill.due_date = datetime.date.fromisoformat(request.POST['due_date'])
@@ -213,7 +222,7 @@ def update_bill_save(request, bill_id):
     bill.amount_to_pay_bs = float(request.POST['amount_to_pay_bs']),
     bill.exchange_rate =float( request.POST['exchange_rate']),
     bill.total_amount_dollar = float(request.POST['total_amount_dollar']),
-    bill.amount_to_pay_dollar = float(request.POST['amount_to_pay_dollar']),
+    bill.amount_to_pay_dollar = new_amount_to_pay_dollar,
     bill.note = request.POST['note']   
     bill.save()
     
@@ -228,7 +237,9 @@ def delete_bill(request,bill_id):
 
 def delete_bill_save(request,bill_id):
     request = reset_messages(request)
-    bill = Bill.objects.get(pk=bill_id) 
+    bill = Bill.objects.get(pk=bill_id)
+    bill.provider.dollar_debt = bill.provider.dollar_debt - bill.rest_to_pay_dollar
+    bill.provider.save()
     bill.delete()
     request.session['message'] = 'Factura eliminado satisfactoriamente'
     request.session['message_shown'] = False

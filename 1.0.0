@@ -1,0 +1,3 @@
+Requirement already satisfied: django-hashid-field in c:\users\dante\documents\facturas\venv\lib\site-packages (1.0.0)
+Requirement already satisfied: Django<1.11,>1.8 in c:\users\dante\documents\facturas\venv\lib\site-packages (from django-hashid-field) (1.10.8)
+Requirement already satisfied: hashids>=1.1.0 in c:\users\dante\documents\facturas\venv\lib\site-packages (from django-hashid-field) (1.3.1)

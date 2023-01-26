@@ -2,7 +2,7 @@ from . import views
 
 from django.urls import path
 
-app_name = 'payment'
+app_name = 'payments'
 
 urlpatterns = [
     #/payment/home/
@@ -11,7 +11,7 @@ urlpatterns = [
     #payment/new/
     path('new/', views.new_payment, name='new_payment'),
     #payment/created/
-    path('created/', views.new_payment_save, name='payment_created'),
+    path('created/', views.new_payment_save, name='new_payment_save'),
 
     ## #/payments/id/detail
     path('<str:payment_id>/detail', views.payment_detail, name='payment_detail'),

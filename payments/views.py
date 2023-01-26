@@ -35,17 +35,20 @@ def new_payment_save(request):
         exchange_rate = float(request.POST['exchange_rate'])
         amount_dollar = float(request.POST['amount_dollar'])
         amount_bs = float(request.POST['amount_bs'])
-        paid_total = False
-        paid_total = request.POST['paid_total']
+        total_amount_dollar = amount_bs / exchange_rate
+        total_amount_dollar = round(total_amount_dollar + amount_dollar,2)
+        paid_total = request.POST.get('paid_total',False)
         if paid_total:
             bill.paid = True
             bill.rest_to_pay_dollar = 0
+            bill.provider.dollar_debt = round(bill.provider.dollar_debt - bill.amount_to_pay_dollar,2)
+            bill.provider.save()
             bill.save()
-        else: 
-            total_amount_dollar = amount_bs / exchange_rate
-            total_amount_dollar = total_amount_dollar + amount_dollar
-            bill.rest_to_pay_dollar = round(float(bill.rest_to_pay_dollar) - total_amount_dollar,2)
+        else:             
+            bill.rest_to_pay_dollar = float(bill.rest_to_pay_dollar) - total_amount_dollar
             bill.save()
+            bill.provider.dollar_debt = round(bill.provider.dollar_debt - total_amount_dollar,2)
+            bill.provider.save()
         Payment.objects.create(
             bill = bill,
             date = date,
@@ -55,7 +58,8 @@ def new_payment_save(request):
             account = request.POST['account'],
             paid_total = paid_total,
             description = request.POST['description'],
-            transfer_id = request.POST['transfer_id']
+            transfer_id = request.POST['transfer_id'],
+            total_dollar = total_amount_dollar
         )
         request.session['message'] = 'Pago creado de manera exitosa'
         request.session['message_shown'] = False
@@ -70,7 +74,12 @@ def payment_detail(request, payment_id):
         request.session['message_shown'] = False
         return redirect('payments:index')
     else:
-        return render(request, 'payments/payment_detail.html',{'payment':payment})
+        total_paid = round(payment.amount_dollar + payment.amount_bs / payment.exchange_rate,2)
+        return render(request, 'payments/payment_detail.html',{
+            'payment':payment,
+            'total_paid': total_paid
+            
+            })
 
 def update_payment(request, payment_id):
     try:
@@ -93,9 +102,15 @@ def update_payment_save(request, payment_id):
     exchange_rate = float(request.POST['exchange_rate'])
     amount_dollar = float(request.POST['amount_dollar'])
     amount_bs = float(request.POST['amount_bs'])
-    paid_total = False
-    paid_total = request.POST['paid_total']
+    paid_total = request.POST.get('paid_total',False)
+    new_total_amount_dollar = amount_bs / exchange_rate
+    new_total_amount_dollar = new_total_amount_dollar + amount_dollar
     if paid_total:
+        if not payment.paid_total:  
+            update_debt = payment.bill.provider.dollar_debt + payment.total_dollar
+            payment.bill.provider.dollar_debt = round(update_debt - payment.bill.amount_to_pay_dollar,2)
+            payment.bill.provider.save()   
+
         payment.bill.paid = True
         payment.bill.rest_to_pay_dollar = 0
         payment.bill.save()
@@ -103,15 +118,17 @@ def update_payment_save(request, payment_id):
         #Update payment, first revert the payment, then make the new one
         #revert
         payment.bill.paid = False
-        prev_total_amount_dollar = payment.amount_bs / payment.exchange_rate
-        prev_total_amount_dollar = prev_total_amount_dollar + payment.amount_dollar
-        payment.bill.rest_to_pay_dollar = round(float(payment.bill.rest_to_pay_dollar) + prev_total_amount_dollar,2)
-        payment.bill.save()
-
-        #new payment
-        new_total_amount_dollar = amount_bs / exchange_rate
-        new_total_amount_dollar = new_total_amount_dollar + amount_dollar
-        payment.bill.rest_to_pay_dollar = round(float(payment.bill.rest_to_pay_dollar) - new_total_amount_dollar,2)
+        update_rest_to_pay_dollar = round(float(payment.bill.rest_to_pay_dollar) + payment.total_dollar,2)
+        if payment.paid_total:
+            update_debt = payment.bill.provider.dollar_debt + payment.bill.amount_to_pay_dollar
+            payment.bill.provider.dollar_debt = round(update_debt - new_total_amount_dollar,2)
+            payment.bill.provider.save()   
+        else:
+            update_debt = payment.bill.provider.dollar_debt + payment.total_dollar
+            payment.bill.provider.dollar_debt = round(update_debt - new_total_amount_dollar,2)
+            payment.bill.provider.save()
+        #new payment        
+        payment.bill.rest_to_pay_dollar = round(update_rest_to_pay_dollar - new_total_amount_dollar,2)
         payment.bill.save()    
     
     payment.date = date
@@ -122,6 +139,8 @@ def update_payment_save(request, payment_id):
     payment.paid_total = paid_total
     payment.description = request.POST['description']
     payment.transfer_id = request.POST['transfer_id']
+    payment.total_dollar = new_total_amount_dollar
+    payment.save()
     
     request.session['message'] = 'Cambios guardados'
     request.session['message_shown'] = False
@@ -138,13 +157,16 @@ def delete_payment(request, payment_id):
     else:
         return render(request, 'payments/delete_payment.html',{'payment':payment})
 
-def delete_payment_dave(request, payment_id):
+def delete_payment_save(request, payment_id):
     request = reset_messages(request)
     payment = Payment.objects.get(pk=payment_id)
+    if payment.paid_total:
+        payment.bill.provider.dollar_debt = payment.bill.provider.dollar_debt + payment.bill.amount_to_pay_dollar
+    else:
+        payment.bill.provider.dollar_debt = payment.bill.provider.dollar_debt + payment.total_dollar
+    payment.bill.provider.save()
     payment.bill.paid = False
-    total_amount_dollar = payment.amount_bs / payment.exchange_rate
-    total_amount_dollar = total_amount_dollar + payment.amount_dollar
-    payment.bill.rest_to_pay_dollar = round(float(payment.bill.rest_to_pay_dollar) + total_amount_dollar,2)
+    payment.bill.rest_to_pay_dollar = round(float(payment.bill.rest_to_pay_dollar) + payment.total_dollar,2)
     payment.bill.save()
     payment.delete()
     request.session['message'] = 'Pago eliminado'

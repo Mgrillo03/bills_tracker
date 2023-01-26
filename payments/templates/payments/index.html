@@ -1,39 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagos</title>
-</head>
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
 <body>
-    <h1>Pagos</h1>
-    <br>
+ 
+<div class="place p-payments"></div>
+<div class="bills">
+    <div class="bills-container">    
 
-    {% if payments_list %}
-        
         {% for payment in payments_list %}
-        {{payment.bill.provider.nickname}} - {{payment.date}} - Pagado: {{payment.amount_bs}}Bs  {{payment.amount_dollar}}Bs - {{payment.exchange_rate}}Bs
-        <a href="{% url 'payments:payment_detail'  payment.id %}">view</a> 
-        <a href="{% url 'payments:update_payment'  payment.id %}">update</a> 
-        <a href="{% url 'payments:delete_payment'  payment.id %}">delete</a> 
-        <br>
-        {% endfor %}
-    {% else %}
-        Aun no has Creado Pagos
-        Crea uno aqui
-    {% endif %}
-    
-    <br><br>
-    <a href="{% url 'payments:new_payment' %}">Nuevo Pago</a> - - - 
-<br>
-    <!-- <a href="#">Nuevo Gasto</a> <br><br>
-    <a href="#">Nueva Transferencia</a><br><br>
-    <a href="#">Nueva Cuenta</a><br><br>
-    <a href="#">Ver Categorias</a><br><br>
-    -->
-    
-    <a href="#">volver a inicio</a>
+        <div class="bill-content-p">
+            <div class="bill-head">
+                <div class="bill-head-left">
+                    <p>{{payment.bill.bill_number}}   |</p>
+                    <p>Fecha: {{payment.date}} -</p>
+                    {% if payment.paid_total %}
+                    <p>Total</p>
+                    {% else %}
+                    <p>Parcial</p>
+                    {% endif %}
+                </div>
+                <div class="bill-head-right">
+                    <figure>
+                        <a href="{% url 'payments:delete_payment'  payment.id %}">
+                            <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                        </a>
+                    </figure>
+                </div>
+            </div>
+            <div class="bill-body">
+                <div class="bill-body-sub-left-p">
+                    <div class="bill-detail">
+                        <p>Proveedor:</p>
+                        <p>{{payment.bill.provider.nickname}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Comentario:</p>
+                        <p>{{payment.description}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Cuenta:</p>
+                        <p>{{payment.account}}</p>
+                    </div>
+                </div>
 
+                <div class="bill-body-sub-p">
+                    <div class="bill-detail">
+                        <p>Total:</p>
+                        <p>${{payment.amount_dollar}}</p>
+                        <p class="amount-bs">Bs.{{payment.amount_bs}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Cambio:</p>
+                        <p>${{payment.exchange_rate}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Total:</p>
+                        <p>${{payment.total_dollar}}</p>
+                    </div>
+                </div>
+
+                <div class="bill-body-buttons">
+                    <a href="{% url 'payments:payment_detail'  payment.id %}" class="link-primary-button">Detalle</a>
+                    <a href="{% url 'payments:update_payment'  payment.id %}" class="link-secondary-button">Editar</a> 
+                </div>
+            </div>
+        </div>
+         
+        {% endfor %}
+    </div>
+    <div class="add">
+        <div class="hint inactive">
+                <div>
+                    <p>Proveedor</p>
+                    <a href="{% url 'providers:new_provider' %}">
+                        <figure >                    
+                            <img src="{% static 'bills/images/user.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>     
+                <div>
+                    <p>Pago</p>
+                    <a href="{% url 'payments:new_payment' %}">
+                        <figure >                    
+                            <img src="{% static 'bills/images/coin.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+                <div>
+                    <p>Factura</p>
+                    <a href="{% url 'bills:new_bill' %}">
+                        <figure >                    
+                            <img src="{% static 'bills/images/bill.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+        </div>
+        
+        <figure class="figure">            
+            <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+        </figure>
+    
+    </div>
+</div>
+
+<script src="{% static 'bills/js/main.js' %}"></script>
 </body>
-</html>
+{% endblock %}
