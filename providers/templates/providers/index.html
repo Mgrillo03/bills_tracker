@@ -1,43 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proveedores</title>
-</head>
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+
 <body>
-    <h1>Proveedores</h1>
-    <br>
+ 
+<div class="place p-providers"></div>
+<div class="bills">
+    <div class="bills-container">    
 
-    {% if providers_list %}
-        
         {% for provider in providers_list %}
-        {{provider.rif}} - {{provider.nickname}} - {{provider.name}}: {{provider.taxtype}}: - Deuda: ${{provider.dollar_debt}} 
-        <a href="{% url 'providers:provider_detail'  provider.id %}">view</a> 
-        <a href="{% url 'providers:update_provider'  provider.id %}">update</a> 
-        <a href="{% url 'providers:delete_provider'  provider.id %}">delete</a> 
-        <br>
+        <div class="bill-content">
+            <div class="bill-head">
+                <div class="bill-head-left">
+                    <p>{{provider.nickname}}</p>                    
+                </div>
+                <div class="bill-head-right">
+                    <figure>
+                        <a href="{% url 'providers:delete_provider'  provider.id %}">
+                            <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                        </a>
+                    </figure>
+                </div>
+            </div>
+            <div class="bill-body">
+                <div class="bill-body-sub-left-provider">
+                    <div class="bill-detail">
+                        <p>Deuda:</p>
+                        <p>${{provider.dollar_debt}}</p>
+                    </div>
+                </div>
+
+                <div class="bill-body-sub-provider">                    
+                    <div class="bill-detail">
+                        <p>Nombre:</p>
+                        <p>{{provider.name}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Rif:</p>
+                        <p>{{provider.rif}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Retencion:</p>                        
+                        <p>{{provider.taxtype}}%</p>                        
+                    </div>
+                </div>
+
+                <div class="bill-body-buttons">
+                    <a href="{% url 'providers:provider_detail'  provider.id %}" class="link-primary-button">Detalle</a>
+                    <a href="{% url 'providers:update_provider'  provider.id %}" class="link-secondary-button">Editar</a> 
+                </div>
+            </div>
+        </div>
+         
         {% endfor %}
-    {% else %}
-        Aun no has agregado Proveedores
-    {% endif %}
+    </div>
+    <div class="add">
+        <div class="hint inactive">
+                <div>
+                    <p>Proveedor</p>
+                    <a href="{% url 'providers:new_provider' %}">
+                        <figure >                    
+                            <img src="{% static 'bills/images/user.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>     
+                <div>
+                    <p>Pago</p>
+                    <a href="{% url 'payments:new_payment' %}">
+                        <figure >                    
+                            <img src="{% static 'bills/images/coin.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+                <div>
+                    <p>Factura</p>
+                    <a href="{% url 'bills:new_bill' %}">
+                        <figure >                    
+                            <img src="{% static 'bills/images/bill.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+        </div>
+        
+        <figure class="figure">            
+            <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+        </figure>
     
-    <br><br>
-    <a href="{% url 'providers:new_provider' %}">Nuevo Proveedor</a> - - - 
-    <a href="{% url 'bills:new_bill' %}">Nueva Factura</a> - - - 
+    </div>
+</div>
 
-<br>
-    <!-- <a href="#">Nuevo Gasto</a> <br><br>
-    <a href="#">Nueva Transferencia</a><br><br>
-    <a href="#">Nueva Cuenta</a><br><br>
-    <a href="#">Ver Categorias</a><br><br>
-    -->
-    <br>
-    <a href="{% url 'bills:index' %}">Facturas</a> - - - <br><br>
-    <a href="{% url 'payments:index' %}">Pagos</a> - - - <br><br>
-
-    <a href="#">volver a inicio</a>
 
 </body>
-</html>
+<script src="{% static 'bills/js/main.js' %}"></script>
+{% endblock %}
