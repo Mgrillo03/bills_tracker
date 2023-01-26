@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Proveedor: {{payment.bill.provider.nickname}} - Factura: {{payment.bill.bill_number}}</h1> <a href="{% url 'bills:bill_detail' bill.id %}">Ver</a>
+    <h3>Pago: {{payment.description}}</h3>
+    <div>
+        <br>
+        Fecha: {{payment.date}} --
+        Cuenta: {{payment.account}}
+        id transferencia: {{payment.transfer_id}}
+        
+    </div> 
+    <br>
+        Pagado Bs: Bs.{{payment.amount_bs}} <br>
+        Pagado Dollar: ${{payment.amount_dollar}} <br>
+        Cambio: Bs.{{payment.exchange_rate}} <br>
+        Total pagado: {{total_paid}} <br>
+        Total a pagar: {{payment.bill.amount_to_pay_dollar}} <br>
+        Faltante por pagar: ${{payment.bill.rest_to_pay_dollar}} <br>
+        --------------------------------------------------------
+        <br><br><br>
+
+        -------------------------------------------------------- 
+        <br>
+
+    <br>
+    <div>
+
+    </div>
+    <br><br>
+    <a href="{% url 'payments:update_payment' payment.id %}">Editar</a>
+    <a href="{% url 'payments:index' %}">Volver</a>
+
+
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Pago</title>
+</head>
+<body>
+    <h1>Nuevo Pago</h1>
+    <form action="{% url 'payments:new_payment_save' %}" method="post">
+        {% csrf_token %}
+
+        <label for="bill_id" >Factura`:</label>
+        <input   list="bills-list" name="bill_id" placeholder="Selccione Opcion.." required>
+            <datalist id="bills-list">
+                {% for bill in bills_list  %}
+                    <option value="{{bill.id}}">{{bill.bill_number}} | {{bill.provider.nickname}} - ${{bill.rest_to_pay_dollar}}</option>                
+                {% endfor %}  
+            </datalist><br><br>
+
+        <label for="payment_number">Numero de Factura</label><br>
+        <input type="text" name="payment_number" placeholder="Numero de Factura" required><br>
+        
+        <label for="date">Fecha</label><br>
+        <input type="date" name="date" value="{{date}}" required><br>
+
+        <label for="amount_bs">Pago en Bs:</label>
+        <input type="number" step="0.01"  name="amount_bs" value="0" required><br>
+  
+        <label for="amount_dollar">Pago en $:</label>
+        <input type="number" step="0.01" name="amount_dollar" value="0" required><br>
+
+        <label for="exchange_rate">Tasa de Cambio Bs</label>
+        <input type="number" step="0.01" name="exchange_rate" placeholder="Tasa" required><br>
+        
+        <label for="paid_total"> Pago total</label>
+        <input type="checkbox" name="paid_total" value="True" checked><br>
+        
+        <label for="account">Cuenta</label>
+        <input type="text" name="account" placeholder="Cuenta" required><br>
+
+        <label for="description">Descripcion:</label>
+        <input type="number" name="description" placeholder="..." ><br>
+        
+        <label for="transfer_id">Codigo de transferencia: </label>
+        <input type="number" step="0.01" name="transfer_id" placeholder="Codigo"><br>
+
+
+
+        <br><br>
+
+        <input type="submit" value="Crear" >
+
+
+    </form>
+    {{ request.session.error_message }} <br>
+    {{ request.session.message }} <br>
+
+
+    <a href="{% url 'payments:index' %}">Cancelar</a>
+</body>
+</html>

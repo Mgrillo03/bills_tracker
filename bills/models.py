@@ -22,3 +22,4 @@ class Bill(models.Model):
     amount_to_pay_dollar = models.FloatField(default=0)
     paid = models.BooleanField(default='False')
     note = models.CharField(max_length=200, default='')
+    rest_to_pay_dollar = models.FloatField(default=0)
