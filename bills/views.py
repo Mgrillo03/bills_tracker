@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from .models import Bill
 from providers.models import Provider
+from payments.models import Payment
 
 import datetime
 
@@ -138,8 +139,10 @@ def bill_detail(request, bill_id):
         request.session['message_shown'] = False
         return redirect('bills:index')
     else:
-        return render(request, 'bills/bill_detail_2.html',{
+        payments_list = Payment.objects.filter(bill=bill)
+        return render(request, 'bills/bill_detail.html',{
             'bill': bill,
+            'payments_list': payments_list,
         })
 
 

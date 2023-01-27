@@ -47,6 +47,7 @@
         list-style: none;
         align-items: center;
         height: 60px;
+        margin-left: -50px;
     }
     .main-nav li{
         margin-left: 20px;
@@ -120,9 +121,11 @@
         display: grid;
         grid-template-rows: auto 1fr auto;
         width: 80%;
+        place-items: center;
     }
     .bill-content,
     .bill-content-p{
+        width: 900px;
         display: flex;
         flex-direction: column;
         height: 170px;
@@ -161,13 +164,15 @@
         justify-content: space-around;
         margin-top: 15px;
     }
+    .bill-body p:nth-child(1){
+        font-weight: bold;
+    }
     .bill-body-sub,
     .bill-body-sub-p,
     .bill-body-sub-provider,
     .bill-body-sub-left,
     .bill-body-sub-left-p,
     .bill-body-sub-left-provider{
-
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -312,6 +317,8 @@
         display: grid;
         place-items: center;
         margin-bottom: 40px;
+        margin-top: 40px;
+        padding-top: 15px;
     }
     .title p{
         color: var(--secondary-pink);
@@ -319,12 +326,11 @@
     }
     .general-details,
     .details-content{
-        width: 660px;
+        width: 700px;
         height: 90px;
         display: flex;
         justify-content: space-betweens;
         background: var(--white);
-        border: var(--division) 1px solid;
         border-radius: 8px;
     }
     .general-details-left,
@@ -399,8 +405,6 @@
         padding-bottom: 10px;
         padding-top: 5px;
         border-bottom: var(--division) 1px solid;
-        
-
     }
     .detail-head-left,
     .detail-head-center,
@@ -423,7 +427,6 @@
     .detail-head-right{
         width: 30%;
         font-weight: bold;
-
     }
     .detail-body{
         display: flex;
@@ -459,6 +462,35 @@
     .detail-body-center div p:nth-child(1),
     .detail-body-right div p:nth-child(1){
         font-weight: bold;
+    }
+    .payments-container{
+        width: 660px;
+    }
+    .payment-content{
+        width: 660px;
+        height: 150px;
+        padding-top: 10px;
+    }
+    .payment-body{
+        margin-top: 5px;
+        padding-bottom: 60px;
+    }
+    .bill-body-payment-left{
+        width: 40%;
+        margin-left: -10px;
+        justify-content: space-evenly;
+    }
+    .bill-body-payment-left p:nth-child(2){
+        padding-left: 15px;
+        padding-right: -10px;
+    }
+    .bill-body-payment-center{
+        margin-left: -20px;
+        width: 30%;
+        padding-left: 10px;
+    }
+    .detail-buttons{
+        width: 15%;
     }
     .inactive{
         display: none;
