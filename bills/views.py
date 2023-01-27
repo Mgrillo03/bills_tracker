@@ -78,6 +78,7 @@ def new_bill_calc(request):
             exchange_rate = float(request.POST['exchange_rate'])
             total_amount_dollar = round(total_amount_bs / exchange_rate,2)
             amount_to_pay_dollar = round(amount_to_pay_bs / exchange_rate, 2)
+            rest_to_pay_dollar = amount_to_pay_dollar
             note = request.POST['note']
             return render(request,'bills/new_bill_2.html',{            
             'bill_number':bill_number, 
