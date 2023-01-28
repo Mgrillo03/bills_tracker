@@ -4,7 +4,7 @@
         --secondary-pink:      #FF70BD;
         --division:            #BAB0B0;
         --backgorund:          #FFFFFF;
-        --white:               #f9f9f9;
+        --white:               #e7e7e7;
         --black:               #000000;
         --sm:   14px;
         --md:   16px;
@@ -463,6 +463,19 @@
     .detail-body-right div p:nth-child(1){
         font-weight: bold;
     }
+    .payment-title{
+        width: 100%;
+        height: 40px;
+        display: grid;
+        place-items: left;
+        margin-bottom: 0px;
+        margin-top: 15px;
+    }
+    .payment-title p{
+        color: var(--secondary-pink);
+        font-size: 30px;
+        font-weight: bold;
+    }
     .payments-container{
         width: 660px;
     }
@@ -492,6 +505,86 @@
     .detail-buttons{
         width: 15%;
     }
+/* Form new bill */
+    .new-bill{
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        margin-top: 60px;
+    }
+    .form-body{
+        height: 850px;
+        width: 600px;
+        display: flex;
+        flex-direction: column;
+        background: var(--white);
+        border: var(--division) 1px solid;
+        border-radius: 6px;
+        padding: 15px 10px 15px 10px;
+    }
+    .form-body p:nth-child(1),
+    .form-body p:nth-child(3),
+    .form-body label{
+        font-weight: bold;
+    }
+    .form-provider,
+    .form-data{
+        width: 600px;
+        display: flex;      
+        justify-content: space-around;  
+        border-bottom: var(--division) 1px solid;
+        padding-bottom: 10px;
+    }
+    .form-provider{
+        height: 60px;
+    }
+    .form-provider input,
+    .form-data div input{
+        height: 25px;
+        border-radius: 6px;
+        border: var(--division) 1px solid;
+    }
+    .form-provider div{
+        width: 40;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    .form-provider-right{
+        width: 60%;
+    }
+    .form-provider-right div{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .form-data{
+        height: 300px;
+        flex-direction: column;
+    }
+    .form-data div{
+        display: flex;
+    }
+    .form-data div label{
+        margin-top: 10px;
+        margin-right: 15px;
+    }
+    .form-data div input{
+        width: 130px;
+        margin-top: 10px;
+    }
+    .form-data div div{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 50%;
+        height: 60px;
+        padding-top: 15px;
+    }
+    .form-data div div p{
+        font-weight: bold;
+    }
     .inactive{
         display: none;
     }
@@ -511,9 +604,12 @@
         }
         .bill-content{
             height: 250px;
+            width: 315px;
+
         }
         .bill-content-p{
             height: 335px;
+            width: 315px;
         }
         .bill-body{
             flex-wrap: wrap;

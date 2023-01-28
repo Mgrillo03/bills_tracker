@@ -39,7 +39,7 @@ def new_bill(request):
     request = reset_messages(request)
     providers_list = Provider.objects.all()
     date = datetime.date.today().isoformat()
-    return render(request, 'bills/new_bill.html',{
+    return render(request, 'bills/new_bill_new.html',{
         'providers_list':providers_list,
         'date' : date,        
         })
