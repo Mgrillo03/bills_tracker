@@ -39,10 +39,31 @@ def new_bill(request):
     request = reset_messages(request)
     providers_list = Provider.objects.all()
     date = datetime.date.today().isoformat()
-    return render(request, 'bills/new_bill_new.html',{
+    return render(request, 'bills/new_bill.html',{
         'providers_list':providers_list,
         'date' : date,        
         })
+
+def new_bill_show_provider(request):
+    try:
+        provider = Provider.objects.get(rif=request.POST['provider_rif'])
+    except (KeyError, Provider.DoesNotExist):
+        print('error')
+
+        request = reset_messages(request)
+        request.session['message'] = 'Por favor seleccione un proveedor de la lista'
+        request.session['message_shown'] = False
+        return redirect('bills:new_bill')
+    else:
+        request = reset_messages(request)
+        providers_list = Provider.objects.all()
+        date = datetime.date.today().isoformat()
+        return render(request,'bills/new_bill.html',{
+            'providers_list':providers_list,
+            'date' : date,
+            'provider_selected':provider, 
+            })
+
 
 def new_bill_calc(request):
     try:
@@ -53,6 +74,7 @@ def new_bill_calc(request):
         request.session['message_shown'] = False
         return redirect('bills:new_bill')
     else:
+
         bill_number = request.POST['bill_number']
         bills_list = Bill.objects.filter(provider=provider)
         bill_number_unique = check_name(bill_number, bills_list)
@@ -78,7 +100,6 @@ def new_bill_calc(request):
             exchange_rate = float(request.POST['exchange_rate'])
             total_amount_dollar = round(total_amount_bs / exchange_rate,2)
             amount_to_pay_dollar = round(amount_to_pay_bs / exchange_rate, 2)
-            rest_to_pay_dollar = amount_to_pay_dollar
             note = request.POST['note']
             return render(request,'bills/new_bill_2.html',{            
             'bill_number':bill_number, 

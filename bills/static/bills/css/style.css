@@ -205,21 +205,24 @@
         margin-top: 20px;    
         width: 150px;
     }
-    .bill-body-buttons a{
+    .bill-body-buttons a,
+    .form-calc div a{
         display: block;
         box-sizing: border-box;
-        height: 30px;
+        height: 35px;
         text-align: center;
         padding-top: 7px;
         margin-top: 10px;
 
         border-radius: 5px;
-        border: var(--primary-pink) 1px solid;
+        border: var(--primary-pink) 2px solid;
         text-decoration: none;
     }
     .link-primary-button{
         background: var(--secondary-pink);
         color: var(--white);
+        font-size: var(--md);
+        border: var(--secondary-pink) 1px solid;
     }
     .link-secondary-button{
         background: var(--white);
@@ -316,8 +319,8 @@
         height: 100px;
         display: grid;
         place-items: center;
-        margin-bottom: 40px;
-        margin-top: 40px;
+        margin-bottom: 20px;
+        margin-top: 20px;
         padding-top: 15px;
     }
     .title p{
@@ -511,17 +514,18 @@
         height: 100vh;
         display: grid;
         place-items: center;
-        margin-top: 60px;
+        margin-top: 0px;
     }
     .form-body{
-        height: 850px;
-        width: 600px;
+        height: 700px;
+        width: 560px;
         display: flex;
         flex-direction: column;
         background: var(--white);
         border: var(--division) 1px solid;
         border-radius: 6px;
-        padding: 15px 10px 15px 10px;
+        padding: 15px 10px 15px 20px;
+        margin-bottom: 50px;
     }
     .form-body p:nth-child(1),
     .form-body p:nth-child(3),
@@ -529,21 +533,46 @@
         font-weight: bold;
     }
     .form-provider,
-    .form-data{
-        width: 600px;
+    .form-data,
+    .form-calc{
+        width: 560px;
         display: flex;      
         justify-content: space-around;  
         border-bottom: var(--division) 1px solid;
         padding-bottom: 10px;
     }
+    .form-provider div div{
+        flex-direction: row;
+    }
+    .form-body figure {
+        margin: 0;
+        display: grid;
+        justify-content: center;
+        padding-left: -10px;
+    }
+    
+    .form-calc{
+        border-bottom: 0px;
+    }
     .form-provider{
         height: 60px;
     }
     .form-provider input,
-    .form-data div input{
+    .form-data input,
+    .form-calc input{
         height: 25px;
         border-radius: 6px;
         border: var(--division) 1px solid;
+        padding-left: 10px;
+    }
+    .form-data div:nth-child(2) div input{
+        margin-top: 0px;
+    }
+    .form-body figure input{
+        width: 25px;
+        height: 25px;
+        opacity: 80%;
+        padding-left: 0px
     }
     .form-provider div{
         width: 40;
@@ -559,22 +588,29 @@
         flex-direction: row;
         justify-content: space-around;
     }
-    .form-data{
-        height: 300px;
+    .form-data,
+    .form-calc{
+        height: 280px;
         flex-direction: column;
     }
-    .form-data div{
+    .form-data div,
+    .form-calc div{
         display: flex;
     }
-    .form-data div label{
-        margin-top: 10px;
+    .form-data div label,
+    .form-calc div label{
+        margin-top: 15px;
         margin-right: 15px;
     }
-    .form-data div input{
+    .form-data input,
+    .form-calc input{
         width: 130px;
         margin-top: 10px;
+        margin-left: 10px;
+        padding-left: 10px;
     }
-    .form-data div div{
+    .form-data div div,
+    .form-calc div div{
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -582,9 +618,45 @@
         height: 60px;
         padding-top: 15px;
     }
-    .form-data div div p{
+    .form-data div div p,
+    .form-calc div div p{
         font-weight: bold;
     }
+    .form-calc{
+        margin-top: 30px;
+    }
+    .form-calc div:nth-child(3) div:nth-child(2) input{
+        margin-left: 22px;
+    }
+    .form-calc div a{
+        width: 120px;
+        height: 35px;
+        display: grid;
+        justify-content: center;
+    }
+    .create-note{
+        margin-top: 10px;
+    }
+    .create-note input{
+        width: 400px;
+        height: 35px;
+    }
+    .create-note label{
+        padding-top: 10px;
+    }
+    .create-buttons{
+        margin-top: 20px;
+        justify-content: space-evenly;
+    }
+    .create-buttons input,
+    .form-data-last input:nth-child(2){
+        width: 120px;
+        height: 35px;
+    }
+    .form-data-last input:nth-child(2) {
+        margin-top: 45px;
+    }
+    
     .inactive{
         display: none;
     }

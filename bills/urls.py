@@ -9,7 +9,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     
     path('new/', views.new_bill, name='new_bill'),
-    path('new/calc', views.new_bill_calc, name='new_bill_calc'),
+    path('new/show-p/',views.new_bill_show_provider, name='new_bill_show_provider'),
+    path('new/calc/', views.new_bill_calc, name='new_bill_calc'),
     path('created/', views.new_bill_save, name='bill_created'),
 
     # #/bills/id/detail

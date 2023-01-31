@@ -7,7 +7,8 @@ const billMobileNav = document.querySelector('.bill-mob-nav');
 const paymentMobileNav = document.querySelector('.payment-mob-nav');
 const providerMobileNav = document.querySelector('.provider-mob-nav')
 const place = document.querySelector('.place');
-const body = document.querySelector('.bills')
+const body = document.querySelector('.bills');
+const navBar = document.querySelector('navbar');
 
 const bottomMenu = document.querySelector('.hint');
 const asideMenu = document.querySelector('.mobile-menu');
@@ -40,6 +41,7 @@ function toggleAsideMenu(){
 
 
 function toggleNavSelected(){
+    console.log('hola');
 
     if (place.classList.contains('p-bills')){
         billNav.classList.add('navbar-selected');
@@ -52,5 +54,8 @@ function toggleNavSelected(){
     if (place.classList.contains('p-providers')){
         providerNav.classList.add('navbar-selected');   
         providerMobileNav.classList.add('navbar-mobile-selected');
+    }
+    if (place.classList.contains('n-bill')){
+        navBar.classList.add('inactive');
     }
 }
