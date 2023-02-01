@@ -10,6 +10,7 @@ const place = document.querySelector('.place');
 const body = document.querySelector('.bills');
 const navBar = document.querySelector('navbar');
 
+
 const bottomMenu = document.querySelector('.hint');
 const asideMenu = document.querySelector('.mobile-menu');
 
@@ -17,7 +18,6 @@ const asideMenu = document.querySelector('.mobile-menu');
 menuBill.addEventListener('click', toggleBottomMenu);
 menuMobile.addEventListener('click', toggleAsideMenu);
 window.addEventListener('load',toggleNavSelected);
-
 
 
 function toggleBottomMenu(){   
@@ -41,8 +41,7 @@ function toggleAsideMenu(){
 
 
 function toggleNavSelected(){
-    console.log('hola');
-
+    
     if (place.classList.contains('p-bills')){
         billNav.classList.add('navbar-selected');
         billMobileNav.classList.add('navbar-mobile-selected');

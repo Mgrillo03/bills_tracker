@@ -8,7 +8,7 @@ import datetime
 
 def index(request):
     request = reset_messages(request)
-    payments_list = Payment.objects.all()
+    payments_list = Payment.objects.all().order_by('-date')
     return render(request, 'payments/index.html',{
         'payments_list':payments_list
         })

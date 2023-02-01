@@ -51,6 +51,11 @@
                     <p>{{bill.emission_date}}</p>
                     <p>-  Vto:</p>
                     <p>{{bill.due_date}}</p>
+                    {% if bill.overdue %}
+                    <p class="debt">Vencida</p>
+                    {% else %}
+                    <p class="paid">Vigente</p>
+                    {% endif %}
                 </div>
                 <div class="detail-head-right">
                     
@@ -108,6 +113,7 @@
         <div class="payment-title">
             <p>Pagos:</p>
         </div>
+        {% if payments_list %}
         <div class="payments-container">
                 
 
@@ -173,6 +179,11 @@
             {% endfor %}
             
         </div>
+        {% else %}
+        <div>
+            <p>Aun no se han registrado pagos.</p>
+        </div>
+        {% endif %}
             
     </div>
     <div class="add">

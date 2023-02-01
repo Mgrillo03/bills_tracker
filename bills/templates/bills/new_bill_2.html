@@ -41,7 +41,7 @@
                 </div>
             </div>
     </form>
-    <form action="{% url 'bills:new_bill_calc' %}" method="post">
+    <form action="{% url 'bills:bill_created' %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="provider_rif" value="{{provider.rif}}">
             <div class="form-data">
@@ -86,9 +86,9 @@
 
             <div class="form-calc">
                 <div>
-                    <label for="sub_total_amount">SubTotal:</label>
+                    <label for="sub_total_bs">SubTotal:</label>
                     <p>
-                        Bs.<input type="number" step="0.01" name="sub_total_amount" value={{sub_total_bs}} required>
+                        Bs.<input type="number" step="0.01" name="sub_total_bs" value={{sub_total_bs}} required>
                     </p>
                 </div>
                 <div>
@@ -125,7 +125,7 @@
                 </div>
                 <div class="create-buttons">
                     <a href="{% url 'bills:index' %}" class="link-secondary-button" >Cancelar</a>
-                    <input type="submit" value="Create" class="link-primary-button" disabled>
+                    <input type="submit" value="Create" class="link-primary-button" >
                 </div>
             </div>
         </div>

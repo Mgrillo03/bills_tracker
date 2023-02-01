@@ -15,10 +15,15 @@
                     <p>{{bill.bill_number}}   |</p>
                     <p>Em: {{bill.emission_date}}  -</p>
                     <p>Vto: {{bill.due_date}}</p>
+                    {% if bill.overdue %}
+                    <p class="debt">Vencida</p>
+                    {% else %}
+                    <p class="paid">Vigente</p>
+                    {% endif %}
                 </div>
                 <div class="bill-head-right">
                     <figure>
-                        <a href="{% url 'bills:delete_bill'  bill.id %}">
+                        <a href="{% url 'bills:delete_bill'  bill.id %}" >
                             <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
                         </a>
                     </figure>
@@ -104,7 +109,6 @@
     
     </div>
 </div>
-
 
 </body>
 <script src="{% static 'bills/js/main.js' %}"></script>

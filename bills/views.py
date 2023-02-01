@@ -14,6 +14,15 @@ def check_name(bill_number, bills_list):
         if bill_number.lower() == i.bill_number.lower():
             return False
     return True
+def check_overdue_bill(bills_list):
+    """
+    check and update the overdue status
+    """
+    today = datetime.date.today()
+    for i in bills_list:
+        if today > i.due_date and i.paid == False: 
+            i.overdue = True
+            i.save()
 
 def reset_messages(request):
     try : 
@@ -29,7 +38,8 @@ def reset_messages(request):
         return request
 
 def index(request):
-    bills_list = Bill.objects.all().order_by('paid','due_date')
+    bills_list = Bill.objects.all().order_by('-overdue','due_date')
+    check_overdue_bill(bills_list)
     request = reset_messages(request)    
     return render(request, 'bills/index.html',{
         'bills_list': bills_list,
@@ -124,6 +134,7 @@ def new_bill_calc(request):
     
 
 def new_bill_save(request):
+    print('error')
     provider = Provider.objects.get(rif=request.POST['provider_rif'])
     emission_date = datetime.date.fromisoformat(request.POST['emission_date'])
     due_date = datetime.date.fromisoformat(request.POST['due_date'])
@@ -256,8 +267,12 @@ def update_bill_save(request, bill_id):
 
 def delete_bill(request,bill_id):
     request = reset_messages(request)
+    bills_list = Bill.objects.all().order_by('paid','due_date')
     bill = Bill.objects.get(pk= bill_id)
-    return render(request, 'bills/delete_bill.html',{'bill':bill})    
+    return render(request, 'bills/delete_bill.html',{
+        'bill':bill,
+        'bills_list':bills_list
+        })    
 
 def delete_bill_save(request,bill_id):
     request = reset_messages(request)
