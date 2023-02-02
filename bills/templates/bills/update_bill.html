@@ -1,69 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nueva Factura</title>
-</head>
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+
+<div class="place n-bill"></div>
 <body>
-    <h1>Actualizar Factura</h1>
-    <form action="{% url 'bills:update_bill_calc' bill.id %}" method="post">
-        {% csrf_token %}
+<div class="new-bill">
+    <div class="title">
+        <p>Editar Factura</p>
+    </div>
 
-        <label for="provider" >Proveedor:  {{bill.provider.name}} </label><br>
-        <label for="provider" >Retencion: {{bill.provider.taxtype}}</label>
-        <label for="provider"  >RIF: </label>
-        <input type="text" name="provider_rif"value="{{bill.provider.rif}}" readonly>
-
-        
-        <br><br>
-        
-        <label for="bill_number">Numero de Factura</label><br>
-        <input type="text" name="bill_number" value={{bill.bill_number}} readonly><br>
-        
-        <label for="emission_date">Fecha de emision </label><br>
-        <input type="date" name="emission_date" value={{emission_date}} required><br>
-
-        <label for="due_date">fecha de vencimiento</label><br>
-        <input type="date" name="due_date" value={{due_date}} required><br>
-
-        <label for="total_amount_bs">Total Bs:</label>
-        <input type="number" step="0.01"  name="total_amount_bs" value={{bill.total_amount_bs}} required><br>
-  
-        <label for="exchange_rate">Tasa de Cambio Bs</label>
-        <input type="number" step="0.01" name="exchange_rate" value={{bill.exchange_rate}} required><br>
-    
-        <input type="submit" value="Calcular"><br><br>
-
-        <label for="sub_total_bs">SubTotal: Bs</label>
-        <input type="number" step="0.01" name="sub_total_bs" value={{bill.sub_total_bs}} readonly><br>
-
-        <label for="tax_bs">IVA Bs</label>
-        <input type="number" step="0.01" name="tax_bs" value={{bill.tax_bs}} readonly><br>
-
-        <label for="retained_tax_bs">Iva Retenido Bs</label>
-        <input type="number" step="0.01" name="retained_tax_bs" value={{bill.retained_tax_bs}} readonly><br>
-        
-        <label for="amount_to_pay_bs">Total a Pagar Bs</label>
-        <input type="number" step="0.01" name="amount_to_pay_bs" value={{bill.amount_to_pay_bs}} readonly><br>
-
-        <label for="total_amount_dollar">Total factura en divisa $</label>
-        <input type="number" step="0.01" name="total_amount_dollar" value={{bill.total_amount_dollar}} readonly><br>
-
-        <label for="amount_to_pay_dollar">Total a pagar en divisa $</label>
-        <input type="number" step="0.01" name="amount_to_pay_dollar" value={{bill.amount_to_pay_dollar}} readonly><br>
-        <br><br>
-        <label for="note">Nota</label><br>
-        <input type="text" name="note" placeholder="Nota"><br>
-
-        <input type="submit" value="Guardar" >
-
-
+    <form action="{% url 'bills:new_bill_show_provider' %}" method="post">
+    {% csrf_token %}
+        <div class="form-body">
+            <div class="form-provider">
+                <div class="form-provider-left">
+                    <label for="provider_rif" >Proveedor:</label>
+                    <div>
+                    <input   list="providers-list" name="provider_rif" value="{{bill.provider.rif}}" readonly>
+                        <figure>
+                            <input type="image" src="{% static 'bills/images/refresh.png'  %}" alt="Submit Form" disabled/>
+                        </figure>
+                    </div>
+                </div>
+                <div class="form-provider-right">
+                    <div>
+                        <p>Nombre:</p>
+                        <p>{{bill.provider.name}}</p>
+                    </div> 
+                    <div>
+                        <p>Alias:</p>
+                        <p>{{bill.provider.nickname}}</p>
+                        <p>Retencion:</p>
+                        <p>{{bill.provider.taxtype}}%</p>
+                    </div>
+                </div>
+            </div>
     </form>
-    {{ request.session.error_message }} <br>
-    {{ request.session.message }} <br>
+    <form action="{% url 'bills:update_bill_calc' bill.id %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="provider_rif" value="{{bill.provider.rif}}">
+            <div class="form-data">
+                <div>
+                    <label for="bill_number">Numero de Factura:</label>
+                    <input type="text" name="bill_number" value="{{bill.bill_number}}" required >
+                </div>
+                <div>
+                    <div>
+                        <label for="emission_date">Fecha de emision: </label>
+                        <input type="date" name="emission_date" value="{{emission_date}}" required >
+                    </div>
+                    <div>
+                        <label for="due_date">Fecha de vencimiento:</label>
+                        <input type="date" name="due_date" value="{{due_date}}" required >
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="total_amount_bs">Total Bolivares:</label>
+                        <p>
+                            Bs.<input type="number" step="0.01" lang="en"  name="total_amount_bs" value={{bill.total_amount_bs}} required >
+                        </p>
+                    </div>
+                    <div>
+                        <label for="total_amount_dollar">Total Dolares:</label>
+                        <p>
+                            $<input type="number" step="0.01" name="total_amount_dollar"value={{bill.total_amount_dollar}} required >
+                        </p>
+                    </div>
+                </div>
+                <div class="form-data-last">
+                    <div> 
+                        <label for="exchange_rate">Cambio:</label>
+                        <p>
+                            Bs.<input type="number" step="0.01" name="exchange_rate" value={{bill.exchange_rate}} required >
+                        </p>
+                    </div>
+                    <input type="submit" value="Calcular" name="choice" class="link-primary-button">
+                </div>                
+            </div>
 
-    <a href="{% url 'bills:index' %}">Cancelar</a>
+            <div class="form-calc">
+                <div>
+                    <label for="sub_total_bs">SubTotal:</label>
+                    <p>
+                        Bs.<input type="number" step="0.01" name="sub_total_bs" value={{bill.sub_total_bs}} readonly>
+                    </p>
+                </div>
+                <div>
+                    <div>
+                        <label for="tax_bs">I.V.A.:</label>
+                        <p>
+                            Bs.<input type="number" step="0.01" name="tax_bs" value={{bill.tax_bs}} readonly>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="retained_tax_bs">I.V.A. Retenido:</label>
+                        <p>
+                            Bs.<input type="number" step="0.01" name="retained_tax_bs" value={{bill.retained_tax_bs}} readonly>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="amount_to_pay_bs">A Pagar Bolivares:</label>
+                        <p>
+                            Bs.<input type="number" step="0.01" name="amount_to_pay_bs" value={{bill.amount_to_pay_bs}} readonly>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="amount_to_pay_dollar">A Pagar Dolares:</label>
+                        <p>
+                            $<input type="number" step="0.01" name="amount_to_pay_dollar" value={{bill.amount_to_pay_dollar}} readonly>
+                        </p>
+                    </div>
+                </div>
+                <div class="create-note">
+                    <label for="note">Nota:</label>
+                    <input type="text" name="note" value="{{bill.note}}">
+                </div>
+                <div class="create-buttons">
+                    <a href="{% url 'bills:index' %}" class="link-secondary-button" >Cancelar</a>
+                    <input type="submit" value="Guardar" class="link-primary-button" disabled>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{{ request.session.error_message }}
+{{ request.session.message }}
 </body>
-</html>
+<script src="{% static 'bills/js/new_bill.js' %}"></script>
+{% endblock %}
+
+

@@ -16,6 +16,7 @@
         color: var(--font-color);
         background: var(--backgorund);
     }
+
 /* Navbar  */
     nav{
         position: fixed;
@@ -176,7 +177,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 200px;
+        width: 300px;
     }
     .bill-body-sub-left,
     .bill-body-sub-left-p,
@@ -185,7 +186,10 @@
         padding-right: 20px;
     }
     .bill-body-sub-left-p{
-        width: 400px;
+        width: 400px;        
+    }
+    .bill-body-sub-left p:nth-child(2){
+        padding-left: 10px;
     }
     .bill-body-sub-left-provider{
         width: 100px;
@@ -261,7 +265,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        width: 100px;
+        width: 110px;
         background: var(--white);
         
         border-radius: 5px;
@@ -273,17 +277,19 @@
         right: 17px;
         bottom: 12vh;
     }
-    .hint div{
-        width: 100px;
+    .hint div a{
+        width: 110px;
         display: flex;
         justify-content: space-between;
         margin-top: 5px;
+        text-decoration: none;
     }
     .hint p{    
         font-size: var(--sm);
         font-weight: bold;
         color: var(--font-color);
         margin-top: 3px;
+        padding-right: 5px;
 
     }
     .hint figure{    
@@ -658,6 +664,7 @@
     }
     .form-data-last input:nth-child(2) {
         margin-top: 45px;
+        cursor: pointer;
     }
 /* Created  */
     .created{

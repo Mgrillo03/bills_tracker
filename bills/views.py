@@ -23,6 +23,9 @@ def check_overdue_bill(bills_list):
         if today > i.due_date and i.paid == False: 
             i.overdue = True
             i.save()
+        elif i.paid == True:
+            i.overdue = False
+            i.save()
 
 def reset_messages(request):
     try : 
@@ -38,7 +41,7 @@ def reset_messages(request):
         return request
 
 def index(request):
-    bills_list = Bill.objects.all().order_by('-overdue','due_date')
+    bills_list = Bill.objects.all().order_by('-overdue','paid','due_date')
     check_overdue_bill(bills_list)
     request = reset_messages(request)    
     return render(request, 'bills/index.html',{
@@ -247,17 +250,20 @@ def update_bill_save(request, bill_id):
     bill.provider.dollar_debt = round(update_debt + new_amount_to_pay_dollar,2)
     bill.provider.save()
 
+    rest_to_pay_dollar = abs(new_amount_to_pay_dollar -bill.amount_to_pay_dollar) + bill.rest_to_pay_dollar
+    bill.rest_to_pay_dollar = rest_to_pay_dollar
     bill.bill_number = request.POST['bill_number']
     bill.emission_date = datetime.date.fromisoformat(request.POST['emission_date'])
     bill.due_date = datetime.date.fromisoformat(request.POST['due_date'])
-    bill.total_amount_bs = float(request.POST['total_amount_bs']),
-    bill.sub_total_bs = float(request.POST['sub_total_bs']),
-    bill.tax_bs = float(request.POST['tax_bs']),
-    bill.retained_tax_bs = float(request.POST['retained_tax_bs']),
-    bill.amount_to_pay_bs = float(request.POST['amount_to_pay_bs']),
-    bill.exchange_rate =float( request.POST['exchange_rate']),
-    bill.total_amount_dollar = float(request.POST['total_amount_dollar']),
-    bill.amount_to_pay_dollar = new_amount_to_pay_dollar,
+    bill.total_amount_bs = float(request.POST['total_amount_bs'])
+    bill.sub_total_bs = float(request.POST['sub_total_bs'])
+    bill.tax_bs = float(request.POST['tax_bs'])
+    bill.retained_tax_bs = float(request.POST['retained_tax_bs'])
+    bill.amount_to_pay_bs = float(request.POST['amount_to_pay_bs'])
+    bill.exchange_rate =float( request.POST['exchange_rate'])
+    bill.total_amount_dollar = float(request.POST['total_amount_dollar'])
+    bill.amount_to_pay_dollar = new_amount_to_pay_dollar
+    
     bill.note = request.POST['note']   
     bill.save()
     
