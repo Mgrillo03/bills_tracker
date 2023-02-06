@@ -77,8 +77,7 @@ def payment_detail(request, payment_id):
         total_paid = round(payment.amount_dollar + payment.amount_bs / payment.exchange_rate,2)
         return render(request, 'payments/payment_detail.html',{
             'payment':payment,
-            'total_paid': total_paid
-            
+            'total_paid': total_paid,            
             })
 
 def update_payment(request, payment_id):
