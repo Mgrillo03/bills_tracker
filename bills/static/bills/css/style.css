@@ -112,7 +112,6 @@
 /* index menu   Bills/Payments/Providers  */
     .bills{
         width: 100%;
-        height: 100vh;
         display: grid;
         place-items: center;
         position: relative;
@@ -315,11 +314,14 @@
         place-items: center;
         margin-top: 60px;
     }
-    .details-container{
-        margin-top: -100px;
+    .details-container,
+    .details-container-p{
         display: flex;
         justify-content: space-between;
         flex-direction: column;
+    }
+    .details-container-p{
+        margin-top: -100px;
     }
     .title{
         width: 100%;
@@ -386,10 +388,7 @@
         height: 50%;
     }
     .general-details-right-p{
-        display: block;
-        height: 100%;
         font-weight: bold;
-        padding-top: 30%;
     }
     .general-details-left div p:nth-child(1),
     .general-details-center div p:nth-child(1){
@@ -496,7 +495,8 @@
         font-weight: bold;
     }
     .detail-body-left-p div:nth-child(1) p{
-        margin-left: -10px;
+        padding-left: 20px;
+        width: 100%;
     }
     .detail-body-left-p div:nth-child(2) p{
         font-weight: normal;
@@ -535,7 +535,7 @@
         margin-top: 0px;
 
         border-radius: 5px;
-        border: var(--primary-pink) 2px solid;
+        border: var(--secondary-pink) 2px solid;
         text-decoration: none;
     }
 /* payments */
@@ -648,7 +648,6 @@
         padding-left: 0px
     }
     .form-provider div{
-        width: 40;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -851,8 +850,8 @@
 
         }
         .bill-content-p{
-            height: 335px;
-            width: 315px;
+            height: 350px;
+            width: 90%;
         }
         .bill-body{
             flex-wrap: wrap;
@@ -893,4 +892,154 @@
             width: 70px;
         }
 
+/*details responsive*/
+        .details{
+            height: 200vh;
+            align-items: baseline;
+        }
+        .details-container{
+            width: 100%;
+            padding-left: 20px;
+        }
+        .details-container-p{
+            margin: 0px;
+        }
+        .title{
+            width: 95%;
+        }
+        .general-details{
+            width: 95%;
+            height: 200px;
+            flex-direction: column;
+        }
+        .general-details-left,
+        .general-details-center,
+        .general-details-right{
+            width: 90%;
+            border-bottom: var(--division) 1px solid;
+            border-right: 0px;
+        }
+        .general-details-right{
+            height: 40%;
+            border-bottom: 0px;
+        }
+        .details-content{
+            width: 95%;
+            height: 430px;
+        }
+        .payments-container{
+            width: 95%;
+        }
+        .detail-head-left,
+        .detail-head-left-p,
+        .detail-head-center,
+        .detail-head-right{
+            flex-wrap: wrap;
+        }
+        .detail-head-center{
+            width: 50%;
+            border-right: var(--division) 1px solid;
+        }
+        .detail-body{
+            flex-direction: column;
+            height: 300px;
+        }
+        .detail-body-left,
+        .detail-body-left-p,
+        .detail-body-center,
+        .detail-body-right{
+            width: 100%;
+        }
+        .detail-body-left-p{
+            border-bottom: var(--division) 1px solid;
+            padding-bottom: 5px;
+        }
+        .detail-body-left-p div{
+            border: 0px;
+            width: 100%;
+        }
+                .detail-body-left,
+        .detail-body-center{
+            border-bottom: var(--division) 1px solid;
+            padding-bottom: 10px;
+        }
+        .detail-body-left div,
+        .detail-body-center div{
+            border: 0px;
+        }
+        .detail-body-left div p,
+        .detail-body-center div p,
+        .detail-body-right div p{
+            width: 40%;
+            padding-bottom: 5px;
+        }
+        .detail-body-left-p p{
+            width: 40%;
+            text-align: left;
+            padding-left: 10px;
+        }
+        .detail-body-left-p div:nth-child(1) p{
+            padding-left: 20px;
+            width: 95%;
+            text-align: left;
+        }
+        .detail-body-left-p div:nth-child(2) p {
+            font-weight: normal;
+            width: 95%;
+            text-align: left;
+            padding-left: 20px;
+        }
+        .detail-body-left-p p:nth-child(2){
+            text-align: right;
+            padding-right: 20px;
+            width: 35%;
+        }
+        .bill-content-p{
+            width: 90%;
+            height: 350px;
+            padding: 10px;
+        }
+/* edit bill */
+        .new-bill{
+            height: 150vh;
+            place-items: baseline;
+            padding-left: 10px;
+        }
+        .form-body{
+            width: 90%;
+            margin-top: -70%;
+        }
+        .form-provider{
+            height: 120px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .form-provider div{
+            justify-content: center;
+            width: 100%;
+        }
+        .form-provider-left{
+            width: 100%;
+            padding-bottom: 10px;
+        }
+        .form-provider-right p{
+            padding-left: 0px;
+            width: 40%;
+        }
+        .form-data{
+            width: 100%;
+        }
+        .form-calc{
+            width: 100%;
+            padding-bottom: 10px;
+        }
+        .create-buttons{
+            margin-top: 0px;
+        }
+        .form-data-last input:nth-child(2) {
+            margin-top: 55px;
+        }
+        .create-note input {
+            width: 90%;
+        }        
     }

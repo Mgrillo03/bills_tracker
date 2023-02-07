@@ -48,8 +48,8 @@
                 </div>
                 <div class="detail-head-center">
                     <p> Em: </p>
-                    <p>{{bill.emission_date}}</p>
-                    <p>- Vto:</p>
+                    <p>{{bill.emission_date}} -</p>
+                    <p>Vto:</p>
                     <p>{{bill.due_date}}</p>
                     {% if bill.overdue %}
                     <p class="debt">Vencida</p>
@@ -107,7 +107,11 @@
                         <p>A Pagar:</p>
                         <p>${{bill.amount_to_pay_dollar}}</p>
                     </div>
-                </div>
+                </div>                
+            </div>
+            <div class="edit-buttons">
+                <a href="{% url 'bills:index' %}" class="link-secondary-button" >Volver</a>
+                <a href="{% url 'bills:update_bill' bill.id %}" class="link-primary-button" >Editar</a>
             </div>
         </div>
         <div class="payment-title">
@@ -170,8 +174,8 @@
                     </div>
     
                     <div class="bill-body-buttons detail-buttons">
-                        <a href="{% url 'payments:payment_detail'  payment.id %}" class="link-primary-button">Detalle</a>
-                        <a href="{% url 'payments:update_payment'  payment.id %}" class="link-secondary-button">Editar</a> 
+                        <a href="{% url 'payments:payment_detail'  payment.id %}" class="link-secondary-button">Detalle</a>
+                        <a href="{% url 'payments:update_payment'  payment.id %}" class="link-primary-button">Editar</a> 
                     </div>
                 </div>
             </div>
@@ -189,24 +193,24 @@
     <div class="add">
         <div class="hint inactive">
                 <div>
-                    <p>Proveedor</p>
                     <a href="{% url 'providers:new_provider' %}">
+                    <p>Proveedor</p>
                         <figure >                    
                             <img src="{% static 'bills/images/user.png'  %}" alt="new-bill" >
                         </figure>
                     </a> 
                 </div>     
                 <div>
-                    <p>Pago</p>
                     <a href="{% url 'payments:new_payment' %}">
+                    <p>Pago</p>
                         <figure >                    
                             <img src="{% static 'bills/images/coin.png'  %}" alt="new-bill" >
                         </figure>
                     </a> 
                 </div>  
                 <div>
-                    <p>Factura</p>
                     <a href="{% url 'bills:new_bill' %}">
+                    <p>Factura</p>
                         <figure >                    
                             <img src="{% static 'bills/images/bill.png'  %}" alt="new-bill" >
                         </figure>

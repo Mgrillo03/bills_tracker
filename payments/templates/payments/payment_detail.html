@@ -6,7 +6,7 @@
  
 <div class="place p-payments"></div>
 <div class="details">
-    <div class="details-container">    
+    <div class="details-container-p">    
         <div class="title">
             <p>Detalle del Pago</p>
         </div>
@@ -65,7 +65,6 @@
                 <div class="detail-body-left-p">
                     <div>
                         <p>Descripcion:</p>
-                        <p></p>
                     </div>
                     <div>
                         <p>{{payment.description}}</p>
@@ -113,24 +112,24 @@
     <div class="add">
         <div class="hint inactive">
                 <div>
-                    <p>Proveedor</p>
                     <a href="{% url 'providers:new_provider' %}">
+                    <p>Proveedor</p>
                         <figure >                    
                             <img src="{% static 'bills/images/user.png'  %}" alt="new-bill" >
                         </figure>
                     </a> 
                 </div>     
                 <div>
-                    <p>Pago</p>
                     <a href="{% url 'payments:new_payment' %}">
+                    <p>Pago</p>
                         <figure >                    
                             <img src="{% static 'bills/images/coin.png'  %}" alt="new-bill" >
                         </figure>
                     </a> 
                 </div>  
                 <div>
-                    <p>Factura</p>
                     <a href="{% url 'bills:new_bill' %}">
+                    <p>Factura</p>
                         <figure >                    
                             <img src="{% static 'bills/images/bill.png'  %}" alt="new-bill" >
                         </figure>
