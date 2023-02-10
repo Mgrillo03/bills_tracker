@@ -17,7 +17,7 @@ def new_payment(request):
     request = reset_messages(request)
     bills_list = Bill.objects.filter(paid='False')
     date = datetime.date.today().isoformat() 
-    return render(request, 'payments/new_payment.html',{
+    return render(request, 'payments/new_payment_2.html',{
         'bills_list': bills_list,
         'date': date,
     })

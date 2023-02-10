@@ -209,7 +209,8 @@
         width: 150px;
     }
     .bill-body-buttons a,
-    .form-calc div a{
+    .form-calc div a,
+    .form-data-payment div a{
         display: block;
         box-sizing: border-box;
         height: 35px;
@@ -582,10 +583,12 @@
         width: 15%;
     }
 /* Form new bill */
-    .new-bill{
+    .new-bill,
+    .new-payment{
         width: 100%;
         height: 100vh;
-        display: grid;
+        display: flex;
+        flex-direction: column;
         place-items: center;
         margin-top: 0px;
     }
@@ -600,6 +603,9 @@
         padding: 15px 10px 15px 20px;
         margin-bottom: 50px;
     }
+    .form-body-payment{
+        height: 500px;
+    }
     .form-body p:nth-child(1),
     .form-body p:nth-child(3),
     .form-body label{
@@ -607,12 +613,17 @@
     }
     .form-provider,
     .form-data,
-    .form-calc{
+    .form-calc,
+    .form-data-payment{
         width: 560px;
         display: flex;      
         justify-content: space-around;  
         border-bottom: var(--division) 1px solid;
         padding-bottom: 10px;
+    }
+    .form-data-payment{
+        flex-direction: column;
+        border: 0px;
     }
     .form-provider div div{
         flex-direction: row;
@@ -632,14 +643,25 @@
     }
     .form-provider input,
     .form-data input,
-    .form-calc input{
+    .form-calc input,
+    .form-data-payment input{
         height: 25px;
         border-radius: 6px;
         border: var(--division) 1px solid;
         padding-left: 10px;
     }
-    .form-data div:nth-child(2) div input{
+    .form-data div:nth-child(2) div input,
+    .form-data-payment div:nth-child(2) div input{
         margin-top: 0px;
+    }
+    .form-data-payment div:nth-child(6) input{
+        height: 15px;
+        margin-left: -30px;
+        margin-top: 15px;
+    }
+    .form-data-payment div:nth-child(7),
+    .form-data-payment div:nth-child(6){
+        height: 50px;
     }
     .form-body figure input{
         width: 25px;
@@ -665,24 +687,32 @@
         height: 280px;
         flex-direction: column;
     }
+    
     .form-data div,
-    .form-calc div{
+    .form-calc div,
+    .form-data-payment div{
         display: flex;
     }
+    .form-data-payment div{
+        height: 70px;
+    }
     .form-data div label,
-    .form-calc div label{
+    .form-calc div label,
+    .form-data-payment label{
         margin-top: 15px;
         margin-right: 15px;
     }
     .form-data input,
-    .form-calc input{
+    .form-calc input,
+    .form-data-payment input{
         width: 130px;
         margin-top: 10px;
         margin-left: 10px;
         padding-left: 10px;
     }
     .form-data div div,
-    .form-calc div div{
+    .form-calc div div,
+    .form-data-payment div div{
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -691,7 +721,8 @@
         padding-top: 15px;
     }
     .form-data div div p,
-    .form-calc div div p{
+    .form-calc div div p,
+    .form-data-payment div div p{
         font-weight: bold;
     }
     .form-calc{
@@ -700,7 +731,8 @@
     .form-calc div:nth-child(3) div:nth-child(2) input{
         margin-left: 22px;
     }
-    .form-calc div a{
+    .form-calc div a,
+    .form-data-payment a{
         width: 120px;
         height: 35px;
         display: grid;
@@ -1026,7 +1058,8 @@
             padding-left: 0px;
             width: 40%;
         }
-        .form-data{
+        .form-data,
+        .form-data-payment{
             width: 100%;
         }
         .form-calc{
