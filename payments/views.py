@@ -17,7 +17,7 @@ def new_payment(request):
     request = reset_messages(request)
     bills_list = Bill.objects.filter(paid='False')
     date = datetime.date.today().isoformat() 
-    return render(request, 'payments/new_payment.html',{
+    return render(request, 'payments/new_payment_2.html',{
         'bills_list': bills_list,
         'date': date,
     })
@@ -41,11 +41,11 @@ def new_payment_save(request):
         if paid_total:
             bill.paid = True
             bill.rest_to_pay_dollar = 0
-            bill.provider.dollar_debt = round(bill.provider.dollar_debt - bill.amount_to_pay_dollar,2)
+            bill.provider.dollar_debt = round(bill.provider.dollar_debt - bill.rest_to_pay_dollar,2)
             bill.provider.save()
             bill.save()
         else:             
-            bill.rest_to_pay_dollar = float(bill.rest_to_pay_dollar) - total_amount_dollar
+            bill.rest_to_pay_dollar = round(bill.rest_to_pay_dollar - total_amount_dollar,2)
             bill.save()
             bill.provider.dollar_debt = round(bill.provider.dollar_debt - total_amount_dollar,2)
             bill.provider.save()
@@ -77,8 +77,7 @@ def payment_detail(request, payment_id):
         total_paid = round(payment.amount_dollar + payment.amount_bs / payment.exchange_rate,2)
         return render(request, 'payments/payment_detail.html',{
             'payment':payment,
-            'total_paid': total_paid
-            
+            'total_paid': total_paid,            
             })
 
 def update_payment(request, payment_id):

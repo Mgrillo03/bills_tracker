@@ -1,44 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+
 <body>
-    <h1> Proveedor: {{payment.bill.provider.nickname}} - Factura: {{payment.bill.bill_number}}</h1> 
-    <a href="{% url 'bills:bill_detail' payment.bill.id %}">Ver Factura</a>
-    <h3>Pago: {{payment.description}}</h3>
-    <div>
-        <br>
-        Fecha: {{payment.date}} --
-        Cuenta: {{payment.account}}
-        id transferencia: {{payment.transfer_id}}
-        
-    </div> 
-    <br>
-        Pagado Bs: Bs.{{payment.amount_bs}} <br>
-        Pagado Dollar: ${{payment.amount_dollar}} <br>
-        Cambio: Bs.{{payment.exchange_rate}} <br>
-        Total pagado: {{total_paid}} <br>
-        Total a pagar: {{payment.bill.amount_to_pay_dollar}} <br>
-        Faltante por pagar: ${{payment.bill.rest_to_pay_dollar}} <br>
-        --------------------------------------------------------
-        <br><br><br>
-
-        -------------------------------------------------------- 
-        <br>
-
-    <br>
-    <div>
-
+ 
+<div class="place p-payments"></div>
+<div class="details">
+    <div class="details-container-p">    
+        <div class="title">
+            <p>Detalle del Pago</p>
+        </div>
+        <div class="general-details">
+            <div class="general-details-left">
+                <div>
+                    <p>Nombre</p>
+                    <p>{{payment.bill.provider.name}}</p>
+                </div>
+                <div>
+                    <p>Alias:</p>
+                    <p>{{payment.bill.provider.nickname}}</p>
+                </div>
+            </div>
+            <div class="general-details-center">
+                <div>
+                    <p>Rif:</p>
+                    <p>{{payment.bill.provider.rif}}</p>
+                </div>
+                <div>
+                    <p>Retencion:</p>
+                    <p>{{payment.bill.provider.taxtype}}%</p>
+                </div>
+            </div>
+            <div class="general-details-right">
+                <p class="general-details-right-p">Deuda:</p>                
+                {% if payment.bill.provider.dollar_debt > 0 %}
+                    <p class="debt">${{payment.bill.provider.dollar_debt}}</p>
+                {% else %}
+                    <p class="paid">${{payment.bill.provider.dollar_debt}}</p>
+                {% endif %}                
+            </div>
+        </div>
+        <div class="details-content">
+            <div class="detail-head">
+                <div class="detail-head-left-p">
+                    <p>Factura:</p>
+                    <a href="{% url 'bills:bill_detail' payment.bill.id %}">
+                    <p>{{payment.bill.bill_number}}</p>
+                    </a>
+                </div>
+                <div class="detail-head-center">
+                    <p>Fecha:</p>
+                    <p>{{payment.date}}</p>
+                </div>
+                <div class="detail-head-right">
+                    
+                    {% if payment.paid_total %}
+                        <p class="debt">Parcial</p>
+                    {% else %}
+                        <p class="paid">Total</p>
+                    {% endif %}                       
+                </div>
+            </div>
+            <div class="detail-body">
+                <div class="detail-body-left-p">
+                    <div>
+                        <p>Descripcion:</p>
+                    </div>
+                    <div>
+                        <p>{{payment.description}}</p>
+                    </div>
+                    <div>
+                        <p>Cuenta:</p>
+                        <p>{{payment.account}}</p>
+                    </div>
+                </div>
+                <div class="detail-body-center">
+                    <div>
+                        <p>Pagado $:</p>
+                        <p>${{payment.amount_dollar}}</p>
+                    </div>
+                    <div>
+                        <p>Pagado Bs:</p>
+                        <p>Bs.{{payment.amount_dollar}}</p>
+                    </div>
+                    <div>
+                        <p>Cambio:</p>
+                        <p>Bs{{payment.exchange_rate}}</p>
+                    </div>
+                </div>
+                <div class="detail-body-right">
+                    <div>
+                        <p>Total:</p>
+                        <p>${{payment.total_dollar}}</p>
+                    </div>
+                    <div>
+                        <p>A Pagar:</p>
+                        <p>${{payment.bill.amount_to_pay_dollar}}</p>
+                    </div>
+                    <div>
+                        <p>Restante:</p>
+                        <p>${{payment.bill.rest_to_pay_dollar}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-buttons">
+                <a href="{% url 'payments:index' %}" class="link-secondary-button" >Volver</a>
+                <a href="{% url 'payments:update_payment' payment.id %}" class="link-primary-button" >Editar</a>
+            </div>
+        </div>
     </div>
-    <br><br>
-    <a href="{% url 'payments:update_payment' payment.id %}">Editar</a>
-    <a href="{% url 'payments:index' %}">Volver</a>
-
+    <div class="add">
+        <div class="hint inactive">
+                <div>
+                    <a href="{% url 'providers:new_provider' %}">
+                    <p>Proveedor</p>
+                        <figure >                    
+                            <img src="{% static 'bills/images/user.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>     
+                <div>
+                    <a href="{% url 'payments:new_payment' %}">
+                    <p>Pago</p>
+                        <figure >                    
+                            <img src="{% static 'bills/images/coin.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+                <div>
+                    <a href="{% url 'bills:new_bill' %}">
+                    <p>Factura</p>
+                        <figure >                    
+                            <img src="{% static 'bills/images/bill.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+        </div>
+        
+        <figure class="figure">            
+            <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+        </figure>
+    
+    </div>
+</div>
 
 
 </body>
-</html>
+<script src="{% static 'bills/js/main.js' %}"></script>
+{% endblock %}
