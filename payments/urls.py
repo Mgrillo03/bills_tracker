@@ -10,11 +10,13 @@ urlpatterns = [
     
     #payment/new/
     path('new/', views.new_payment, name='new_payment'),
+    #payment/new/show-bill
+    path('new/show-bill/', views.new_payment_show_bill, name='new_payment_show_bill'),
     #payment/created/
     path('created/', views.new_payment_save, name='new_payment_save'),
 
     ## #/payments/id/detail
-    path('<str:payment_id>/detail', views.payment_detail, name='payment_detail'),
+    path('<str:payment_id>/detail/', views.payment_detail, name='payment_detail'),
 
     ## #payment/payment-id/update
     path('<str:payment_id>/update/', views.update_payment, name='update_payment'),

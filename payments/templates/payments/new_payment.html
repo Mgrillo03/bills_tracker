@@ -10,13 +10,13 @@
     </div>
 
     <div class="form-body form-body-payment">
-        <form action="{% url 'bills:new_bill_show_provider' %}" method="post">
+        <form action="{% url 'payments:new_payment_show_bill' %}" method="post">
             <div class="form-provider">
                 {% csrf_token %}
                 <div class="form-provider-left">
                     <label for="bill_id" >Factura:</label>
                     <div>
-                        <input   list="bills-list" name="bill_id" placeholder="Selccione Opcion.." required>
+                        <input   list="bills-list" name="bill_id" placeholder="Selccione Opcion.." value="{{bill_selected.bill_number}}" required>
                             <datalist id="bills-list">
                                 {% for bill in bills_list  %}
                                     <option value="{{bill.id}}">
@@ -36,21 +36,21 @@
                 <div class="form-provider-right">
                     <div>
                         <p>Proveedor:</p>
-                        <p>{{bill_selected.provider.nickname}}Manu</p>
+                        <p>{{bill_selected.provider.nickname}} </p>
                     </div> 
                     <div>
                         <p>Total:</p>
-                        <p>${{bill.total_amount_dollar}}250,00</p>
+                        <p>${{bill_selected.total_amount_dollar}}</p>
                         <p>Restante:</p>
-                        <p>${{bill.rest_to_pay_dollar}}200,00</p>
+                        <p>${{bill_selected.rest_to_pay_dollar}}</p>
                     </div>
                 </div>
             </div>
         </form>
-        <form action="{% url 'bills:new_bill_calc' %}" method="post">
+        <form action="{% url 'payments:new_payment_save' %}" method="post">
             {% csrf_token %}
             <div class="form-data-payment">
-                <input type="hidden" name="bill_selected" value="{{bill_selected.id}}">
+                <input type="hidden" name="bill_selected" value="{{bill_selected.pk}}">
                 <div>
                     <div>
                         <label for="date">Fecha: </label>
@@ -80,7 +80,7 @@
                     <div> 
                         <label for="exchange_rate">Cambio:</label>
                         <p>
-                            Bs.<input type="number" step="0.01" name="exchange_rate" placeholder="Tasa" >
+                            Bs.<input type="number" step="0.01" name="exchange_rate" value="0" required>
                         </p>
                     </div>
                     <div>

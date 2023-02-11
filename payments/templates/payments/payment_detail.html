@@ -54,7 +54,7 @@
                 </div>
                 <div class="detail-head-right">
                     
-                    {% if payment.paid_total %}
+                    {% if not payment.paid_total %}
                         <p class="debt">Parcial</p>
                     {% else %}
                         <p class="paid">Total</p>

@@ -22,19 +22,39 @@ def new_payment(request):
         'date': date,
     })
 
-def new_payment_save(request):
+def new_payment_show_bill(request):
     try:
         bill = Bill.objects.get(pk=request.POST['bill_id'])
     except (KeyError, Bill.DoesNotExist):
         request = reset_messages(request)
         request.session['message'] = 'Por favor seleccione una factura de la lista'
         request.session['message_shown'] = False
-        return redirect('payments:index')
+        return redirect('payments:new_payment')
+    else:
+        request = reset_messages(request)
+        bills_list = Bill.objects.all()
+        date = datetime.date.today().isoformat()
+        return render(request,'payments/new_payment.html',{
+            'bills_list':bills_list,
+            'date' : date,
+            'bill_selected':bill, 
+            })
+
+def new_payment_save(request):
+    try:
+        bill = Bill.objects.get(pk=request.POST['bill_selected'])
+    except (KeyError, Bill.DoesNotExist):
+        request = reset_messages(request)
+        request.session['message'] = 'Por favor seleccione una factura de la lista'
+        request.session['message_shown'] = False
+        return redirect('payments:new_payment')
     else:
         date = datetime.date.fromisoformat(request.POST['date'])
         exchange_rate = float(request.POST['exchange_rate'])
         amount_dollar = float(request.POST['amount_dollar'])
         amount_bs = float(request.POST['amount_bs'])
+        if exchange_rate == 0:
+            exchange_rate = 1
         total_amount_dollar = amount_bs / exchange_rate
         total_amount_dollar = round(total_amount_dollar + amount_dollar,2)
         paid_total = request.POST.get('paid_total',False)
