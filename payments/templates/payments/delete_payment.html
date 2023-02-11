@@ -1,17 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Estas a punto de eliminar el pago {{payment.pk}} de la factura {{payment.bill.bill_number}} del proveedor {{payment.bill.provider.nickname}} permanentemente</h1>
-    <h3>Deseas continuar?</h3>
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
 
-    <a href="{% url 'payments:payment_deleted' payment.id %}">Si</a><br><br>
-    <a href="{% url 'payments:index' %}">No</a><br><br>
+<div class="place n-bill"></div>
+<body>
+    <div class="place p-payments"></div>
+    <div class="bills">
+        <div class="title">
+            <p>Pagos</p>
+        </div>
+        <div class="bills-container">    
     
+            {% for payment in payments_list %}
+            <div class="bill-content-p">
+                <div class="bill-head">
+                    <div class="bill-head-left">
+                        <p>{{payment.bill.bill_number}}   |</p>
+                        <p>Fecha: {{payment.date}} -</p>
+                        {% if payment.paid_total %}
+                        <p>Total</p>
+                        {% else %}
+                        <p>Parcial</p>
+                        {% endif %}
+                    </div>
+                    <div class="bill-head-right">
+                        <figure>
+                            <a href="{% url 'payments:delete_payment'  payment.id %}">
+                                <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <div class="bill-body">
+                    <div class="bill-body-sub-left-p">
+                        <div class="bill-detail">
+                            <p>Proveedor:</p>
+                            <p>{{payment.bill.provider.nickname}}</p>
+                        </div>
+                        <div class="bill-detail">
+                            <p>Comentario:</p>
+                            <p>{{payment.description}}</p>
+                        </div>
+                        <div class="bill-detail">
+                            <p>Cuenta:</p>
+                            <p>{{payment.account}}</p>
+                        </div>
+                    </div>
+    
+                    <div class="bill-body-sub-p">
+                        <div class="bill-detail">
+                            <p>Total:</p>
+                            <p>${{payment.amount_dollar}}</p>
+                            <p class="amount-bs">Bs.{{payment.amount_bs}}</p>
+                        </div>
+                        <div class="bill-detail">
+                            <p>Cambio:</p>
+                            <p>${{payment.exchange_rate}}</p>
+                        </div>
+                        <div class="bill-detail">
+                            <p>Total:</p>
+                            <p>${{payment.total_dollar}}</p>
+                        </div>
+                    </div>
+    
+                    <div class="bill-body-buttons">
+                        <a href="{% url 'payments:payment_detail'  payment.id %}" class="link-primary-button">Detalle</a>
+                        <a href="{% url 'payments:update_payment'  payment.id %}" class="link-secondary-button">Editar</a> 
+                    </div>
+                </div>
+            </div>
+             
+            {% endfor %}
+        </div>
+        <div class="add">
+            <div class="hint inactive">
+                    <div>
+                        <a href="{% url 'providers:new_provider' %}">
+                        <p>Proveedor</p>
+                            <figure >                    
+                                <img src="{% static 'bills/images/user.png'  %}" alt="new-bill" >
+                            </figure>
+                        </a> 
+                    </div>     
+                    <div>
+                        <a href="{% url 'payments:new_payment' %}">
+                        <p>Pago</p>
+                            <figure >                    
+                                <img src="{% static 'bills/images/coin.png'  %}" alt="new-bill" >
+                            </figure>
+                        </a> 
+                    </div>  
+                    <div>
+                        <a href="{% url 'bills:new_bill' %}">
+                        <p>Factura</p>
+                            <figure >                    
+                                <img src="{% static 'bills/images/bill.png'  %}" alt="new-bill" >
+                            </figure>
+                        </a> 
+                    </div>  
+            </div>
+            
+            <figure class="figure">            
+                <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+            </figure>
+        
+        </div>
+    </div>
+
+</div>
+<div class="delete-menu ">
+    <div class="delete-content">    
+        <div class="second-title">
+            <p>Estas a punto de eliminar el pago {{payment.pk}} de la factura #{{payment.bill.bill_number}} del proveedor "{{payment.bill.provider.nickname}}" permanentemente</p>
+        </div> 
+        <p>Deseas continuar?</p> 
+        <div>
+            <a href="{% url 'payments:index' %}" class="link-secondary-button hide-delete-menu">No</a>
+            <a href="{% url 'payments:payment_deleted' payment.id %}" class="link-primary-button">Si</a>  
+        </div>
+    </div>
+</div>
 </body>
-</html>
+<script src="{% static 'bills/js/new_bill.js' %}"></script>
+{% endblock %}

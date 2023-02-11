@@ -1,60 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevo Pago</title>
-</head>
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+
+<div class="place n-bill"></div>
 <body>
-    <h1>Nuevo Pago</h1>
-    <form action="{% url 'payments:update_payment_save' payment.id %}" method="post">
-        {% csrf_token %}
+<div class="new-payment">
+    <div class="title">
+        <p>Nuevo Pago</p>
+    </div>
 
-        <label >Factura: {{payment.bill.bill_number}} Proveedor: {{payment.bill.provider.nickname}}</label>
-       Total a pagar: Bs.{{payment.bill.amount_to_pay_bs}} -- Cambio: Bs.{{payment.bill.exchange_rate}}
-       <br>
-       Total a pagar: ${{payment.bill.amount_to_pay_dollar}} <br>
-       Restante por pagar: ${{payment.bill.rest_to_pay_dollar}} <br>
-            
+    <div class="form-body form-body-payment">
+        <form action="{% url 'bills:new_bill_show_provider' %}" method="post">
+            <div class="form-provider">
+                {% csrf_token %}
+                <div class="form-provider-left">
+                    <label for="bill_id" >Factura:</label>
+                    <div>
+                        <input   list="bills-list" name="bill_id" value="{{payment.bill.id}}" required>                            
+                        <figure>
+                            <input type="image" src="{% static 'bills/images/refresh.png'  %}" alt="Submit Form"  disabled/>
+                        </figure>
+                    </div>
+                </div>
+                <div class="form-provider-right">
+                    <div>
+                        <p>Proveedor:</p>
+                        <p>{{payment.bill.provider.nickname}}</p>
+                    </div> 
+                    <div>
+                        <p>Total:</p>
+                        <p>${{payment.bill.total_amount_dollar}}</p>
+                        <p>Restante:</p>
+                        <p>${{payment.bill.rest_to_pay_dollar}}</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form action="{% url 'payments:update_payment_save' payment.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-data-payment">
+                <input type="hidden" name="bill_selected" value="{{bill_selected.id}}">
+                <div>
+                    <div>
+                        <label for="date">Fecha: </label>
+                        <input type="date" name="date" value="{{date}}" required>
+                    </div>
+                    <div>
+                        <label for="account">Cuenta</label>
+                        <input type="text" name="account" value="{{payment.account}}" required>
+                    </div>
+                    
+                </div>
+                <div>
+                    <div>
+                        <label for="amount_bs">Pago Bolivares:</label>
+                        <p>
+                            Bs.<input type="number" step="0.01"  name="amount_bs" value="{{payment.amount_bs}}" required>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="amount_dollar">Pago Dolares:</label>
+                        <p>
+                            $<input type="number" step="0.01" name="amount_dollar" value="{{payment.amount_dollar}}" required>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-data-last-payment">
+                    <div> 
+                        <label for="exchange_rate">Cambio:</label>
+                        <p>
+                            Bs.<input type="number" step="0.01" name="exchange_rate"  value="{{payment.exchange_rate}}" >
+                        </p>
+                    </div>
+                    <div>
+                        <label for="transfer_id">Codigo de transferencia: </label>
+                        <p><input type="number" step="0.01" name="transfer_id" value="{{payment.transfer_id}}"></p>
+                    </div>
+                </div>     
+                <div class="create-note">
+                    <label for="description">Descripcion:</label>
+                    <input type="text" name="description" value="{{payment.description}}">
+                </div>   
+                <div>
+                    <label for="paid_total"> Pago total</label>
+                    {% if payment.paid_total %}
+                        <input type="checkbox" name="paid_total" value="True" checked><br>
+                    {% else %}
+                        <input type="checkbox" name="paid_total" value="True" ><br>
+                    {% endif %}
+                </div>
+                <div class="create-buttons">
+                    <a href="{% url 'payments:index' %}" class="link-secondary-button" >Cancelar</a>
+                    <input type="submit" value="Guardar" class="link-primary-button">
+                </div>       
+            </div>            
+        </form>
+    </div>
+    {{ request.session.error_message }} 
+    {{ request.session.message }} 
 
-        <label for="date">Fecha</label><br>
-        <input type="date" name="date" value="{{date}}" required><br>
-
-        <label for="amount_bs">Pago en Bs:</label>
-        <input type="number" step="0.01"  name="amount_bs" value="{{payment.amount_bs}}" required><br>
-  
-        <label for="amount_dollar">Pago en $:</label>
-        <input type="number" step="0.01" name="amount_dollar" value="{{payment.amount_dollar}}" required><br>
-
-        <label for="exchange_rate">Tasa de Cambio Bs</label>
-        <input type="number" step="0.01" name="exchange_rate" value="{{payment.exchange_rate}}" required><br>
-                
-        <label for="account">Cuenta</label>
-        <input type="text" name="account" value="{{payment.account}}" required><br>
-
-        <label for="description">Descripcion:</label>
-        <input type="text" name="description" value="{{payment.description}}" ><br>
-        
-        <label for="transfer_id">Codigo de transferencia: </label>
-        <input type="number" step="0.01" name="transfer_id" value="{{payment.transfer_id}}" ><br>
-        
-       <label for="paid_total"> Pago total</label>
-        {% if payment.paid_total %}
-            <input type="checkbox" name="paid_total" value="True" checked><br>
-        {% else %}
-            <input type="checkbox" name="paid_total" value="True" ><br>
-        {% endif %}
-        <br><br>
-
-        <input type="submit" value="Crear" >
-
-
-    </form>
-    {{ request.session.error_message }} <br>
-    {{ request.session.message }} <br>
-
-
-    <a href="{% url 'payments:index' %}">Cancelar</a>
+</div>
 </body>
-</html>
+<script src="{% static 'bills/js/new_bill.js' %}"></script>
+{% endblock %}

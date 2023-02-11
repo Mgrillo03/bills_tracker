@@ -117,8 +117,8 @@
         </div> 
         <p>Deseas continuar?</p> 
         <div>
-            <a href="{% url 'bills:bill_deleted' bill.id %}" class="link-primary-button">Si</a>  
             <a href="{% url 'bills:index' %}" class="link-secondary-button hide-delete-menu">No</a>
+            <a href="{% url 'bills:bill_deleted' bill.id %}" class="link-primary-button">Si</a>  
         </div>
     </div>
 </div>

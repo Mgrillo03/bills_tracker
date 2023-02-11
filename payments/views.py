@@ -17,7 +17,7 @@ def new_payment(request):
     request = reset_messages(request)
     bills_list = Bill.objects.filter(paid='False')
     date = datetime.date.today().isoformat() 
-    return render(request, 'payments/new_payment_2.html',{
+    return render(request, 'payments/new_payment.html',{
         'bills_list': bills_list,
         'date': date,
     })
@@ -89,7 +89,7 @@ def update_payment(request, payment_id):
         request.session['message_shown'] = False
         return redirect('payments:index')
     else:
-        date = datetime.date.today().isoformat()        
+        date = payment.date.isoformat()        
         return render(request, 'payments/update_payment.html',{
             'payment':payment,
             'date': date,
@@ -154,7 +154,11 @@ def delete_payment(request, payment_id):
         request.session['message_shown'] = False
         return redirect('payments:index')
     else:
-        return render(request, 'payments/delete_payment.html',{'payment':payment})
+        payments_list = Payment.objects.all().order_by('-date')
+        return render(request, 'payments/delete_payment.html',{
+            'payment':payment,
+            'payments_list':payments_list,
+            })
 
 def delete_payment_save(request, payment_id):
     request = reset_messages(request)
