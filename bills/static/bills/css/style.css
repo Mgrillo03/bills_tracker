@@ -656,6 +656,9 @@
         border: var(--division) 1px solid;
         padding-left: 10px;
     }
+    .create-note{
+        margin-top: 10px;
+    }
     .form-data div:nth-child(2) div input,
     .form-data-payment div:nth-child(2) div input{
         margin-top: 0px;
