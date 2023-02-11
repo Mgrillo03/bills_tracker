@@ -98,7 +98,7 @@ def new_bill_calc(request):
             emission_date = request.POST['emission_date']
             due_date = request.POST['due_date']
             total_amount_bs = float(request.POST['total_amount_bs'])
-            sub_total_bs = round(total_amount_bs * 0.84, 2)
+            sub_total_bs = round(total_amount_bs / 1.16 , 2)
             tax_bs = round(total_amount_bs - sub_total_bs,2)
             taxType = provider.taxtype
             if taxType == '0':
