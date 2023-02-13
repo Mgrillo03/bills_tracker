@@ -19,7 +19,7 @@
                         <input   list="bills-list" name="bill_id" placeholder="Selccione Opcion.." value="{{bill_selected.bill_number}}" required>
                             <datalist id="bills-list">
                                 {% for bill in bills_list  %}
-                                    <option value="{{bill.id}}">
+                                    <option value="{{bill.bill_number}}-{{bill.id}}">
                                         {{bill.bill_number}} | 
                                         {{bill.provider.nickname}} - 
                                         ${{bill.rest_to_pay_dollar}} - 

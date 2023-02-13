@@ -952,6 +952,7 @@
             width: 95%;
         }
         .general-details{
+            margin-top: 50px;
             width: 95%;
             height: 200px;
             flex-direction: column;
