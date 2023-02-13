@@ -24,7 +24,8 @@ def new_payment(request):
 
 def new_payment_show_bill(request):
     try:
-        bill = Bill.objects.get(pk=request.POST['bill_id'])
+        bill_id = request.POST['bill_id'].split('-',1)
+        bill = Bill.objects.get(pk=bill_id[1])
     except (KeyError, Bill.DoesNotExist):
         request = reset_messages(request)
         request.session['message'] = 'Por favor seleccione una factura de la lista'
@@ -94,6 +95,9 @@ def payment_detail(request, payment_id):
         request.session['message_shown'] = False
         return redirect('payments:index')
     else:
+        if payment.exchange_rate == 0:
+            payment.exchange_rate = 1 
+            payment.save()
         total_paid = round(payment.amount_dollar + payment.amount_bs / payment.exchange_rate,2)
         return render(request, 'payments/payment_detail.html',{
             'payment':payment,
@@ -122,6 +126,8 @@ def update_payment_save(request, payment_id):
     amount_dollar = float(request.POST['amount_dollar'])
     amount_bs = float(request.POST['amount_bs'])
     paid_total = request.POST.get('paid_total',False)
+    if exchange_rate == 0 :
+        exchange_rate = 1
     new_total_amount_dollar = amount_bs / exchange_rate
     new_total_amount_dollar = new_total_amount_dollar + amount_dollar
     if paid_total:

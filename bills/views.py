@@ -205,7 +205,7 @@ def update_bill_calc(request, bill_id):
         due_date = request.POST['due_date']
 
         total_amount_bs = float(request.POST['total_amount_bs'])
-        sub_total_bs = round(total_amount_bs * 0.84, 2)
+        sub_total_bs = round(total_amount_bs / 1.16, 2)
         tax_bs = total_amount_bs - sub_total_bs
         taxType = bill.provider.taxtype
         if taxType == '0':
