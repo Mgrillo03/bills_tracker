@@ -70,6 +70,7 @@
                 </div>
 
                 <div class="bill-body-buttons">
+                    <a href="{% url 'payments:new_payment_show_bill_id'  bill.id %}" class="link-primary-button">Pagar</a>
                     <a href="{% url 'bills:bill_detail'  bill.id %}" class="link-primary-button">Detalle</a>
                     <a href="{% url 'bills:update_bill'  bill.id %}" class="link-secondary-button">Editar</a> 
                 </div>

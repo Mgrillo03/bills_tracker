@@ -167,7 +167,7 @@
     .bill-body{
         display: flex;
         justify-content: space-around;
-        margin-top: 15px;
+        
     }
     .bill-body p:nth-child(1){
         font-weight: bold;
@@ -210,7 +210,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        margin-top: 20px;    
+          
         width: 150px;
     }
     .bill-body-buttons a,
@@ -221,9 +221,9 @@
         height: 35px;
         text-align: center;
         padding-top: 7px;
-        margin-top: 10px;
+        margin-top: 5px;
 
-        border-radius: 5px;
+        border-radius: 8px;
         border: var(--primary-pink) 2px solid;
         text-decoration: none;
     }
@@ -543,6 +543,13 @@
         border-radius: 5px;
         border: var(--secondary-pink) 2px solid;
         text-decoration: none;
+    }
+    .print-button{
+        cursor: pointer;
+    }
+    .print-button img{
+        width: 25px;
+        height: auto;
     }
 /* payments */
     .payment-title{

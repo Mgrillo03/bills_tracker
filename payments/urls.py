@@ -12,6 +12,7 @@ urlpatterns = [
     path('new/', views.new_payment, name='new_payment'),
     #payment/new/show-bill
     path('new/show-bill/', views.new_payment_show_bill, name='new_payment_show_bill'),
+    path('new/show-bill/<str:bill_id>/', views.new_payment_show_bill_id, name='new_payment_show_bill_id'),
     #payment/created/
     path('created/', views.new_payment_save, name='new_payment_save'),
 

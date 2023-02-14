@@ -41,6 +41,24 @@ def new_payment_show_bill(request):
             'bill_selected':bill, 
             })
 
+def new_payment_show_bill_id(request,bill_id):
+    try:
+        bill = Bill.objects.get(pk=bill_id)
+    except (KeyError, Bill.DoesNotExist):
+        request = reset_messages(request)
+        request.session['message'] = 'Por favor seleccione una factura de la lista'
+        request.session['message_shown'] = False
+        return redirect('payments:new_payment')
+    else:
+        request = reset_messages(request)
+        bills_list = Bill.objects.all()
+        date = datetime.date.today().isoformat()
+        return render(request,'payments/new_payment.html',{
+            'bills_list':bills_list,
+            'date' : date,
+            'bill_selected':bill, 
+            })
+
 def new_payment_save(request):
     try:
         bill = Bill.objects.get(pk=request.POST['bill_selected'])

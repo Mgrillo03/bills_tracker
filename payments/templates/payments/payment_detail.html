@@ -106,6 +106,9 @@
             <div class="edit-buttons">
                 <a href="{% url 'payments:index' %}" class="link-secondary-button" >Volver</a>
                 <a href="{% url 'payments:update_payment' payment.id %}" class="link-primary-button" >Editar</a>
+                <figure class="print-button">
+                    <img src="{% static 'bills/images/print.png'  %}"  alt="new-bill"> 
+                </figure>
             </div>
         </div>
     </div>

@@ -8,7 +8,8 @@ const paymentMobileNav = document.querySelector('.payment-mob-nav');
 const providerMobileNav = document.querySelector('.provider-mob-nav')
 const place = document.querySelector('.place');
 const body = document.querySelector('.bills');
-const navBar = document.querySelector('navbar');
+const navBar = document.querySelector('.navbar');
+const printButton = document.querySelector('.print-button');
 
 
 const bottomMenu = document.querySelector('.hint');
@@ -19,6 +20,9 @@ menuBill.addEventListener('click', toggleBottomMenu);
 menuMobile.addEventListener('click', toggleAsideMenu);
 window.addEventListener('load',toggleNavSelected);
 
+printButton.addEventListener("click", function(){
+    window.print();
+});
 
 function toggleBottomMenu(){   
     const isAsideMenuOpen = !asideMenu.classList.contains('inactive');

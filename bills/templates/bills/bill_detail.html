@@ -2,8 +2,7 @@
 {% block content %}
 {% load static %}
 
-<body>
- 
+<body>    
 <div class="place p-bills"></div>
 <div class="details">
     <div class="details-container">    
@@ -112,6 +111,10 @@
             <div class="edit-buttons">
                 <a href="{% url 'bills:index' %}" class="link-secondary-button" >Volver</a>
                 <a href="{% url 'bills:update_bill' bill.id %}" class="link-primary-button" >Editar</a>
+                <a href="{% url 'payments:new_payment_show_bill_id'  bill.id %}" class="link-primary-button">Pagar</a>
+                <figure class="print-button">
+                    <img src="{% static 'bills/images/print.png'  %}"  alt="new-bill"> 
+                </figure>
             </div>
         </div>
         <div class="payment-title">
@@ -188,8 +191,8 @@
             <p>Aun no se han registrado pagos.</p>
         </div>
         {% endif %}
-            
     </div>
+    
     <div class="add">
         <div class="hint inactive">
                 <div>
@@ -224,7 +227,6 @@
     
     </div>
 </div>
-
 
 </body>
 <script src="{% static 'bills/js/main.js' %}"></script>
