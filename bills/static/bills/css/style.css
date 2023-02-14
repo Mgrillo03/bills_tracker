@@ -1051,6 +1051,9 @@
             height: 350px;
             padding: 10px;
         }
+        .edit-buttons a{
+            width: 70px;
+        }
 /* edit bill */
         .new-bill{
             height: 150vh;
