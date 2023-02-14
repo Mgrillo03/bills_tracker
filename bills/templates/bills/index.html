@@ -1,7 +1,8 @@
 {% extends 'bills/header.html' %}
 {% block content %}
 {% load static %}
-
+{% load humanize %}
+{{ value|floatformat:2|intcomma:2 }}
 <body>
  
 <div class="place p-bills"></div>

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     'providers.apps.ProvidersConfig',
     'bills.apps.BillsConfig',
@@ -122,7 +123,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-USE_L10N = False
+#USE_L10N = False
+
+DECIMAL_SEPARATOR = ','
+USE_THOUSAND_SEPARATOR = True
+THOUSAND_SEPARATOR = '.'
 
 
 # Static files (CSS, JavaScript, Images)
