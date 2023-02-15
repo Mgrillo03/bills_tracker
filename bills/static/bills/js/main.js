@@ -62,3 +62,6 @@ function toggleNavSelected(){
         navBar.classList.add('inactive');
     }
 }
+function numericFilter(txb) {
+    txb.value = txb.value.replace(/[^\0-9]/ig, "");
+ }

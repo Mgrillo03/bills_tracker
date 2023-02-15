@@ -58,13 +58,13 @@
                     <div>
                         <label for="total_amount_bs">Total Bolivares:</label>
                         <p>
-                            Bs.<input type="number" step="0.01"  name="total_amount_bs" value={{bill.total_amount_bs}} required >
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="total_amount_bs" value={{bill.total_amount_bs}} required >
                         </p>
                     </div>
                     <div>
                         <label for="total_amount_dollar">Total Dolares:</label>
                         <p>
-                            $<input type="number" step="0.01" name="total_amount_dollar"value={{bill.total_amount_dollar}} required >
+                            $<input type="number"  pattern="[0-9]+([\,][0-9]+)?" min="0" max="5" name="total_amount_dollar"value={{bill.total_amount_dollar}} required >
                         </p>
                     </div>
                 </div>
