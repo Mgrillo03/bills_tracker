@@ -119,7 +119,7 @@
         place-items: center;
         position: relative;
         margin-top: 60px;
-        overflow: scroll;
+        overflow: auto;
     }
     .bills-container{
         display: flex;
@@ -227,6 +227,9 @@
         border: var(--primary-pink) 2px solid;
         text-decoration: none;
     }
+    .form-data-payment div:nth-child(7) a{
+        margin-top: 10px;
+    }
     .link-primary-button{
         background: var(--secondary-pink);
         color: var(--white);
@@ -319,6 +322,14 @@
         display: grid;
         place-items: center;
         margin-top: 60px;
+    }
+    .provider-details{
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        margin-top: 500px;
     }
     .details-container,
     .details-container-p{
@@ -618,6 +629,9 @@
     .form-body-payment{
         height: 500px;
     }
+    .form-body-provider{
+        height: 270px;
+    }
     .form-body p:nth-child(1),
     .form-body p:nth-child(3),
     .form-body label{
@@ -670,6 +684,9 @@
     .form-data-payment div:nth-child(2) div input{
         margin-top: 0px;
         margin-left: 10px;
+    }
+    .form-new-provider div:nth-child(2) div:nth-child(1) input{
+        margin-left: 0px;
     }
     .form-data-payment div:nth-child(4) div:nth-child(2) input{
         margin-left: 10px;
@@ -1066,6 +1083,7 @@
         .form-body-payment{
             height: 550px;
         }
+        
         .form-provider{
             height: 120px;
             flex-wrap: wrap;

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from .models import Payment
 from bills.models import Bill
-from bills.views import reset_messages
+from bills.views import reset_messages, format_number
 
 import datetime
 
@@ -69,9 +69,9 @@ def new_payment_save(request):
         return redirect('payments:new_payment')
     else:
         date = datetime.date.fromisoformat(request.POST['date'])
-        exchange_rate = float(request.POST['exchange_rate'])
-        amount_dollar = float(request.POST['amount_dollar'])
-        amount_bs = float(request.POST['amount_bs'])
+        exchange_rate = format_number(request.POST['exchange_rate'])
+        amount_dollar = format_number(request.POST['amount_dollar'])
+        amount_bs = format_number(request.POST['amount_bs'])
         if exchange_rate == 0:
             exchange_rate = 1
         total_amount_dollar = amount_bs / exchange_rate
@@ -140,9 +140,9 @@ def update_payment(request, payment_id):
 def update_payment_save(request, payment_id):
     payment = Payment.objects.get(pk=payment_id)
     date = datetime.date.fromisoformat(request.POST['date'])
-    exchange_rate = float(request.POST['exchange_rate'])
-    amount_dollar = float(request.POST['amount_dollar'])
-    amount_bs = float(request.POST['amount_bs'])
+    exchange_rate = format_number(request.POST['exchange_rate'])
+    amount_dollar = format_number(request.POST['amount_dollar'])
+    amount_bs = format_number(request.POST['amount_bs'])
     paid_total = request.POST.get('paid_total',False)
     if exchange_rate == 0 :
         exchange_rate = 1
@@ -161,7 +161,7 @@ def update_payment_save(request, payment_id):
         #Update payment, first revert the payment, then make the new one
         #revert
         payment.bill.paid = False
-        update_rest_to_pay_dollar = round(float(payment.bill.rest_to_pay_dollar) + payment.total_dollar,2)
+        update_rest_to_pay_dollar = round(payment.bill.rest_to_pay_dollar + payment.total_dollar,2)
         if payment.paid_total:
             update_debt = payment.bill.provider.dollar_debt + payment.bill.amount_to_pay_dollar
             payment.bill.provider.dollar_debt = round(update_debt - new_total_amount_dollar,2)
@@ -213,7 +213,7 @@ def delete_payment_save(request, payment_id):
         payment.bill.provider.dollar_debt = payment.bill.provider.dollar_debt + payment.total_dollar
     payment.bill.provider.save()
     payment.bill.paid = False
-    payment.bill.rest_to_pay_dollar = round(float(payment.bill.rest_to_pay_dollar) + payment.total_dollar,2)
+    payment.bill.rest_to_pay_dollar = round(payment.bill.rest_to_pay_dollar + payment.total_dollar,2)
     payment.bill.save()
     payment.delete()
     request.session['message'] = 'Pago eliminado'

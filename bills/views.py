@@ -6,6 +6,10 @@ from payments.models import Payment
 
 import datetime
 
+def format_number(string):
+    string = string.replace('.','')
+    return float(string.replace(',','.'))
+
 def check_name(bill_number, bills_list):
     """
     check if the bill number is available in users account list
@@ -14,6 +18,7 @@ def check_name(bill_number, bills_list):
         if bill_number.lower() == i.bill_number.lower():
             return False
     return True
+
 def check_overdue_bill(bills_list):
     """
     check and update the overdue status
@@ -97,7 +102,7 @@ def new_bill_calc(request):
         if bill_number_unique:
             emission_date = request.POST['emission_date']
             due_date = request.POST['due_date']
-            total_amount_bs = float(request.POST['total_amount_bs'])
+            total_amount_bs = format_number(request.POST['total_amount_bs'])
             sub_total_bs = round(total_amount_bs / 1.16 , 2)
             tax_bs = round(total_amount_bs - sub_total_bs,2)
             taxType = provider.taxtype
@@ -110,7 +115,7 @@ def new_bill_calc(request):
             elif taxType == '100':
                 retained_tax_bs = tax_bs
                 amount_to_pay_bs = total_amount_bs - retained_tax_bs
-            exchange_rate = float(request.POST['exchange_rate'])
+            exchange_rate = format_number(request.POST['exchange_rate'])
             total_amount_dollar = round(total_amount_bs / exchange_rate,2)
             amount_to_pay_dollar = round(amount_to_pay_bs / exchange_rate, 2)
             note = request.POST['note']
@@ -142,7 +147,7 @@ def new_bill_save(request):
     emission_date = datetime.date.fromisoformat(request.POST['emission_date'])
     due_date = datetime.date.fromisoformat(request.POST['due_date'])
     bill_number = request.POST['bill_number']
-    amount_to_pay_dollar = float(request.POST['amount_to_pay_dollar'])
+    amount_to_pay_dollar = format_number(request.POST['amount_to_pay_dollar'])
     provider.dollar_debt = round(provider.dollar_debt + amount_to_pay_dollar,2)
     provider.save()
     bill = Bill.objects.create(
@@ -150,15 +155,15 @@ def new_bill_save(request):
         emission_date = emission_date,
         due_date = due_date,
         provider = provider,
-        total_amount_bs = request.POST['total_amount_bs'],
-        sub_total_bs = request.POST['sub_total_bs'],
-        tax_bs = request.POST['tax_bs'],
-        retained_tax_bs = request.POST['retained_tax_bs'],
-        amount_to_pay_bs = request.POST['amount_to_pay_bs'],
-        exchange_rate = request.POST['exchange_rate'],
-        total_amount_dollar = request.POST['total_amount_dollar'],
-        amount_to_pay_dollar = request.POST['amount_to_pay_dollar'],
-        rest_to_pay_dollar = request.POST['amount_to_pay_dollar'],
+        total_amount_bs = format_number(request.POST['total_amount_bs']),
+        sub_total_bs = format_number(request.POST['sub_total_bs']),
+        tax_bs = format_number(request.POST['tax_bs']),
+        retained_tax_bs = format_number(request.POST['retained_tax_bs']),
+        amount_to_pay_bs = format_number(request.POST['amount_to_pay_bs']),
+        exchange_rate = format_number(request.POST['exchange_rate']),
+        total_amount_dollar = format_number(request.POST['total_amount_dollar']),
+        amount_to_pay_dollar = format_number(request.POST['amount_to_pay_dollar']),
+        rest_to_pay_dollar = format_number(request.POST['amount_to_pay_dollar']),
         note = request.POST['note'],
     )
     request.session['message'] = f'Factura N°{bill_number} creada existosamente'
@@ -204,20 +209,20 @@ def update_bill_calc(request, bill_id):
         emission_date = request.POST['emission_date']
         due_date = request.POST['due_date']
 
-        total_amount_bs = float(request.POST['total_amount_bs'])
+        total_amount_bs = format_number(request.POST['total_amount_bs'])
         sub_total_bs = round(total_amount_bs / 1.16, 2)
-        tax_bs = total_amount_bs - sub_total_bs
+        tax_bs = round(total_amount_bs - sub_total_bs,2)
         taxType = bill.provider.taxtype
         if taxType == '0':
             retained_tax_bs = 0
             amount_to_pay_bs = total_amount_bs
         elif taxType == '75':
-            retained_tax_bs = tax_bs * 0.75
+            retained_tax_bs = round(tax_bs * 0.75,2)
             amount_to_pay_bs = round(total_amount_bs - retained_tax_bs, 2)
         elif taxType == '100':
             retained_tax_bs = tax_bs
-            amount_to_pay_bs = total_amount_bs - retained_tax_bs
-        exchange_rate = float(request.POST['exchange_rate'])
+            amount_to_pay_bs = round(total_amount_bs - retained_tax_bs,2)
+        exchange_rate = format_number(request.POST['exchange_rate'])
         total_amount_dollar = round(total_amount_bs / exchange_rate, 2)
         amount_to_pay_dollar = round(amount_to_pay_bs / exchange_rate, 2)
         note = request.POST['note']
@@ -246,7 +251,7 @@ def update_bill_save(request, bill_id):
     bill = Bill.objects.get(pk=bill_id)
     #update provider debt
     update_debt = bill.provider.dollar_debt - bill.amount_to_pay_dollar
-    new_amount_to_pay_dollar = float(request.POST['amount_to_pay_dollar'])
+    new_amount_to_pay_dollar = format_number(request.POST['amount_to_pay_dollar'])
     bill.provider.dollar_debt = round(update_debt + new_amount_to_pay_dollar,2)
     bill.provider.save()
 
@@ -255,13 +260,13 @@ def update_bill_save(request, bill_id):
     bill.bill_number = request.POST['bill_number']
     bill.emission_date = datetime.date.fromisoformat(request.POST['emission_date'])
     bill.due_date = datetime.date.fromisoformat(request.POST['due_date'])
-    bill.total_amount_bs = float(request.POST['total_amount_bs'])
-    bill.sub_total_bs = float(request.POST['sub_total_bs'])
-    bill.tax_bs = float(request.POST['tax_bs'])
-    bill.retained_tax_bs = float(request.POST['retained_tax_bs'])
-    bill.amount_to_pay_bs = float(request.POST['amount_to_pay_bs'])
-    bill.exchange_rate =float( request.POST['exchange_rate'])
-    bill.total_amount_dollar = float(request.POST['total_amount_dollar'])
+    bill.total_amount_bs = format_number(request.POST['total_amount_bs'])
+    bill.sub_total_bs = format_number(request.POST['sub_total_bs'])
+    bill.tax_bs = format_number(request.POST['tax_bs'])
+    bill.retained_tax_bs = format_number(request.POST['retained_tax_bs'])
+    bill.amount_to_pay_bs = format_number(request.POST['amount_to_pay_bs'])
+    bill.exchange_rate =format_number( request.POST['exchange_rate'])
+    bill.total_amount_dollar = format_number(request.POST['total_amount_dollar'])
     bill.amount_to_pay_dollar = new_amount_to_pay_dollar
     
     bill.note = request.POST['note']   

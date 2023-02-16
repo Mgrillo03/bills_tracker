@@ -1,3 +1,115 @@
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+
+<body>
+ 
+<div class="place p-providers"></div>
+<div class="bills">
+    <div class="title">
+        <p>Proveedores</p>
+    </div>
+    <div class="bills-container">    
+
+        {% for provider in providers_list %}
+        <div class="bill-content">
+            <div class="bill-head">
+                <div class="bill-head-left">
+                    <p>{{provider.nickname}}</p>                    
+                </div>
+                <div class="bill-head-right">
+                    <figure>
+                        <a href="{% url 'providers:delete_provider'  provider.id %}">
+                            <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                        </a>
+                    </figure>
+                </div>
+            </div>
+            <div class="bill-body">
+                <div class="bill-body-sub-left-provider">
+                    <div class="bill-detail">
+                        <p>Deuda:</p>
+                        <p>${{provider.dollar_debt}}</p>
+                    </div>
+                </div>
+
+                <div class="bill-body-sub-provider">                    
+                    <div class="bill-detail">
+                        <p>Nombre:</p>
+                        <p>{{provider.name}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Rif:</p>
+                        <p>{{provider.rif}}</p>
+                    </div>
+                    <div class="bill-detail">
+                        <p>Retencion:</p>                        
+                        <p>{{provider.taxtype}}%</p>                        
+                    </div>
+                </div>
+
+                <div class="bill-body-buttons">
+                    <a href="{% url 'providers:provider_detail'  provider.id %}" class="link-primary-button">Detalle</a>
+                    <a href="{% url 'providers:update_provider'  provider.id %}" class="link-secondary-button">Editar</a> 
+                </div>
+            </div>
+        </div>
+         
+        {% endfor %}
+    </div>
+    <div class="add">
+        <div class="hint inactive">
+                <div>
+                    <a href="{% url 'providers:new_provider' %}">
+                    <p>Proveedor</p>
+                        <figure >                    
+                            <img src="{% static 'bills/images/user.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>     
+                <div>
+                    <a href="{% url 'payments:new_payment' %}">
+                    <p>Pago</p>
+                        <figure >                    
+                            <img src="{% static 'bills/images/coin.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+                <div>
+                    <a href="{% url 'bills:new_bill' %}">
+                    <p>Factura</p>
+                        <figure >                    
+                            <img src="{% static 'bills/images/bill.png'  %}" alt="new-bill" >
+                        </figure>
+                    </a> 
+                </div>  
+        </div>
+        
+        <figure class="figure">            
+            <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+        </figure>
+    
+    </div>
+</div>
+<div class="delete-menu ">
+    <div class="delete-content">    
+        <div class="second-title">
+            <p>Estas a punto de eliminar el Proveedor {{provider.nickname}} permanentemente</p>
+        </div> 
+        <p>Deseas continuar?</p> 
+        <div>
+            <a href="{% url 'bills:index' %}" class="link-secondary-button hide-delete-menu">No</a>
+            <a href="{% url 'providers:provider_deleted' provider.id %}" class="link-primary-button">Si</a>  
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script src="{% static 'bills/js/main.js' %}"></script>
+{% endblock %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

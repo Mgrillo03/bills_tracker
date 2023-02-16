@@ -1,42 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+
+<div class="place n-bill"></div>
 <body>
-    <h1>New Account</h1>
-    <form action="{% url 'providers:provider_created' %}" method="post">
-        {% csrf_token %}
-        <label for="name">Nombre</label><br>
-        <input type="text" name="name" placeholder="name" required><br>
-        
-        <label for="rif">Rif </label><br>
-        <input type="text" name="rif" placeholder="Rif" required><br>
+<div class="new-payment">
+    <div class="title">
+        <p>Nuevo Proveedor</p>
+    </div>
 
-        <label for="nickname">nickname</label><br>
-        <input type="text" name="nickname" placeholder="nickname"><br>
-  
-        <label for="dollar_debt">Deuda en Dolar</label><br>
-        <input type="number" step="0.01" name="dollar_debt" value="0" required><br>
+    <div class="form-body  form-body-provider">
+        <form action="{% url 'providers:provider_created' %}" method="post">
+            {% csrf_token %}
+            <div class="form-data-payment form-new-provider">
+                <input type="hidden" name="bill_selected" value="{{bill_selected.pk}}">
+                <div>
+                    <div>
+                        <label for="name">Nombre</label>
+                        <p>
+                            <input type="text" name="name" placeholder="name" required>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="rif">Rif </label>
+                        <input type="text" name="rif" placeholder="Rif" required>
+                    </div>
+                    
+                </div>
+                <div>
+                    <div>
+                        <label for="nickname">nickname</label>                        
+                        <p>
+                            <input type="text" name="nickname" placeholder="nickname">
+                        </p>
+                    </div>
+                    <div>
+                        <label for="dollar_debt">Deuda en Dolar</label>        
+                        <p>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="dollar_debt" value="0" required>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-data-last-payment">
+                    <div> 
+                        <label for="taxtype" >Porcentaje de retencion de iva:</label>
+                        <p>
+                            <input   list="taxtype-list" name="taxtype" placeholder="Selccione Opcion.." required>
+                            <datalist id="taxtype-list">
+                                <option value="0%"></option>                
+                                <option value="75%"></option>                
+                                <option value="100%"></option>     
+                            </datalist>
+                        </p>
+                    </div>
 
-        <label for="taxtype" >Porcentaje de retencion de iva:</label>
-        <input   list="taxtype-list" name="taxtype" placeholder="Selccione Opcion.." required>
-            <datalist id="taxtype-list">
-                <option value="0">0% de retencion</option>                
-                <option value="75">75% de retencion</option>                
-                <option value="100">100% de retencion</option>                
-                
-            </datalist><br><br>
+                </div>     
+                <div class="create-buttons">
+                    <a href="{% url 'providers:index' %}" class="link-secondary-button" >Cancelar</a>
+                    <input type="submit" value="Crear" class="link-primary-button">
+                </div>       
+            </div>            
+        </form>
+    </div>
+    {{ request.session.error_message }} 
+    {{ request.session.message }} 
 
-        <input type="submit" value="Create">
-
-
-    </form>
-    {{ request.session.error_message }} <br>
-
-    <a href="{% url 'providers:index' %}">Cancelar</a>
+</div>
 </body>
-</html>
+<script src="{% static 'bills/js/new_bill.js' %}"></script>
+{% endblock %}
