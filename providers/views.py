@@ -35,7 +35,7 @@ def new_provider_save(request):
         nickname = request.POST['nickname']
         taxtype = request.POST['taxtype']
         taxtype = taxtype.replace('%','')
-        dollar_debt = format_number(request.POST['dollar_debt'])
+        dollar_debt = round(format_number(request.POST['dollar_debt']),2)
         provider = Provider.objects.create(name=name, rif=rif, nickname=nickname, taxtype=taxtype, dollar_debt=dollar_debt)
         request.session['message'] = f'Usuario {name} creado existosamente'
         request.session['message_shown'] = False
@@ -75,7 +75,7 @@ def update_provider_save(request, provider_id):
         provider.rif = new_provider_rif
         provider.name = request.POST['name']
         provider.nickname = request.POST['nickname']
-        provider.dollar_debt = format_number(request.POST['dollar_debt']) 
+        provider.dollar_debt = round(format_number(request.POST['dollar_debt']) ,2)
         taxtype = request.POST['taxtype']
         provider.taxtype = taxtype.replace('%','')
         ### crear pago cuando se modifique la deuda

@@ -288,7 +288,7 @@ def delete_bill(request,bill_id):
 def delete_bill_save(request,bill_id):
     request = reset_messages(request)
     bill = Bill.objects.get(pk=bill_id)
-    bill.provider.dollar_debt = bill.provider.dollar_debt - bill.rest_to_pay_dollar
+    bill.provider.dollar_debt = round(bill.provider.dollar_debt - bill.rest_to_pay_dollar,2)
     bill.provider.save()
     bill.delete()
     request.session['message'] = 'Factura eliminado satisfactoriamente'
