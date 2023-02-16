@@ -6,7 +6,7 @@
 <body>
 <div class="new-payment">
     <div class="title">
-        <p>Nuevo Pago</p>
+        <p> Actualizar Pago</p>
     </div>
 
     <div class="form-body form-body-payment">
@@ -55,13 +55,13 @@
                     <div>
                         <label for="amount_bs">Pago Bolivares:</label>
                         <p>
-                            Bs.<input type="number" step="0.01"  name="amount_bs" value="{{payment.amount_bs}}" required>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);"  name="amount_bs" value="{{payment.amount_bs}}" required>
                         </p>
                     </div>
                     <div>
                         <label for="amount_dollar">Pago Dolares:</label>
                         <p>
-                            $<input type="number" step="0.01" name="amount_dollar" value="{{payment.amount_dollar}}" required>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_dollar" value="{{payment.amount_dollar}}" required>
                         </p>
                     </div>
                 </div>
@@ -69,12 +69,12 @@
                     <div> 
                         <label for="exchange_rate">Cambio:</label>
                         <p>
-                            Bs.<input type="number" step="0.01" name="exchange_rate"  value="{{payment.exchange_rate}}" >
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="exchange_rate"  value="{{payment.exchange_rate}}" >
                         </p>
                     </div>
                     <div>
                         <label for="transfer_id">Codigo de transferencia: </label>
-                        <p><input type="number" step="0.01" name="transfer_id" value="{{payment.transfer_id}}"></p>
+                        <p><input type="text" onKeyUp="numericFilter(this);" name="transfer_id" value="{{payment.transfer_id}}"></p>
                     </div>
                 </div>     
                 <div class="create-note">

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from bills.views import reset_messages
+from bills.views import reset_messages, format_number
 
 from .models import Provider
 
@@ -34,7 +34,8 @@ def new_provider_save(request):
         name = request.POST['name']
         nickname = request.POST['nickname']
         taxtype = request.POST['taxtype']
-        dollar_debt = float(request.POST['dollar_debt'])
+        taxtype = taxtype.replace('%','')
+        dollar_debt = format_number(request.POST['dollar_debt'])
         provider = Provider.objects.create(name=name, rif=rif, nickname=nickname, taxtype=taxtype, dollar_debt=dollar_debt)
         request.session['message'] = f'Usuario {name} creado existosamente'
         request.session['message_shown'] = False
@@ -74,8 +75,9 @@ def update_provider_save(request, provider_id):
         provider.rif = new_provider_rif
         provider.name = request.POST['name']
         provider.nickname = request.POST['nickname']
-        provider.dollar_debt = float(request.POST['dollar_debt']) 
-        provider.taxtype = request.POST['taxtype']
+        provider.dollar_debt = format_number(request.POST['dollar_debt']) 
+        taxtype = request.POST['taxtype']
+        provider.taxtype = taxtype.replace('%','')
         ### crear pago cuando se modifique la deuda
 
         provider.save()
@@ -90,7 +92,11 @@ def update_provider_save(request, provider_id):
 def delete_provider(request,provider_id):
     request = reset_messages(request)
     provider = Provider.objects.get(pk=provider_id)
-    return render(request, 'providers/delete_provider.html',{'provider':provider})    
+    providers_list = Provider.objects.all()
+    return render(request, 'providers/delete_provider.html',{
+        'provider':provider,
+        'providers_list':providers_list,
+        })    
 
 def delete_provider_save(request,provider_id):
     request = reset_messages(request)
