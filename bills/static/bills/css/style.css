@@ -1187,7 +1187,9 @@
         .form-body-payment{
             height: 550px;
         }
-        
+        .form-body-provider {
+            margin-top: 50px;
+        }
         .form-provider{
             height: 120px;
             flex-wrap: wrap;
@@ -1238,5 +1240,17 @@
         }
         .delete-content P:nth-child(2){
             margin-top: 30px;
+        }
+    /*search bar*/
+        .search{
+            height: 80px;
+        }
+        .search form{
+            width: 315px;
+            height: 80px;
+        }
+        .search-left{
+            flex-wrap: wrap;
+            height: 80px;
         }
     }
