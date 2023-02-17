@@ -220,7 +220,7 @@
         height: 35px;
         text-align: center;
         padding-top: 7px;
-        margin-top: 5px;
+        margin-top: 10px;
 
         border-radius: 8px;
         border: var(--primary-pink) 2px solid;
@@ -1112,7 +1112,7 @@
         }
         .details-content{
             width: 95%;
-            height: 430px;
+            height: 480px;
         }
         .payments-container{
             width: 95%;

@@ -20,16 +20,17 @@ const asideMenu = document.querySelector('.mobile-menu');
 const orderByMenu = document.querySelector('.order-by-menu');
 
 
+
 menuBill.addEventListener('click', toggleBottomMenu);
 menuMobile.addEventListener('click', toggleAsideMenu);
 window.addEventListener('load',toggleNavSelected);
 cheackboxSearchOverdue.addEventListener('click',activateSearchButton);
 cheackboxSearchUnpaid.addEventListener('click',activateSearchButton);
 orderByMenuButton.addEventListener('click', toggleOrderByMenu);
-
 printButton.addEventListener("click", function(){
     window.print();
 });
+
 
 function toggleBottomMenu(){   
     const isAsideMenuOpen = !asideMenu.classList.contains('inactive');
@@ -78,5 +79,4 @@ function numericFilter(txb) {
 
  function activateSearchButton(){
     searchButton.click();
-    console.log('hola')
  }
