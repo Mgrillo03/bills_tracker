@@ -57,7 +57,11 @@ def index(request):
 
 def search(request):
     search_field = request.POST['search_field']
-    provider_list = Provider.objects.filter(Q(name__contains=search_field) | Q(nickname__contains=search_field))
+    provider_list = Provider.objects.filter(
+        Q(name__contains=search_field) | 
+        Q(nickname__contains=search_field) |
+        Q(rif__contains=search_field)
+        )
     only_overdue = request.POST.get('only_overdue',False)    
     if only_overdue:
         bills_list = Bill.objects.filter(overdue=True)

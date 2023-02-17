@@ -929,7 +929,8 @@
         width: 250px;
         height: 25px;
         margin-top: 3px;
-        padding-left: 10px;
+        padding-left: 30px;
+        padding-right: 25px;
         border-radius: 8px;
         border: none;
         border: var(--division) 1px solid;
@@ -938,9 +939,22 @@
         width: 25px;
         height: 25px;
         margin-top: 5px;
+        margin-left: -315px;
         padding-left: 10px;
         
     }
+    .search-left div a{
+        width: 15px;
+        height: 15px;
+        margin-left: 10px;
+    }
+    .search-left div img{
+        width: 17px;
+        margin-left: 248px;
+        margin-top: 9px;
+        opacity: 80%;
+    }
+    
     .search-left div:nth-child(2) input,
     .search-left div:nth-child(3) input{
         margin-top: -5px;
@@ -1252,5 +1266,8 @@
         .search-left{
             flex-wrap: wrap;
             height: 80px;
+        }
+        .search-left div:nth-child(1){
+            width: 50%;
         }
     }
