@@ -7,6 +7,8 @@ app_name = 'bills'
 urlpatterns = [
     #/bill/home/
     path('', views.index, name='index'),
+    #/bill/search/
+    path('search/', views.search, name='search'),
     
     path('new/', views.new_bill, name='new_bill'),
     path('new/show-p/',views.new_bill_show_provider, name='new_bill_show_provider'),

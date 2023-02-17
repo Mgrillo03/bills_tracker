@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
+
 
 from .models import Bill
 from providers.models import Provider
@@ -51,6 +53,31 @@ def index(request):
     request = reset_messages(request)    
     return render(request, 'bills/index.html',{
         'bills_list': bills_list,
+    })
+
+def search(request):
+    search_field = request.POST['search_field']
+    provider_list = Provider.objects.filter(Q(name__contains=search_field) | Q(nickname__contains=search_field))
+    only_overdue = request.POST.get('only_overdue',False)    
+    if only_overdue:
+        bills_list = Bill.objects.filter(overdue=True)
+    else:
+        bills_list = Bill.objects.all()
+    only_unpaid = request.POST.get('only_unpaid',False)    
+    if only_unpaid:
+        bills_list = bills_list.filter(paid=False)   
+        
+    bills_list = bills_list.filter(
+        Q(bill_number__contains=search_field) | 
+        Q(note__contains=search_field) | 
+        Q(provider__in=provider_list)   
+    ).order_by('-overdue','paid','due_date')
+    request = reset_messages(request)    
+    return render(request, 'bills/index.html',{
+        'bills_list': bills_list,
+        'search_field': search_field,
+        'only_overdue': only_overdue,
+        'only_unpaid': only_unpaid
     })
 
 def new_bill(request):

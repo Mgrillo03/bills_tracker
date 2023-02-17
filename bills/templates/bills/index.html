@@ -10,8 +10,35 @@
     <div class="title">
         <p>Facturas</p>
     </div>
+    <div class="search">
+        <form action="{% url 'bills:search' %}" method="post">
+            {% csrf_token %}
+            <div class="search-left">
+                <div>
+                    
+                    <input type="text" name="search_field" placeholder="Buscar..." value="{{search_field}}">
+                    <input type="image" src="{% static 'bills/images/search.png'  %}" alt="Submit Form" class="search-button" />
+                </div>
+                <div>
+                    {% if only_overdue %}
+                        <input type="checkbox" name="only_overdue" value="True" class="checkbox-overdue" checked>
+                    {% else %}
+                        <input type="checkbox" name="only_overdue" value="True" class="checkbox-overdue">
+                    {% endif %}
+                    <p>Vencidas</p>
+                    {% if only_unpaid %}
+                        <input type="checkbox" name="only_unpaid" value="True" class="checkbox-unpaid" checked>
+                    {% else %}
+                        <input type="checkbox" name="only_unpaid" value="True" class="checkbox-unpaid">
+                    {% endif %}
+                    <p>Impagas</p>
+                </div>
+            </div>
+            
+    </div>
     <div class="bills-container">    
 
+        {% if bills_list %}
         {% for bill in bills_list %}
         <div class="bill-content">
             <div class="bill-head">
@@ -76,9 +103,15 @@
                     <a href="{% url 'bills:update_bill'  bill.id %}" class="link-secondary-button">Editar</a> 
                 </div>
             </div>
-        </div>
-         
+        </div>         
         {% endfor %}
+        {% else %}
+        <h1 class="search-failed">No hubo coincidencias</h1>
+        {% endif %}
+
+
+
+
     </div>
     <div class="add">
         <div class="hint inactive">
@@ -110,11 +143,10 @@
         
         <figure class="figure">            
             <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
-        </figure>
-    
+        </figure>    
     </div>
+    
 </div>
-
 </body>
 <script src="{% static 'bills/js/main.js' %}"></script>
 {% endblock %}

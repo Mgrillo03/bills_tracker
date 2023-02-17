@@ -1,7 +1,7 @@
     :root{
         --font-color:          #5E5E5E;
-        --primary-pink:        #FFB5DD;
-        --secondary-pink:      #FF70BD;
+        --primary-pink:        #fc89c6;
+        --secondary-pink:      #fc89c6;
         --division:            #BAB0B0;
         --backgorund:          #FFFFFF;
         --white:               #e7e7e7;
@@ -117,7 +117,6 @@
         display: flex;
         flex-direction: column;
         place-items: center;
-        position: relative;
         margin-top: 60px;
         overflow: auto;
     }
@@ -896,6 +895,111 @@
         text-decoration: none;
     }
 
+/* Search Bar*/
+    .search{
+        width: 100%;
+        height: 40px; 
+        display: flex;
+        justify-content: center;
+    }
+    .search form{
+        display: flex;
+        justify-content: space-between;
+
+        width: 900px;
+        height: 40px;
+        margin-left: -3px;
+        padding: 8px 20px 2px 20px;
+        border-radius: 8px;
+        background-color: var(--white);
+
+    }
+    .search-left,
+    .search-left div,
+    .search-right,
+    .search-right-menu{
+        display: flex;
+    }
+
+    .search-left{
+        width: 100%;
+        justify-content: space-between;
+    }
+    .search-left div:nth-child(1) input:nth-child(1){
+        width: 250px;
+        height: 25px;
+        margin-top: 3px;
+        padding-left: 10px;
+        border-radius: 8px;
+        border: none;
+        border: var(--division) 1px solid;
+    }
+    .search-left div input:nth-child(2){
+        width: 25px;
+        height: 25px;
+        margin-top: 5px;
+        padding-left: 10px;
+        
+    }
+    .search-left div:nth-child(2) input,
+    .search-left div:nth-child(3) input{
+        margin-top: -5px;
+        margin-left: 15px;
+    }
+    .search-left div:nth-child(2) p,
+    .search-left div:nth-child(3) p{
+        margin-top: 8px;
+    }
+    .search-right{
+        position: relative;
+    }
+    .search-right-menu{
+        cursor: pointer;
+    }
+    .search-right p{
+        margin-top: 8px;
+    }
+    .search-right div p{
+        font-weight: bold;
+        margin-left: 5px;
+    }
+    .search-right figure img{
+        width: 15px;
+        height: 18px;
+        opacity: 70%;
+        margin-top: 5px;
+    }
+    .search-failed{
+        font-size: 30px;
+        margin-top: 50px;
+        color: var(--secondary-pink);
+    }
+    .order-by-menu{
+        position: absolute;
+        inset: 40px 0px 0px 40%;
+        width: 150px;
+        height: 70px;
+        background: var(--white); 
+        z-index: 9999;
+
+        border-radius: 8px;
+        box-shadow:  0px 0px 10px -8px #000000;
+    }
+    .order-by-menu ul{
+        width: 100%;
+        height: 100%;
+    }
+    .order-by-menu li{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 49%;
+        text-align: center;
+        border-radius: 8px;
+    }
+    .order-by-menu li:hover{
+        border: var(--secondary-pink) 1px solid;
+    }
     .inactive{
         display: none;
     }

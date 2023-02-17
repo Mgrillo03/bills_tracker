@@ -10,15 +10,22 @@ const place = document.querySelector('.place');
 const body = document.querySelector('.bills');
 const navBar = document.querySelector('.navbar');
 const printButton = document.querySelector('.print-button');
-
+const cheackboxSearchOverdue = document.querySelector('.checkbox-overdue');
+const cheackboxSearchUnpaid = document.querySelector('.checkbox-unpaid');
+const searchButton = document.querySelector('.search-button');
+const orderByMenuButton = document.querySelector('.search-right-menu');
 
 const bottomMenu = document.querySelector('.hint');
 const asideMenu = document.querySelector('.mobile-menu');
+const orderByMenu = document.querySelector('.order-by-menu');
 
 
 menuBill.addEventListener('click', toggleBottomMenu);
 menuMobile.addEventListener('click', toggleAsideMenu);
 window.addEventListener('load',toggleNavSelected);
+cheackboxSearchOverdue.addEventListener('click',activateSearchButton);
+cheackboxSearchUnpaid.addEventListener('click',activateSearchButton);
+orderByMenuButton.addEventListener('click', toggleOrderByMenu);
 
 printButton.addEventListener("click", function(){
     window.print();
@@ -42,6 +49,9 @@ function toggleAsideMenu(){
     } 
     asideMenu.classList.toggle('inactive');
 }
+function toggleOrderByMenu(){
+    orderByMenu.classList.toggle('inactive');
+}
 
 
 function toggleNavSelected(){
@@ -64,4 +74,9 @@ function toggleNavSelected(){
 }
 function numericFilter(txb) {
     txb.value = txb.value.replace(/[^\0-9]/ig, "");
+ }
+
+ function activateSearchButton(){
+    searchButton.click();
+    console.log('hola')
  }
