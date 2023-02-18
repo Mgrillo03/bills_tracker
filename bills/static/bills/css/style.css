@@ -1063,9 +1063,10 @@
         }
         .bill-head-left p:nth-child(2){
             margin-top: 8px;
+            margin-right: 20px;
         }
         .bill-head-left p:nth-child(3){
-            margin-right: 10px;
+            margin-left: 60px;
             margin-top: 8px;
         }
         .bill-head-right figure img{
