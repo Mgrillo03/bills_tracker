@@ -7,6 +7,7 @@ app_name = 'providers'
 urlpatterns = [
     #/provider/home/
     path('home/', views.index, name='index'),
+    path('search/', views.search, name='search'),
     
     path('new/', views.new_provider, name='new_provider'),
     path('created/', views.new_provider_save, name='provider_created'),

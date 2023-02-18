@@ -20,8 +20,14 @@
                     <input type="image" src="{% static 'bills/images/search.png'  %}" alt="Submit Form" class="search-button" />
                     <a href="{% url 'bills:index' %}">
                         <img src="{% static 'bills/images/close.png'  %}" alt="close">
-                    </a>
+                    </a>                  
                     
+                </div>
+                <div>
+                    <p>Desde:</p>
+                    <input type="date" name="date_start" value="{{date_start}}">
+                    <p>Hasta:</p>
+                    <input type="date" name="date_end" value="{{date_end}}">
                 </div>
                 <div>
                     {% if only_overdue %}
@@ -37,8 +43,7 @@
                     {% endif %}
                     <p>Impagas</p>
                 </div>
-            </div>
-            
+            </div>            
     </div>
     <div class="bills-container">    
 
@@ -153,4 +158,5 @@
 </div>
 </body>
 <script src="{% static 'bills/js/main.js' %}"></script>
+<script src="{% static 'bills/js/index.js' %}"></script>
 {% endblock %}

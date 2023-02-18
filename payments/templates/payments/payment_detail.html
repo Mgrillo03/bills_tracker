@@ -51,6 +51,8 @@
                 <div class="detail-head-center">
                     <p>Fecha:</p>
                     <p>{{payment.date}}</p>
+                    <p>Transferencia:</p>
+                    <p>{{payment.transfer_id}}</p>
                 </div>
                 <div class="detail-head-right">
                     
@@ -149,5 +151,6 @@
 
 
 </body>
+<script src="{% static 'bills/js/print.js' %}"></script>
 <script src="{% static 'bills/js/main.js' %}"></script>
 {% endblock %}

@@ -9,6 +9,34 @@
     <div class="title">
         <p>Proveedores</p>
     </div>
+    <div class="search ">
+        <form action="{% url 'providers:search' %}" method="post">
+            {% csrf_token %}
+            <div class="search-left search-left-provider">
+                <div>
+                    
+                    <input type="text" name="search_field" placeholder="Buscar..." value="{{search_field}}">
+                    <input type="image" src="{% static 'bills/images/search.png'  %}" alt="Submit Form" class="search-button" />
+                    <a href="{% url 'providers:index' %}">
+                        <img src="{% static 'bills/images/close.png'  %}" alt="close">
+                    </a>
+                </div>
+                <div>
+                    <p>Desde:</p>
+                    <input type="date" name="date_start" id="">
+                    <p>Hasta:</p>
+                    <input type="date" name="date_end" id="">
+                </div>
+                <div>
+                    {% if only_debt %}
+                        <input type="checkbox" name="only_debt" value="True" class="checkbox-overdue" checked>
+                    {% else %}
+                        <input type="checkbox" name="only_debt" value="True" class="checkbox-overdue">
+                    {% endif %}
+                    <p>Con Deuda</p>                    
+                </div>
+            </div>            
+    </div>
     <div class="bills-container">    
 
         {% for provider in providers_list %}
@@ -94,5 +122,6 @@
 
 
 </body>
+<script src="{% static 'bills/js/index.js' %}"></script>
 <script src="{% static 'bills/js/main.js' %}"></script>
 {% endblock %}

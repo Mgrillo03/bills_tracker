@@ -56,6 +56,18 @@ def index(request):
     })
 
 def search(request):
+    date_start = request.POST['date_start']
+    date_end = request.POST['date_end']
+    if date_start != '':
+        date_start_iso = datetime.date.fromisoformat(date_start)
+        bills_list = Bill.objects.filter(emission_date__gte=date_start_iso)
+    else: 
+        bills_list = Bill.objects.all()
+
+    if date_end != '':
+        date_end_iso = datetime.date.fromisoformat(date_end)
+        bills_list = bills_list.filter(emission_date__lte=date_end_iso)
+
     search_field = request.POST['search_field']
     provider_list = Provider.objects.filter(
         Q(name__contains=search_field) | 
@@ -64,9 +76,9 @@ def search(request):
         )
     only_overdue = request.POST.get('only_overdue',False)    
     if only_overdue:
-        bills_list = Bill.objects.filter(overdue=True)
-    else:
-        bills_list = Bill.objects.all()
+        bills_list = bills_list.filter(overdue=True)
+    # else:
+    #     bills_list = Bill.objects.all()
     only_unpaid = request.POST.get('only_unpaid',False)    
     if only_unpaid:
         bills_list = bills_list.filter(paid=False)   
@@ -81,7 +93,9 @@ def search(request):
         'bills_list': bills_list,
         'search_field': search_field,
         'only_overdue': only_overdue,
-        'only_unpaid': only_unpaid
+        'only_unpaid': only_unpaid,
+        'date_start': date_start,
+        'date_end': date_end
     })
 
 def new_bill(request):

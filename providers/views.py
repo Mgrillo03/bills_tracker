@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
+
 
 from bills.views import reset_messages, format_number
 
@@ -18,6 +20,28 @@ def index(request):
     request = reset_messages(request)    
     return render(request, 'providers/index.html',{
         'providers_list':providers_list,
+    })
+
+
+def search(request):
+    search_field = request.POST['search_field']
+    only_debt = request.POST.get('only_debt',False)    
+    if only_debt:
+        providers_list = Provider.objects.filter(dollar_debt__gt=0)
+    else:
+        providers_list = Provider.objects.all()
+
+    providers_list = providers_list.filter(
+    Q(name__contains=search_field) | 
+    Q(nickname__contains=search_field) |
+    Q(rif__contains=search_field)
+    )
+        
+    request = reset_messages(request)    
+    return render(request, 'providers/index.html',{
+        'providers_list': providers_list,
+        'search_field': search_field,
+        'only_debt': only_debt,
     })
 
 def new_provider(request):

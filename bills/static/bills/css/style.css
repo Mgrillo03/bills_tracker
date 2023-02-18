@@ -146,7 +146,21 @@
 
         margin-bottom: 5px;
         padding-bottom: 5px;
+    }    
+    .bill-head-left div{
+        display: flex;
+        border-right: var(--division) 1px solid;
+        padding-right: 10px;
     }
+    .bill-head-left div:nth-child(2){
+        border-left: var(--division) 1px solid;
+        margin-left: 10px;
+    }    
+    .bill-head-left p:nth-child(1),
+    .bill-head-left p:nth-child(4){
+        font-weight: bold;
+    }
+
     .bill-head-left{
         display: flex;
         justify-content: space-between;
@@ -964,56 +978,37 @@
     .search-left div:nth-child(3) p{
         margin-top: 8px;
     }
-    .search-right{
-        position: relative;
+    .search-left div:nth-child(2){
+        width: 500px;
+        margin-left: 340px;
+        font-size: var(--sm);
     }
-    .search-right-menu{
-        cursor: pointer;
+    .search-left-provider div:nth-child(2){
+        margin-left: 390px;
     }
-    .search-right p{
-        margin-top: 8px;
+    .search-left-payment div:nth-child(2){
+        margin-left: 370px;
     }
-    .search-right div p{
-        font-weight: bold;
-        margin-left: 5px;
+    .search-left-provider div:nth-child(3){
+        width: 20%;
     }
-    .search-right figure img{
-        width: 15px;
-        height: 18px;
-        opacity: 70%;
-        margin-top: 5px;
+    .search-left div:nth-child(2) input{
+        width: 100px;
+        height: 25px;
+        margin: 3px 3px 0px 3px;
+        padding: 0px 5px 0px 5px;
+        border-radius: 8px;
+        border: 0px;
+        border: var(--division) 1px solid;
+        color: var(--font-color);
     }
+
     .search-failed{
         font-size: 30px;
         margin-top: 50px;
         color: var(--secondary-pink);
     }
-    .order-by-menu{
-        position: absolute;
-        inset: 40px 0px 0px 40%;
-        width: 150px;
-        height: 70px;
-        background: var(--white); 
-        z-index: 9999;
 
-        border-radius: 8px;
-        box-shadow:  0px 0px 10px -8px #000000;
-    }
-    .order-by-menu ul{
-        width: 100%;
-        height: 100%;
-    }
-    .order-by-menu li{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 49%;
-        text-align: center;
-        border-radius: 8px;
-    }
-    .order-by-menu li:hover{
-        border: var(--secondary-pink) 1px solid;
-    }
     .inactive{
         display: none;
     }
@@ -1042,8 +1037,31 @@
         .bill-body{
             flex-wrap: wrap;
         }
+        .bill-head{
+            height: 70px;
+        }
+        .bill-head-left{
+            width: 90%;
+            flex-wrap: wrap;
+            border-right: var(--division) 1px solid;
+            padding-right: 5px;
+            margin-right: 5px;
+        }
+        .bill-head-left div{
+            border: 0px;
+        }
+        .bill-head-left p:nth-child(1){
+            margin-top: 10px;
+        }
         .bill-head-left p:nth-child(2){
-            display: none;
+            margin-top: 8px;
+        }
+        .bill-head-left p:nth-child(3){
+            margin-right: 10px;
+            margin-top: 8px;
+        }
+        .bill-head-right figure img{
+            margin-top: 20px;
         }
         .bill-body-sub div:nth-child(2){
             display: none;
@@ -1257,17 +1275,38 @@
         }
     /*search bar*/
         .search{
-            height: 80px;
+            height: 150px;
         }
         .search form{
             width: 315px;
-            height: 80px;
+            height: 120px;
+        }
+        .search-payment form{
+            width: 331px;
+            margin-left: 0.5px;
         }
         .search-left{
             flex-wrap: wrap;
             height: 80px;
         }
         .search-left div:nth-child(1){
-            width: 50%;
+            width: 100%;
+        }
+        .search-left div:nth-child(2){
+            margin-left: 0px;
+            margin-top: 10px;
+        }
+        .search-left div:nth-child(3){
+            margin-left: 0px;
+            margin-top: 10px;
+        }
+        .search-left div:nth-child(3) input{
+            margin-top: 10px;
+        }
+        .search-left-provider div:nth-child(3){
+            width: 100%;
+        }
+        .search-left-provider div:nth-child(3) p{
+            width: 180px;
         }
     }

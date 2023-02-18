@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 
 from .models import Payment
+from providers.models import Provider
 from bills.models import Bill
 from bills.views import reset_messages, format_number
 
@@ -12,6 +14,47 @@ def index(request):
     return render(request, 'payments/index.html',{
         'payments_list':payments_list
         })
+
+def search(request):
+    search_field = request.POST['search_field']
+    provider_list = Provider.objects.filter(
+        Q(name__contains=search_field) | 
+        Q(nickname__contains=search_field) |
+        Q(rif__contains=search_field)
+        )    
+    bills_list = Bill.objects.filter(
+        Q(bill_number__contains=search_field) | 
+        Q(note__contains=search_field) | 
+        Q(provider__in=provider_list)   
+    )    
+
+    only_total = request.POST.get('only_total',False)    
+    if only_total:
+        payments_list = Payment.objects.filter(paid_total=True)
+    else:
+        payments_list = Payment.objects.all()
+    only_partial = request.POST.get('only_partial',False)    
+    if only_partial:
+        payments_list = payments_list.filter(paid_total=False)
+    
+    if only_partial and only_total :
+        payments_list = Payment.objects.all()
+
+    payments_list = payments_list.filter(
+        Q(account__contains=search_field) | 
+        Q(description__contains=search_field) | 
+        Q(transfer_id__contains=search_field) |
+        Q(bill__in=bills_list)   
+    ).order_by('-date')   
+        
+
+    request = reset_messages(request)    
+    return render(request, 'payments/index.html',{
+        'payments_list': payments_list,
+        'search_field': search_field,
+        'only_total': only_total,
+        'only_partial': only_partial
+    })
 
 def new_payment(request):
     request = reset_messages(request)

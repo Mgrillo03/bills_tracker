@@ -8,14 +8,56 @@
     <div class="title">
         <p>Pagos</p>
     </div>
+    <div class="search search-payment">
+        <form action="{% url 'payments:search' %}" method="post">
+            {% csrf_token %}
+            <div class="search-left search-left-payment">
+                <div>
+                    
+                    <input type="text" name="search_field" placeholder="Buscar..." value="{{search_field}}">
+                    <input type="image" src="{% static 'bills/images/search.png'  %}" alt="Submit Form" class="search-button" />
+                    <a href="{% url 'payments:index' %}">
+                        <img src="{% static 'bills/images/close.png'  %}" alt="close">
+                    </a>
+                    
+                </div>
+                <div>
+                    <p>Desde:</p>
+                    <input type="date" name="date_start" id="">
+                    <p>Hasta:</p>
+                    <input type="date" name="date_end" id="">
+                </div>
+                <div>
+                    {% if only_total %}
+                        <input type="checkbox" name="only_total" value="True" class="checkbox-overdue" checked>
+                    {% else %}
+                        <input type="checkbox" name="only_total" value="True" class="checkbox-overdue">
+                    {% endif %}
+                    <p>Total</p>
+                    {% if only_partial %}
+                        <input type="checkbox" name="only_partial" value="True" class="checkbox-unpaid" checked>
+                    {% else %}
+                        <input type="checkbox" name="only_partial" value="True" class="checkbox-unpaid">
+                    {% endif %}
+                    <p>Parcial</p>
+                </div>
+            </div>            
+    </div>
     <div class="bills-container">    
 
         {% for payment in payments_list %}
         <div class="bill-content-p">
             <div class="bill-head">
                 <div class="bill-head-left">
-                    <p>{{payment.bill.bill_number}}   |</p>
-                    <p>Fecha: {{payment.date}} -</p>
+                    <p>{{payment.bill.bill_number}}</p>
+                    <div>
+                        <p>Fecha:</p>
+                        <p>{{payment.date}}</p>
+                    </div>
+                    <div>
+                        <p>Transferencia:</p>
+                        <p>{{payment.transfer_id}}</p>
+                    </div>
                     {% if payment.paid_total %}
                     <p>Total</p>
                     {% else %}
@@ -107,5 +149,6 @@
 </div>
 
 <script src="{% static 'bills/js/main.js' %}"></script>
+<script src="{% static 'bills/js/index.js' %}"></script>
 </body>
 {% endblock %}

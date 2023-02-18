@@ -7,6 +7,7 @@ app_name = 'payments'
 urlpatterns = [
     #/payment/home/
     path('', views.index, name='index'),
+    path('search/', views.search, name='search'),
     
     #payment/new/
     path('new/', views.new_payment, name='new_payment'),
