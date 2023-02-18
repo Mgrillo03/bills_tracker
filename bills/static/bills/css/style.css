@@ -629,7 +629,7 @@
         margin-top: 0px;
     }
     .form-body{
-        height: 700px;
+        height: 860px;
         width: 560px;
         display: flex;
         flex-direction: column;
@@ -779,11 +779,16 @@
         font-weight: bold;
     }
     .form-calc{
-        margin-top: 30px;
+        margin-top: 100px;
     }
-    .form-calc div:nth-child(3) div:nth-child(2) input{
-        margin-left: 22px;
+    .form-calc div:nth-child(4){
+        border-bottom: var(--division) 1px solid;
+        padding-bottom: 15px;
     }
+    .form-calc div:nth-child(5) div:nth-child(1) input{
+        margin-left: 10px;
+    }
+   
     .form-calc div a,
     .form-data-payment a{
         width: 120px;

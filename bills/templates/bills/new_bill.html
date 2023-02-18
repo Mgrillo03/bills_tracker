@@ -47,29 +47,29 @@
             <div class="form-data">
                 <div>
                     <label for="bill_number">Numero de Factura:</label>
-                    <input type="text" name="bill_number" placeholder="Numero de Factura" >
+                    <input type="text" name="bill_number" placeholder="Numero de Factura" required>
                 </div>
                 <div>
                     <div>
                         <label for="emission_date">Emision: </label>
-                        <input type="date" name="emission_date" value="{{date}}" >
+                        <input type="date" name="emission_date" value="{{date}}" required>
                     </div>
                     <div>
                         <label for="due_date">Vencimiento:</label>
-                        <input type="date" name="due_date" value="{{date}}" >
+                        <input type="date" name="due_date" value="{{date}}" required>
                     </div>
                 </div>
                 <div>
                     <div>
-                        <label for="total_amount_bs">Total Bolivares:</label>
+                        <label for="amount_bs">Total Bolivares:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);"  name="total_amount_bs" placeholder="Total.." >
+                            Bs.<input type="text" onKeyUp="numericFilter(this);"  name="amount_bs" placeholder="Total.." required>
                         </p>
                     </div>
                     <div>
-                        <label for="total_amount_dollar">Total Dolares:</label>
+                        <label for="amount_dollar">Total Dolares:</label>
                         <p>
-                            $<input type="text" onKeyUp="numericFilter(this);" name="total_amount_dollar" placeholder="Divisa" >
+                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_dollar" placeholder="Divisa" required>
                         </p>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                     <div> 
                         <label for="exchange_rate">Cambio:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="exchange_rate" placeholder="Tasa" >
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="exchange_rate" placeholder="Tasa" required>
                         </p>
                     </div>
                     <input type="submit" value="Calcular" name="choice" class="link-primary-button">
@@ -86,22 +86,44 @@
 
             <div class="form-calc">
                 <div>
-                    <label for="sub_total_amount">SubTotal:</label>
-                    <p>
-                        Bs.<input type="text" onKeyUp="numericFilter(this);" name="sub_total_amount" placeholder="SubTotal" readonly>
-                    </p>
-                </div>
-                <div>
                     <div>
-                        <label for="tax_bs">I.V.A.:</label>
+                        <label for="sub_total_bs">SubTotal Bolivares:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="tax_bs" placeholder="IVA" readonly>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="sub_total_bs" placeholder="Sub-Total" readonly>
                         </p>
                     </div>
                     <div>
-                        <label for="retained_tax_bs">I.V.A. Retenido:</label>
+                        <label for="sub_total_dollar">SubTotal Dolares:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="retained_tax_bs" placeholder="I.V.A. Retenido" readonly>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="sub_total_dollar" placeholder="Sub-Total" readonly>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="tax_bs">IVA Bolivares:</label>
+                        <p>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="tax_bs" placeholder="IVA Bs." readonly>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="tax_dollar">IVA Dolares:</label>
+                        <p>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="tax_dollar" placeholder="IVA $" readonly>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="retained_tax_bs">IVA Retenido Bolivares:</label>
+                        <p>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="retained_tax_bs" placeholder="IVA Retenido" readonly>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="retained_tax_dollar">IVA Retenido Dolares:</label>
+                        <p>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="retained_tax_dollar" placeholder="IVA Retenido" readonly>
                         </p>
                     </div>
                 </div>
@@ -119,13 +141,27 @@
                         </p>
                     </div>
                 </div>
+                <div class="totals">
+                    <div>
+                        <label for="bill_total_dollar">Total Factura Dolares:</label>
+                        <p>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="bill_total_dollar" placeholder="Total" readonly>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="amount_to_pay_dollar">Total a Pagar Dolares:</label>
+                        <p>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_to_pay_dollar" placeholder="A pagar" readonly>
+                        </p>
+                    </div>
+                </div>
                 <div class="create-note">
                     <label for="note">Nota:</label>
                     <input type="text" name="note" placeholder="Nota">
                 </div>
                 <div class="create-buttons">
-                    <a href="{% url 'bills:index' %}" class="link-secondary-button" >Cancelar</a>
-                    <input type="submit" value="Create" class="link-primary-button" disabled>
+                    <a href="{% url 'bills:index' %}" class="link-secondary-button" >Volver</a>
+                    <input type="submit" value="Crear" class="link-primary-button" disabled>
                 </div>
             </div>
         </div>
