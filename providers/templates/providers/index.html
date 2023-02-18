@@ -22,12 +22,6 @@
                     </a>
                 </div>
                 <div>
-                    <p>Desde:</p>
-                    <input type="date" name="date_start" id="">
-                    <p>Hasta:</p>
-                    <input type="date" name="date_end" id="">
-                </div>
-                <div>
                     {% if only_debt %}
                         <input type="checkbox" name="only_debt" value="True" class="checkbox-overdue" checked>
                     {% else %}
@@ -35,7 +29,8 @@
                     {% endif %}
                     <p>Con Deuda</p>                    
                 </div>
-            </div>            
+            </div> 
+        </form>           
     </div>
     <div class="bills-container">    
 

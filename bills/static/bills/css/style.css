@@ -984,14 +984,13 @@
         font-size: var(--sm);
     }
     .search-left-provider div:nth-child(2){
-        margin-left: 390px;
+        margin-left: 750px;
+        margin-top: 3px;
     }
     .search-left-payment div:nth-child(2){
         margin-left: 370px;
     }
-    .search-left-provider div:nth-child(3){
-        width: 20%;
-    }
+    
     .search-left div:nth-child(2) input{
         width: 100px;
         height: 25px;
@@ -1002,7 +1001,16 @@
         border: var(--division) 1px solid;
         color: var(--font-color);
     }
-
+    .search-left-provider div:nth-child(2) input{
+        width: 12px;
+        height: 25px;
+        margin: 3px 3px 0px 3px;
+        padding: 0px 5px 0px 5px;
+        border-radius: 8px;
+        border: 0px;
+        border: var(--division) 1px solid;
+        color: var(--font-color);
+    }
     .search-failed{
         font-size: 30px;
         margin-top: 50px;
