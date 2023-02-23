@@ -102,7 +102,8 @@
     }
     .bill-mob-nav,
     .payment-mob-nav,
-    .provider-mob-nav{
+    .provider-mob-nav,
+    .account-mob-nav{
         text-decoration: none;
         color: var(--font-color);
         font-size: var(--lg);
@@ -142,6 +143,12 @@
     }
     .bill-content-account{
         height: 120px;
+    }
+    .bill-body-sub-left-account{
+        width: 25%;
+    }
+    .bill-body-sub-account{
+        width: 40%;
     }
     .bill-head{
         display: flex;
@@ -387,6 +394,10 @@
         background: var(--white);
         border-radius: 8px;
     }
+    .account-details{
+        flex-direction: column;
+        height: 120px;
+    }
 
     .general-details-left,
     .general-details-center{
@@ -404,6 +415,15 @@
 
         border-right: var(--division) 1px solid;
     }
+    .account-details-top{
+        width: 95%;
+        flex-direction: row;
+        border: 0px;
+        border-bottom: var(--division) 1px solid;
+    }
+    .account-details-top div{
+        width: 50%;
+    }
     .general-details-right{
         width: 33%;
         height: 85%;
@@ -411,6 +431,11 @@
         align-items: center;
         justify-content: space-evenly;
         padding-top: 5px;
+    }
+    .account-details-bottom{
+        width: 100%;
+        justify-content: space-around;
+        padding-bottom: 10px;
     }
     .general-details-left div,
     .general-details-center div,
@@ -435,6 +460,18 @@
     .general-details-left div p:nth-child(1),
     .general-details-center div p:nth-child(1){
         font-weight: bold;
+    }
+    
+    .account-details-bottom div:nth-child(1){
+        width: 90%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .account-details-bottom div:nth-child(2){
+        width: 10%;
+    }
+    .account-details-bottom div:nth-child(1) a{
+        width: 140px;
     }
     .paid{
         color: green;
@@ -1094,6 +1131,9 @@
             height: 260px;
             width: 315px;
         }
+        .bill-content-account{
+            height: 170px;
+        }
         .bill-content-p{
             height: 350px;
             width: 90%;
@@ -1357,6 +1397,9 @@
         .search-payment form{
             width: 331px;
             margin-left: 0.5px;
+        }
+        .search-account form{
+            height: 40px;
         }
         .search-left{
             flex-wrap: wrap;

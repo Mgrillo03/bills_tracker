@@ -3,42 +3,114 @@
 {% load static %}
 
 <body>    
-<div class="place p-bills"></div>
+<div class="place p-accounts"></div>
 <div class="details provider-details">
     <div class="details-container">    
         <div class="title">
-            <p>Detalle de Proveedor</p>
+            <p>Cuenta {{account.name}}</p>
         </div>
-        <div class="general-details">
-            <div class="general-details-left">
+        <div class="general-details account-details">
+            <div class="general-details-left account-details-top">
                 <div>
-                    <p>Nombre</p>
-                    <p>{{provider.name}}</p>
+                    <p>Nombre:</p>
+                    <p>{{account.name}}</p>
                 </div>
                 <div>
-                    <p>Alias:</p>
-                    <p>{{provider.nickname}}</p>
-                </div>
-            </div>
-            <div class="general-details-center">
-                <div>
-                    <p>Rif:</p>
-                    <p>{{provider.rif}}</p>
-                </div>
-                <div>
-                    <p>Retencion:</p>
-                    <p>{{provider.taxtype}}%</p>
+                    <p>Descripcion:</p>
+                    <p>{{account.description}}</p>
                 </div>
             </div>
-            <div class="general-details-right">
-                <p class="general-details-right-p">Deuda:</p>                
-                {% if provider.dollar_debt > 0 %}
-                    <p class="debt">${{provider.dollar_debt}}</p>
-                {% else %}
-                    <p class="paid">${{provider.dollar_debt}}</p>
-                {% endif %}                
+           
+            <div class="general-details-right account-details-bottom">
+                <div class="bill-body-buttons">
+                    <a href="{% url 'accounts:index' %}" class="link-secondary-button">Volver</a> 
+                    <a href="{% url 'accounts:update_account'  account.id %}" class="link-primary-button">Editar</a>
+                </div>    
+                <div class="bill-head-right">
+                    <figure>
+                        <a href="{% url 'accounts:delete_account'  account.id %}">
+                            <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                        </a>
+                    </figure>
+                </div>      
             </div>
         </div>
+        <div class="payment-title">
+            <p>Total Gastado Bolivares: Bs.{{total_expent_bs}}</p>
+            <p>Total Gastado Dolares: Bs.{{total_expent_dollar}}</p>
+        </div>
+        <br><br>
+        {% if payments_list %}
+        <div class="payments-container">
+                
+
+            {% for payment in payments_list %}
+            <div class="bill-content-p payment-content">
+                <div class="bill-head">
+                    <div class="bill-head-left">
+                        <p>{{payment.bill.bill_number}}   |</p>
+                        <p>Fecha: {{payment.date}} -</p>
+                        {% if payment.paid_total %}
+                        <p>Total</p>
+                        {% else %}
+                        <p>Parcial</p>
+                        {% endif %}
+                    </div>
+                    <div class="bill-head-right">
+                        <figure>
+                            <a href="{% url 'payments:delete_payment'  payment.id %}">
+                                <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <div class="bill-body payment-body">
+                    <div class="bill-body-sub-left-p bill-body-payment-left">
+                        <div class="bill-detail inactive">
+                            <p>Proveedor:</p>
+                            <p>{{payment.bill.provider.nickname}}</p>
+                        </div>
+                        <div class="bill-detail">
+                            <p>Comentario:</p>
+                            <p>{{payment.description}}</p>
+                        </div>
+                        <div class="bill-detail">
+                            <p>Cuenta:</p>
+                            <p>{{payment.account.name}}</p>
+                        </div>
+                    </div>
+    
+                    <div class="bill-body-sub-p bill-body-payment-center">
+                        <div class="bill-detail">
+                            <p>Pagado:</p>
+                            <p>${{payment.amount_dollar}}</p>
+                            <p class="amount-bs">Bs.{{payment.amount_bs}}</p>
+                        </div>
+                        <div class="bill-detail">
+                            <p>Cambio:</p>
+                            <p>${{payment.exchange_rate}}</p>
+                        </div>
+                        <div class="bill-detail">
+                            <p>Total:</p>
+                            <p>${{payment.total_dollar}}</p>
+                        </div>
+                    </div>
+    
+                    <div class="bill-body-buttons detail-buttons">
+                        <a href="{% url 'payments:payment_detail'  payment.id %}" class="link-secondary-button">Detalle</a>
+                        <a href="{% url 'payments:update_payment'  payment.id %}" class="link-primary-button">Editar</a> 
+                    </div>
+                </div>
+            </div>
+                
+            {% endfor %}
+            
+        </div>
+        {% else %}
+        <div>
+            <p>Aun no se han registrado pagos.</p>
+        </div>
+        {% endif %}
 
     </div>
     

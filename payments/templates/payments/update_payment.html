@@ -47,7 +47,14 @@
                     </div>
                     <div>
                         <label for="account">Cuenta</label>
-                        <input type="text" name="account" value="{{payment.account}}" required>
+                        <input   list="accounts-list" name="account_name" value="{{payment.account.name}}" required>
+                            <datalist id="accounts-list">
+                                {% for account in accounts_list  %}
+                                    <option value="{{account.name}}">
+                                        {{account.description}}
+                                    </option>                
+                                {% endfor %}  
+                            </datalist>
                     </div>
                     
                 </div>

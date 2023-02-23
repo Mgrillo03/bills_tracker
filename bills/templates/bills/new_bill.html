@@ -63,13 +63,13 @@
                     <div>
                         <label for="amount_bs">Total Bolivares:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);"  name="amount_bs" placeholder="Total.." required>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);"  name="amount_bs" value="0,00" required>
                         </p>
                     </div>
                     <div>
                         <label for="amount_dollar">Total Dolares:</label>
                         <p>
-                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_dollar" placeholder="Divisa" required>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_dollar" value="0,00" required>
                         </p>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                     <div> 
                         <label for="exchange_rate">Cambio:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="exchange_rate" placeholder="Tasa" required>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="exchange_rate" value="0,00" required>
                         </p>
                     </div>
                     <input type="submit" value="Calcular" name="choice" class="link-primary-button">

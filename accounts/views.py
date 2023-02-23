@@ -4,6 +4,7 @@ from django.db.models import Q
 from bills.views import reset_messages
 
 from .models import Account
+from payments.models import Payment
 
 def check_name(name,list):
     """
@@ -53,7 +54,7 @@ def new_account_save(request):
     else:
         request.session['message'] = 'Ya existe una cuenta con ese nombre'
 
-    return render(request,'accounts/index.html',{'account':account})
+    return redirect('accounts:index')
 
 def account_detail(request, account_id):
     request = reset_messages(request)
@@ -64,8 +65,19 @@ def account_detail(request, account_id):
         request.session['message_shown'] = False
         return redirect('accounts:index')
     else:
+        payments_list = Payment.objects.filter(account=account)
+        total_expent_bs = 0
+        total_expent_dollar = 0
+        print(account.name)
+        print(payments_list[0].total_dollar)
+        for payment in payments_list:
+            total_expent_bs += payment.amount_bs
+            total_expent_dollar += payment.amount_dollar
         return render(request, 'accounts/account_detail.html',{
             'account': account,
+            'total_expent_bs': total_expent_bs,
+            'total_expent_dollar': total_expent_dollar,
+            'payments_list': payments_list
         })
 
 def update_account(request, account_id):

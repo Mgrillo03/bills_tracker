@@ -27,7 +27,7 @@
                                         Cambio: Bs.{{bill.exchange_rate}}
                                     </option>                
                                 {% endfor %}  
-                                </datalist>
+                            </datalist>
                         <figure>
                             <input type="image" src="{% static 'bills/images/refresh.png'  %}" alt="Submit Form" />
                         </figure>
@@ -58,7 +58,14 @@
                     </div>
                     <div>
                         <label for="account">Cuenta</label>
-                        <input type="text" name="account" placeholder="Cuenta" required>
+                        <input   list="accounts-list" name="account_name" placeholder="Selccione Cuenta..." required>
+                            <datalist id="accounts-list">
+                                {% for account in accounts_list  %}
+                                    <option value="{{account.name}}">
+                                        {{account.description}}
+                                    </option>                
+                                {% endfor %}  
+                            </datalist>
                     </div>
                     
                 </div>
@@ -97,7 +104,7 @@
                     <input type="checkbox" name="paid_total" value="True">
                 </div>
                 <div class="create-buttons">
-                    <a href="{% url 'payments:index' %}" class="link-secondary-button" >Cancelar</a>
+                    <a href="{% url 'payments:index' %}" class="link-secondary-button" >Volver</a>
                     <input type="submit" value="Crear" class="link-primary-button">
                 </div>       
             </div>            
