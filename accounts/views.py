@@ -21,7 +21,6 @@ def index(request):
         'accounts_list':accounts_list,
     })
 
-
 def search(request):
     search_field = request.POST['search_field']
     accounts_list = accounts_list.filter(
@@ -69,12 +68,10 @@ def account_detail(request, account_id):
             'account': account,
         })
 
-
 def update_account(request, account_id):
     account = Account.objects.get(pk=account_id)
     request = reset_messages(request)
     return render(request,'accounts/update_account.html',{'account':account})
-
 
 def update_account_save(request, account_id):
     accounts_list = Account.objects.all().exclude(pk=account_id)
@@ -111,4 +108,3 @@ def delete_account_save(request,account_id):
     request.session['message'] = 'Cuenta eliminada satisfactoriamente'
     request.session['message_shown'] = False
     return redirect('accounts:index')    
-

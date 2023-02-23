@@ -45,6 +45,14 @@
     <div class="add">
         <div class="hint inactive">
                 <div>
+                    <div>
+                        <a href="{% url 'accounts:new_account' %}">
+                        <p>Cuenta</p>
+                            <figure >                    
+                                <img src="{% static 'bills/images/account.png'  %}" alt="new-account" >
+                            </figure>
+                        </a> 
+                    </div>  
                     <a href="{% url 'providers:new_provider' %}">
                     <p>Proveedor</p>
                         <figure >                    
