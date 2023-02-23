@@ -57,7 +57,8 @@
 
     .bill-nav,
     .payment-nav,
-    .provider-nav{
+    .provider-nav,
+    .account-nav{
         text-decoration: none;
         color: var(--font-color);
         border: var(--backgorund) 1px solid;
@@ -139,6 +140,9 @@
         margin-top: 15px;
         padding: 20px;
     }
+    .bill-content-account{
+        height: 120px;
+    }
     .bill-head{
         display: flex;
         justify-content: space-between;
@@ -147,6 +151,12 @@
         margin-bottom: 5px;
         padding-bottom: 5px;
     }    
+    .bill-head-account{
+        border: 0px;
+        border-top: var(--division) 1px solid;
+        margin-top: 10px;
+        padding-top: 10px;
+    }
     .bill-head-left div{
         display: flex;
         border-right: var(--division) 1px solid;
@@ -218,6 +228,9 @@
         display: flex;
         justify-content: space-between;
         margin-top: 20px;    
+    }
+    .bill-detail-account p{
+        padding-right: 10px;
     }
     .bill-body-buttons{
         display: flex;
@@ -311,7 +324,6 @@
         color: var(--font-color);
         margin-top: 3px;
         padding-right: 5px;
-
     }
     .hint figure{    
         width: 28px;
@@ -342,7 +354,7 @@
         display: flex;
         flex-direction: column;
         place-items: center;
-        margin-top: 500px;
+        
     }
     .details-container,
     .details-container-p{
@@ -436,9 +448,12 @@
     }
     .details-content{
         flex-direction: column;
-        height: 220px;
+        height: 400px;
         margin-top: 40px;
         align-items: center;
+    }
+    .details-content-payment{
+        height: 270px;
     }
     .detail-head{
         display: flex;
@@ -488,16 +503,21 @@
     .detail-body{
         display: flex;
         width: 90%;
-        height: 130px;
+        height: 250px;
         border: var(--division) 1px solid;
         border-radius: 8px;
-        margin-top: 15px;
-        
+        margin-top: 15px;        
     }
+    .detail-body-payment{
+        height: 150px;
+    }
+
     .detail-body-left,
     .detail-body-center,
     .detail-body-right,
-    .detail-body-left-p{
+    .detail-body-left-p,
+    .detail-body-center-p,
+    .detail-body-right-p{
         width: 33%;
         display: flex;
         flex-direction: column;
@@ -507,21 +527,38 @@
     .detail-body-left div,
     .detail-body-center div,
     .detail-body-right div,
-    .detail-body-left-p div{
+    .detail-body-left-p div,
+    .detail-body-center-p div,
+    .detail-body-right-p div{
         height: 33%;
         display: flex;
-        justify-content: space-around;
+        padding-left: 10px;
+        padding-right: 10px;
+        justify-content: space-between;
     }
     .detail-body-left div,
     .detail-body-center div,
-    .detail-body-left-p div{
-        border-right : var(--division) 1px solid;
-
+    .detail-body-left-p div,
+    .detail-body-center-p div{
+        border-right : var(--division) 1px solid;        
+    }    
+    .detail-body-left div:nth-child(1),
+    .detail-body-center div:nth-child(1),
+    .detail-body-right div:nth-child(1){
+        justify-content: center;
+        text-align: center;
     }
+    .detail-body-left div:nth-child(6),
+    .detail-body-center div:nth-child(6){
+        padding-top: 20px;
+    }   
+
     .detail-body-left div p:nth-child(1),
     .detail-body-center div p:nth-child(1),
     .detail-body-right div p:nth-child(1),
-    .detail-body-left-p div p:nth-child(1){
+    .detail-body-left-p div p:nth-child(1),
+    .detail-body-center-p div p:nth-child(1),
+    .detail-body-right-p div p:nth-child(1){
         font-weight: bold;
     }
     .detail-body-left-p div:nth-child(1) p{
@@ -547,7 +584,7 @@
         padding-right: 10px;
     }
     .edit-buttons{
-        margin-top: 5px;
+        margin-top: 20px;
         display: flex;
         justify-content: space-evenly;
         width: 100%;
@@ -645,6 +682,10 @@
     .form-body-provider{
         height: 270px;
     }
+    .form-body-account{
+        height: 200px;
+        width: 300px;
+    }
     .form-body p:nth-child(1),
     .form-body p:nth-child(3),
     .form-body label{
@@ -663,6 +704,9 @@
     .form-data-payment{
         flex-direction: column;
         border: 0px;
+    }
+    .form-data-account{
+        width: 300px;
     }
     .form-provider div div{
         flex-direction: row;
@@ -750,6 +794,9 @@
         height: 70px;
         margin-top: -5px;
     }
+    .form-body-account div{
+        justify-content: space-between;
+    }
     .form-data div label,
     .form-calc div label,
     .form-data-payment label{
@@ -816,6 +863,10 @@
         margin-top: 45px;
         cursor: pointer;
     }
+
+/* new account */
+    
+
 /* Created  */
     .created{
         width: 100%;
@@ -1144,7 +1195,11 @@
         }
         .details-content{
             width: 95%;
-            height: 480px;
+            height: 680px;
+        }
+        .details-content-payment{
+            width: 95%;
+            height: 420px;
         }
         .payments-container{
             width: 95%;
@@ -1161,12 +1216,14 @@
         }
         .detail-body{
             flex-direction: column;
-            height: 300px;
+            height: 500px;
         }
         .detail-body-left,
         .detail-body-left-p,
         .detail-body-center,
-        .detail-body-right{
+        .detail-body-center-p,
+        .detail-body-right,
+        .detail-body-right-p{
             width: 100%;
         }
         .detail-body-left-p{
@@ -1177,13 +1234,15 @@
             border: 0px;
             width: 100%;
         }
-                .detail-body-left,
-        .detail-body-center{
+        .detail-body-left,
+        .detail-body-center,
+        .detail-body-center-p{
             border-bottom: var(--division) 1px solid;
             padding-bottom: 10px;
         }
         .detail-body-left div,
-        .detail-body-center div{
+        .detail-body-center div,
+        .detail-body-center-p div {
             border: 0px;
         }
         .detail-body-left div p,

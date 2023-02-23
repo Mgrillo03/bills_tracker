@@ -16,14 +16,14 @@
                 <div class="form-provider-left">
                     <label for="bill_id" >Factura:</label>
                     <div>
-                        <input   list="bills-list" name="bill_id" placeholder="Selccione Opcion.." value="{{bill_selected.bill_number}}" required>
+                        <input   list="bills-list" name="bill_id" placeholder="Selccione Opcion.." value="{{bill_selected.bill_number}}-{{bill_selected.id}}" required>
                             <datalist id="bills-list">
                                 {% for bill in bills_list  %}
                                     <option value="{{bill.bill_number}}-{{bill.id}}">
                                         {{bill.bill_number}} | 
                                         {{bill.provider.nickname}} - 
                                         ${{bill.rest_to_pay_dollar}} - 
-                                        Bs.{{bill.amount_to_pay_bs}}
+                                        Bs.{{bill.total_to_pay_bs}}
                                         Cambio: Bs.{{bill.exchange_rate}}
                                     </option>                
                                 {% endfor %}  
@@ -40,7 +40,7 @@
                     </div> 
                     <div>
                         <p>Total:</p>
-                        <p>${{bill_selected.total_amount_dollar}}</p>
+                        <p>${{bill_selected.total_to_pay_dollar}}</p>
                         <p>Restante:</p>
                         <p>${{bill_selected.rest_to_pay_dollar}}</p>
                     </div>
@@ -94,7 +94,7 @@
                 </div>   
                 <div>
                     <label for="paid_total"> Pago total</label>
-                    <input type="checkbox" name="paid_total" value="True" checked>
+                    <input type="checkbox" name="paid_total" value="True">
                 </div>
                 <div class="create-buttons">
                     <a href="{% url 'payments:index' %}" class="link-secondary-button" >Cancelar</a>

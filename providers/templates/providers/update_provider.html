@@ -6,11 +6,11 @@
 <body>
 <div class="new-payment">
     <div class="title">
-        <p>Nuevo Proveedor</p>
+        <p>Actualizar Proveedor</p>
     </div>
 
     <div class="form-body  form-body-provider">
-        <form action="{% url 'providers:provider_created' %}" method="post">
+        <form action="{% url 'providers:provider_updated' provider.id %}" method="post">
             {% csrf_token %}
             <div class="form-data-payment form-new-provider">
                 <input type="hidden" name="bill_selected" value="{{bill_selected.pk}}">
@@ -56,8 +56,8 @@
 
                 </div>     
                 <div class="create-buttons">
-                    <a href="{% url 'providers:index' %}" class="link-secondary-button" >Cancelar</a>
-                    <input type="submit" value="Crear" class="link-primary-button">
+                    <a href="{% url 'providers:index' %}" class="link-secondary-button" >Volver</a>
+                    <input type="submit" value="Guardar" class="link-primary-button">
                 </div>       
             </div>            
         </form>

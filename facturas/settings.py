@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'providers.apps.ProvidersConfig',
     'bills.apps.BillsConfig',
     'payments.apps.PaymentsConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [

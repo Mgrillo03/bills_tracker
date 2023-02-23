@@ -69,42 +69,69 @@
             <div class="detail-body">
                 <div class="detail-body-left">
                     <div>
+                        <p>Bolivares</p>
+                    </div>
+                    <div>
+                        <p>Total:</p>
+                        <p>Bs.{{bill.amount_bs}}</p>
+                    </div>
+                    <div>
                         <p>Sub Total:</p>
-                        <p>${{bill.sub_total_bs}}</p>
+                        <p>Bs.{{bill.sub_total_bs}}</p>
                     </div>
                     <div>
                         <p>I.V.A.:</p>
-                        <p>${{bill.tax_bs}}</p>
+                        <p>Bs.{{bill.tax_bs}}</p>
                     </div>
                     <div>
                         <p>I.V.A. Ret:</p>
-                        <p>${{bill.retained_tax_bs}}</p>
+                        <p>Bs.{{bill.retained_tax_bs}}</p>
+                    </div>
+                    <div>
+                        <p>A Pagar:</p>
+                        <p>Bs.{{bill.amount_to_pay_bs}}</p>
                     </div>
                 </div>
                 <div class="detail-body-center">
                     <div>
-                        <p>Bolivares:</p>
+                        <p>Dolares</p>
                     </div>
                     <div>
                         <p>Total:</p>
-                        <p>Bs.{{bill.total_amount_bs}}</p>
+                        <p>${{bill.amount_dollar}}</p>
+                    </div>
+                    <div>
+                        <p>Sub Total:</p>
+                        <p>${{bill.sub_total_dollar}}</p>
+                    </div>
+                    <div>
+                        <p>I.V.A.:</p>
+                        <p>${{bill.tax_dollar}}</p>
+                    </div>
+                    <div>
+                        <p>I.V.A. Ret:</p>
+                        <p>${{bill.retained_tax_dollar}}</p>
                     </div>
                     <div>
                         <p>A Pagar:</p>
-                        <p>Bs{{bill.amount_to_pay_bs}}</p>
+                        <p>${{bill.amount_to_pay_dollar}}</p>
                     </div>
                 </div>
                 <div class="detail-body-right">
                     <div>
-                        <p>Dolares:</p>
+                        <p>Totales</p>
                     </div>
                     <div>
-                        <p>Total:</p>
-                        <p>${{bill.amount_to_pay_dollar}}</p>
+                        <p>Total Factura:</p>
+                        <p>${{bill.bill_total_dollar}}</p>
                     </div>
                     <div>
-                        <p>A Pagar:</p>
-                        <p>${{bill.amount_to_pay_dollar}}</p>
+                        <p>Total a Pagar:</p>
+                        <p>${{bill.total_to_pay_dollar}}</p>
+                    </div>
+                    <div>
+                        <p>Pagado:</p>
+                        <p>${{bill.amount_paid_dollar}}</p>
                     </div>
                 </div>                
             </div>

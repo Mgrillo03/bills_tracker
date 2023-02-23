@@ -1,0 +1,127 @@
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+
+<body>
+ 
+<div class="place p-accounts"></div>
+<div class="bills">
+    <div class="title">
+        <p>Cuentas</p>
+    </div>
+    <div class="search ">
+        <form action="{% url 'accounts:search' %}" method="post">
+            {% csrf_token %}
+            <div class="search-left search-left-account">
+                <div>
+                    
+                    <input type="text" name="search_field" placeholder="Buscar..." value="{{search_field}}">
+                    <input type="image" src="{% static 'bills/images/search.png'  %}" alt="Submit Form" class="search-button" />
+                    <a href="{% url 'accounts:index' %}">
+                        <img src="{% static 'bills/images/close.png'  %}" alt="close">
+                    </a>
+                </div>
+            </div> 
+        </form>           
+    </div>
+    <div class="bills-container">    
+
+        {% for account in accounts_list %}
+        <div class="bill-content bill-content-account">
+            
+            <div class="bill-body">
+                <div class="bill-body-sub-left-account">
+                    <div class="bill-detail bill-detail-account">
+                        <p>Nombre:</p>
+                        <p>{{account.name}}</p>
+                    </div>
+                </div>
+
+                <div class="bill-body-sub-account">                    
+                    <div class="bill-detail bill-detail-account">
+                        <p>Descripcion:</p>
+                        <p>{{account.description}}</p>
+                    </div>
+                </div>
+
+                <div class="bill-body-buttons">
+                    <a href="{% url 'accounts:account_detail'  account.id %}" class="link-primary-button">Detalle</a>
+                    <a href="{% url 'accounts:update_account'  account.id %}" class="link-secondary-button">Editar</a> 
+                </div>
+            </div>
+            <div class="bill-head bill-head-account">
+                <div class="bill-head-left">
+                    <p>{{account.nickname}}</p>                    
+                </div>
+                <div class="bill-head-right">
+                    <figure>
+                        <a href="{% url 'accounts:delete_account'  account.id %}">
+                            <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                        </a>
+                    </figure>
+                </div>
+            </div>
+        </div>
+         
+        {% endfor %}
+    </div>
+    <div class="add">
+        <div class="hint inactive">
+            <div>
+                <a href="{% url 'accounts:new_account' %}">
+                <p>Cuenta</p>
+                    <figure >                    
+                        <img src="{% static 'bills/images/account.png'  %}" alt="new-account" >
+                    </figure>
+                </a> 
+            </div>  
+            <div>
+                <a href="{% url 'providers:new_provider' %}">
+                <p>Proveedor</p>
+                    <figure >                    
+                        <img src="{% static 'bills/images/user.png'  %}" alt="new-provider" >
+                    </figure>
+                </a> 
+            </div>     
+            <div>
+                <a href="{% url 'payments:new_payment' %}">
+                <p>Pago</p>
+                    <figure >                    
+                        <img src="{% static 'bills/images/coin.png'  %}" alt="new-payment" >
+                    </figure>
+                </a> 
+            </div>  
+            <div>
+                <a href="{% url 'bills:new_bill' %}">
+                <p>Factura</p>
+                    <figure >                    
+                        <img src="{% static 'bills/images/bill.png'  %}" alt="new-bill" >
+                    </figure>
+                </a> 
+            </div>  
+        </div>
+        
+        <figure class="figure">            
+            <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+        </figure>
+    
+    </div>
+</div>
+<div class="delete-menu ">
+    <div class="delete-content">    
+        <div class="second-title">
+            <p>Estas a punto de eliminar la Cuenta {{account.name}} permanentemente</p>
+        </div> 
+        <p>Deseas continuar?</p> 
+        <div>
+            <a href="{% url 'accounts:index' %}" class="link-secondary-button hide-delete-menu">No</a>
+            <a href="{% url 'accounts:account_deleted' account.id %}" class="link-primary-button">Si</a>  
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script src="{% static 'bills/js/index.js' %}"></script>
+<script src="{% static 'bills/js/main.js' %}"></script>
+{% endblock %}

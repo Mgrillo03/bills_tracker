@@ -44,7 +44,7 @@
             </div>            
     </div>
     <div class="bills-container">    
-
+        {% if payments_list %}
         {% for payment in payments_list %}
         <div class="bill-content-p">
             <div class="bill-head">
@@ -112,6 +112,9 @@
         </div>
          
         {% endfor %}
+        {% else %}
+        <h1 class="search-failed">No hubo coincidencias</h1>
+        {% endif %}
     </div>
     <div class="add">
         <div class="hint inactive">

@@ -40,7 +40,7 @@
                 {% endif %}                
             </div>
         </div>
-        <div class="details-content">
+        <div class="details-content details-content-payment">
             <div class="detail-head">
                 <div class="detail-head-left-p">
                     <p>Factura:</p>
@@ -63,7 +63,7 @@
                     {% endif %}                       
                 </div>
             </div>
-            <div class="detail-body">
+            <div class="detail-body detail-body-payment">
                 <div class="detail-body-left-p">
                     <div>
                         <p>Descripcion:</p>
@@ -76,7 +76,7 @@
                         <p>{{payment.account}}</p>
                     </div>
                 </div>
-                <div class="detail-body-center">
+                <div class="detail-body-center-p">
                     <div>
                         <p>Pagado $:</p>
                         <p>${{payment.amount_dollar}}</p>
@@ -90,7 +90,7 @@
                         <p>Bs{{payment.exchange_rate}}</p>
                     </div>
                 </div>
-                <div class="detail-body-right">
+                <div class="detail-body-right-p">
                     <div>
                         <p>Total:</p>
                         <p>${{payment.total_dollar}}</p>

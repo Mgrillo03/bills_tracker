@@ -121,13 +121,15 @@ def new_payment_save(request):
         total_amount_dollar = round(total_amount_dollar + amount_dollar,2)
         paid_total = request.POST.get('paid_total',False)
         if paid_total:
-            bill.paid = True
-            bill.rest_to_pay_dollar = 0
             bill.provider.dollar_debt = round(bill.provider.dollar_debt - bill.rest_to_pay_dollar,2)
             bill.provider.save()
+            bill.paid = True
+            bill.amount_paid_dollar = round(bill.amount_paid_dollar + total_amount_dollar,2)
+            bill.rest_to_pay_dollar = 0
             bill.save()
         else:             
             bill.rest_to_pay_dollar = round(bill.rest_to_pay_dollar - total_amount_dollar,2)
+            bill.amount_paid_dollar = round(bill.amount_paid_dollar + total_amount_dollar,2)
             bill.save()
             bill.provider.dollar_debt = round(bill.provider.dollar_debt - total_amount_dollar,2)
             bill.provider.save()
@@ -198,23 +200,27 @@ def update_payment_save(request, payment_id):
             payment.bill.provider.save()   
 
         payment.bill.paid = True
+        payment.bill.amount_paid_dollar = payment.bill.total_to_pay_dollar
         payment.bill.rest_to_pay_dollar = 0
         payment.bill.save()
     else: 
         #Update payment, first revert the payment, then make the new one
-        #revert
+        
         payment.bill.paid = False
-        update_rest_to_pay_dollar = round(payment.bill.rest_to_pay_dollar + payment.total_dollar,2)
+        #update_rest_to_pay_dollar = round(payment.bill.rest_to_pay_dollar + payment.total_dollar,2)
         if payment.paid_total:
-            update_debt = payment.bill.provider.dollar_debt + payment.bill.amount_to_pay_dollar
+            update_debt = payment.bill.provider.dollar_debt + payment.bill.total_to_pay_dollar
             payment.bill.provider.dollar_debt = round(update_debt - new_total_amount_dollar,2)
             payment.bill.provider.save()   
         else:
             update_debt = payment.bill.provider.dollar_debt + payment.total_dollar
             payment.bill.provider.dollar_debt = round(update_debt - new_total_amount_dollar,2)
             payment.bill.provider.save()
-        #new payment        
-        payment.bill.rest_to_pay_dollar = round(update_rest_to_pay_dollar - new_total_amount_dollar,2)
+        #revert amount paid
+        new_amount_paid_dollar = payment.bill.amount_paid_dollar - payment.total_dollar + new_total_amount_dollar        
+        #new amount paid
+        payment.bill.amount_paid_dollar = round(new_amount_paid_dollar,2)
+        payment.bill.rest_to_pay_dollar = round(payment.bill.total_to_pay_dollar - new_amount_paid_dollar,2)
         payment.bill.save()    
     
     payment.date = date
@@ -250,14 +256,15 @@ def delete_payment(request, payment_id):
 def delete_payment_save(request, payment_id):
     request = reset_messages(request)
     payment = Payment.objects.get(pk=payment_id)
-    if payment.paid_total:
-        payment.bill.provider.dollar_debt = payment.bill.provider.dollar_debt + payment.bill.amount_to_pay_dollar
-    else:
-        payment.bill.provider.dollar_debt = payment.bill.provider.dollar_debt + payment.total_dollar
-    payment.bill.provider.save()
     payment.bill.paid = False
-    payment.bill.rest_to_pay_dollar = round(payment.bill.rest_to_pay_dollar + payment.total_dollar,2)
+    amount_paid = payment.bill.amount_paid_dollar - payment.total_dollar
+    payment.bill.amount_paid_dollar = round(amount_paid,2)
+    old_rest_to_pay = payment.bill.rest_to_pay_dollar
+    payment.bill.rest_to_pay_dollar = round(payment.bill.total_to_pay_dollar - amount_paid,2)
     payment.bill.save()
+    payment.bill.provider.dollar_debt = round(payment.bill.provider.dollar_debt - old_rest_to_pay + payment.bill.rest_to_pay_dollar ,2)
+    payment.bill.provider.save()
+
     payment.delete()
     request.session['message'] = 'Pago eliminado'
     request.session['message_shown'] = False

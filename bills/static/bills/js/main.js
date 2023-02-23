@@ -3,9 +3,11 @@ const menuMobile = document.querySelector('.mobile-menu-link');
 const billNav = document.querySelector('.bill-nav');
 const paymentNav = document.querySelector('.payment-nav');
 const providerNav = document.querySelector('.provider-nav');
+const accountNav = document.querySelector('.account-nav');
 const billMobileNav = document.querySelector('.bill-mob-nav');
 const paymentMobileNav = document.querySelector('.payment-mob-nav');
-const providerMobileNav = document.querySelector('.provider-mob-nav')
+const providerMobileNav = document.querySelector('.provider-mob-nav');
+const accountMobileNav = document.querySelector('.account-mob-nav');
 const place = document.querySelector('.place');
 const body = document.querySelector('.bills');
 const navBar = document.querySelector('.navbar');
@@ -55,6 +57,10 @@ function toggleNavSelected(){
     if (place.classList.contains('p-providers')){
         providerNav.classList.add('navbar-selected');   
         providerMobileNav.classList.add('navbar-mobile-selected');
+    }
+    if (place.classList.contains('p-accounts')){
+       accountNav.classList.add('navbar-selected');   
+       accountMobileNav.classList.add('navbar-mobile-selected');
     }
     if (place.classList.contains('n-bill')){
         navBar.classList.add('inactive');

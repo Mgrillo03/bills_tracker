@@ -63,13 +63,13 @@
                     <div>
                         <label for="amount_bs">Total Bolivares:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);"  name="amount_bs" value={{amount_bs}} required >
+                            Bs.<input type="text" onKeyUp="numericFilter(this);"  name="amount_bs" value={{amount_bs}} readonly >
                         </p>
                     </div>
                     <div>
                         <label for="amount_dollar">Total Dolares:</label>
                         <p>
-                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_dollar"value={{amount_dollar}}  >
+                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_dollar"value={{amount_dollar}}  readonly>
                         </p>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                     <div> 
                         <label for="exchange_rate">Cambio:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="exchange_rate" value={{exchange_rate}} required >
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="exchange_rate" value={{exchange_rate}} readonly >
                         </p>
                     </div>
                     <input type="submit" value="Calcular" name="choice" class="link-primary-button">
@@ -157,11 +157,11 @@
                 </div>
                 <div class="create-note">
                     <label for="note">Nota:</label><br>
-                    <input type="text" name="note" placeholder="Nota...">
+                    <input type="text" name="note" placeholder="Nota..." maxlength="200">
                 </div>
                 <div class="create-buttons">
                     <a href="{% url 'bills:index' %}" class="link-secondary-button" >Cancelar</a>
-                    <input type="submit" value="Create" class="link-primary-button" >
+                    <input type="submit" value="Crear" class="link-primary-button" >
                 </div>
             </div>
         </div>

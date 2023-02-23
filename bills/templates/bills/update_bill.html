@@ -56,15 +56,15 @@
                 </div>
                 <div>
                     <div>
-                        <label for="total_amount_bs">Total Bolivares:</label>
+                        <label for="amount_bs">Total Bolivares:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="total_amount_bs" value={{bill.total_amount_bs}} required >
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="amount_bs" value={{bill.amount_bs}} required >
                         </p>
                     </div>
                     <div>
-                        <label for="total_amount_dollar">Total Dolares:</label>
+                        <label for="amount_dollar">Total Dolares:</label>
                         <p>
-                            $<input type="text" onKeyUp="numericFilter(this);" name="total_amount_dollar"value={{bill.total_amount_dollar}} required >
+                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_dollar"value={{bill.amount_dollar}} required >
                         </p>
                     </div>
                 </div>
@@ -81,22 +81,44 @@
 
             <div class="form-calc">
                 <div>
-                    <label for="sub_total_bs">SubTotal:</label>
-                    <p>
-                        Bs.<input type="text" onKeyUp="numericFilter(this);" name="sub_total_bs" value={{bill.sub_total_bs}} readonly>
-                    </p>
-                </div>
-                <div>
                     <div>
-                        <label for="tax_bs">I.V.A.:</label>
+                        <label for="sub_total_bs">SubTotal Bolivares:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="tax_bs" value={{bill.tax_bs}} readonly>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="sub_total_bs" value="{{bill.sub_total_bs}}" readonly>
                         </p>
                     </div>
                     <div>
-                        <label for="retained_tax_bs">I.V.A. Retenido:</label>
+                        <label for="sub_total_dollar">SubTotal Dolares:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="retained_tax_bs" value={{bill.retained_tax_bs}} readonly>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="sub_total_dollar" value="{{bill.sub_total_dollar}}" readonly>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="tax_bs">IVA Bolivares:</label>
+                        <p>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="tax_bs" value="{{bill.tax_bs}}" readonly>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="tax_dollar">IVA Dolares:</label>
+                        <p>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="tax_dollar" value="{{bill.tax_dollar}}" readonly>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label for="retained_tax_bs">IVA Retenido Bolivares:</label>
+                        <p>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="retained_tax_bs" value="{{bill.retained_tax_bs}}" readonly>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="retained_tax_dollar">IVA Retenido Dolares:</label>
+                        <p>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="retained_tax_dollar" value="{{bill.retained_tax_dollar}}" readonly>
                         </p>
                     </div>
                 </div>
@@ -104,13 +126,27 @@
                     <div>
                         <label for="amount_to_pay_bs">A Pagar Bolivares:</label>
                         <p>
-                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="amount_to_pay_bs" value={{bill.amount_to_pay_bs}} readonly>
+                            Bs.<input type="text" onKeyUp="numericFilter(this);" name="amount_to_pay_bs" value="{{bill.amount_to_pay_bs}}" readonly>
                         </p>
                     </div>
                     <div>
                         <label for="amount_to_pay_dollar">A Pagar Dolares:</label>
                         <p>
-                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_to_pay_dollar" value={{bill.amount_to_pay_dollar}} readonly>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="amount_to_pay_dollar" value="{{bill.amount_to_pay_dollar}}" readonly>
+                        </p>
+                    </div>
+                </div>
+                <div class="totals">
+                    <div>
+                        <label for="bill_total_dollar">Total Factura Dolares:</label>
+                        <p>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="bill_total_dollar" value="{{bill.bill_total_dollar}}" readonly>
+                        </p>
+                    </div>
+                    <div>
+                        <label for="total_to_pay_dollar">Total a Pagar Dolares:</label>
+                        <p>
+                            $<input type="text" onKeyUp="numericFilter(this);" name="total_to_pay_dollar" value="{{bill.total_to_pay_dollar}}" readonly>
                         </p>
                     </div>
                 </div>

@@ -127,7 +127,6 @@ def new_bill_show_provider(request):
             'provider_selected':provider, 
             })
 
-
 def new_bill_calc(request):
     try:
         provider = Provider.objects.get(rif=request.POST['provider_rif'])
@@ -147,11 +146,11 @@ def new_bill_calc(request):
             emission_date = request.POST['emission_date']
             due_date = request.POST['due_date']
 
-            amount_bs = format_number(request.POST['amount_bs'])
+            amount_bs = round(format_number(request.POST['amount_bs']),2)
             sub_total_bs = round(amount_bs / 1.16 , 2)
             tax_bs = round(amount_bs - sub_total_bs,2)
 
-            amount_dollar = format_number(request.POST['amount_dollar'])
+            amount_dollar = round(format_number(request.POST['amount_dollar']),2)
             sub_total_dollar = round(amount_dollar / 1.16 , 2)
             tax_dollar = round(amount_dollar - sub_total_dollar,2)
             
@@ -170,9 +169,9 @@ def new_bill_calc(request):
 
             elif taxType == '100':
                 retained_tax_bs = tax_bs
-                amount_to_pay_bs = amount_bs - retained_tax_bs
+                amount_to_pay_bs = round(amount_bs - retained_tax_bs,2)
                 retained_tax_dollar = tax_dollar
-                amount_to_pay_dollar = amount_dollar - retained_tax_dollar
+                amount_to_pay_dollar = round(amount_dollar - retained_tax_dollar,2)
 
 
             exchange_rate = format_number(request.POST['exchange_rate'])
@@ -182,7 +181,6 @@ def new_bill_calc(request):
             bill_total_dollar = amount_bs / exchange_rate
             bill_total_dollar = round(bill_total_dollar + amount_dollar,2)
             total_to_pay_dollar = round(amount_to_pay_bs / exchange_rate + amount_to_pay_dollar, 2)
-            rest_to_pay_dollar = total_to_pay_dollar
 
             note = request.POST['note']
             return render(request,'bills/new_bill_2.html',{            
@@ -207,15 +205,13 @@ def new_bill_calc(request):
 
             'bill_total_dollar': bill_total_dollar,
             'total_to_pay_dollar': total_to_pay_dollar,
-            'rest_to_pay_dollar': rest_to_pay_dollar,
             'note': note,
             })
             
         else:
             request.session['message'] = f'Ya existe una factura de este proveedor con el codigo: {bill_number}'
             request.session['message_shown'] = False        
-            return redirect('bills:new_bill')        
-    
+            return redirect('bills:new_bill')            
 
 def new_bill_save(request):
     provider = Provider.objects.get(rif=request.POST['provider_rif'])
@@ -247,13 +243,12 @@ def new_bill_save(request):
 
         bill_total_dollar = format_number(request.POST['bill_total_dollar']),
         total_to_pay_dollar = format_number(request.POST['total_to_pay_dollar']),
-        rest_to_pay_dollar = format_number(request.POST['amount_to_pay_dollar']),
+        rest_to_pay_dollar = format_number(request.POST['total_to_pay_dollar']),
         note = request.POST['note'],
     )
     request.session['message'] = f'Factura N°{bill_number} creada existosamente'
     request.session['message_shown'] = False
-    return render(request,'bills/bill_created.html',{'bill':bill})
-    
+    return render(request,'bills/bill_created.html',{'bill':bill})    
 
 def bill_detail(request, bill_id):
     request = reset_messages(request)
@@ -269,7 +264,6 @@ def bill_detail(request, bill_id):
             'bill': bill,
             'payments_list': payments_list,
         })
-
 
 def update_bill(request, bill_id):
     bill = Bill.objects.get(pk=bill_id)
@@ -293,11 +287,11 @@ def update_bill_calc(request, bill_id):
         emission_date = request.POST['emission_date']
         due_date = request.POST['due_date']
 
-        amount_bs = format_number(request.POST['amount_bs'])
+        amount_bs = round(format_number(request.POST['amount_bs']),2)
         sub_total_bs = round(amount_bs / 1.16 , 2)
         tax_bs = round(amount_bs - sub_total_bs,2)
 
-        amount_dollar = format_number(request.POST['amount_dollar'])
+        amount_dollar = round(format_number(request.POST['amount_dollar']),2)
         sub_total_dollar = round(amount_dollar / 1.16 , 2)
         tax_dollar = round(amount_dollar - sub_total_dollar,2)
         
@@ -316,10 +310,9 @@ def update_bill_calc(request, bill_id):
 
         elif taxType == '100':
             retained_tax_bs = tax_bs
-            amount_to_pay_bs = amount_bs - retained_tax_bs
+            amount_to_pay_bs = round(amount_bs - retained_tax_bs,2)
             retained_tax_dollar = tax_dollar
-            amount_to_pay_dollar = amount_dollar - retained_tax_dollar
-
+            amount_to_pay_dollar = round(amount_dollar - retained_tax_dollar,2)
 
         exchange_rate = format_number(request.POST['exchange_rate'])
         if exchange_rate == 0 : 
@@ -328,7 +321,6 @@ def update_bill_calc(request, bill_id):
         bill_total_dollar = amount_bs / exchange_rate
         bill_total_dollar = round(bill_total_dollar + amount_dollar,2)
         total_to_pay_dollar = round(amount_to_pay_bs / exchange_rate + amount_to_pay_dollar, 2)
-        rest_to_pay_dollar = total_to_pay_dollar
 
         note = request.POST['note']
 
@@ -354,7 +346,6 @@ def update_bill_calc(request, bill_id):
 
             'bill_total_dollar': bill_total_dollar,
             'total_to_pay_dollar': total_to_pay_dollar,
-            'rest_to_pay_dollar': rest_to_pay_dollar,
             'note': note,
             })                  
 
@@ -390,7 +381,9 @@ def update_bill_save(request, bill_id):
     bill.amount_to_pay_dollar = format_number(request.POST['amount_to_pay_dollar'])
 
     bill.bill_total_dollar = format_number(request.POST['bill_total_dollar'])
-    bill.total_to_pay_dollar = format_number(request.POST['total_to_pay_dollar'])
+    total_to_pay_dollar = format_number(request.POST['total_to_pay_dollar'])
+    bill.total_to_pay_dollar = total_to_pay_dollar
+    bill.rest_to_pay_dollar = round(total_to_pay_dollar - bill.amount_paid_dollar,2)
 
     bill.note = request.POST['note']   
     bill.save()
@@ -411,7 +404,7 @@ def delete_bill(request,bill_id):
 def delete_bill_save(request,bill_id):
     request = reset_messages(request)
     bill = Bill.objects.get(pk=bill_id)
-    bill.provider.dollar_debt = round(bill.provider.dollar_debt - bill.bill_total_dollar,2)
+    bill.provider.dollar_debt = round(bill.provider.dollar_debt - bill.rest_to_pay_dollar,2)
     bill.provider.save()
     bill.delete()
     request.session['message'] = 'Factura eliminado satisfactoriamente'
