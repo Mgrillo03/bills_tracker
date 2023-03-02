@@ -39,7 +39,29 @@
             <p>Total Gastado Bolivares: Bs.{{total_expent_bs}}</p>
             <p>Total Gastado Dolares: Bs.{{total_expent_dollar}}</p>
         </div>
-        <br><br>
+        
+        <div class="search detail-search">
+            <form action="{% url 'accounts:detail_search' account.id %}" method="post">
+                {% csrf_token %}
+                <div class="search-left deatil-search-left">
+                    <div>
+                        
+                        <input type="text" name="search_field" placeholder="Buscar..." value="{{search_field}}">
+                        <input type="image" src="{% static 'bills/images/search.png'  %}" alt="Submit Form" class="search-button" />
+                        <a href="{% url 'accounts:account_detail' account.id %}">
+                            <img src="{% static 'bills/images/close.png'  %}" alt="close">
+                        </a>                  
+                        
+                    </div>
+                    <div>
+                        <p>Desde:</p>
+                        <input type="date" name="date_start" value="{{date_start}}">
+                        <p>Hasta:</p>
+                        <input type="date" name="date_end" value="{{date_end}}">
+                    </div>
+
+                </div>            
+        </div>
         {% if payments_list %}
         <div class="payments-container">
                 

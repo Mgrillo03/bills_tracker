@@ -1009,6 +1009,9 @@
         display: flex;
         justify-content: center;
     }
+    .detail-search{
+        margin-top: 40px;
+    }
     .search form{
         display: flex;
         justify-content: space-between;
@@ -1020,6 +1023,12 @@
         border-radius: 8px;
         background-color: var(--white);
 
+    }
+    .detail-search form{
+        width: 700px;
+        box-sizing: border-box;
+        margin: 0px;
+        height: 50px;
     }
     .search-left,
     .search-left div,
@@ -1047,9 +1056,9 @@
         height: 25px;
         margin-top: 5px;
         margin-left: -315px;
-        padding-left: 10px;
-        
+        padding-left: 10px;        
     }
+    
     .search-left div a{
         width: 15px;
         height: 15px;
@@ -1083,7 +1092,9 @@
     .search-left-payment div:nth-child(2){
         margin-left: 370px;
     }
-    
+    .deatil-search-left div:nth-child(2){
+        margin-left: 290px;
+    }
     .search-left div:nth-child(2) input{
         width: 100px;
         height: 25px;

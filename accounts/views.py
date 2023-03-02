@@ -6,6 +6,8 @@ from bills.views import reset_messages
 from .models import Account
 from payments.models import Payment
 
+import datetime
+
 def check_name(name,list):
     """
     check if provider name is available in users account list
@@ -17,7 +19,7 @@ def check_name(name,list):
 
 def index(request):
     accounts_list = Account.objects.all()
-    request = reset_messages(request)    
+    request = reset_messages(request)
     return render(request, 'accounts/index.html',{
         'accounts_list':accounts_list,
     })
@@ -65,7 +67,9 @@ def account_detail(request, account_id):
         request.session['message_shown'] = False
         return redirect('accounts:index')
     else:
-        payments_list = Payment.objects.filter(account=account)
+        today = datetime.date.today().isoformat()
+        date_start = today[:8] + '01'
+        payments_list = Payment.objects.filter(account=account, date__gte=date_start)
         total_expent_bs = 0
         total_expent_dollar = 0
         for payment in payments_list:
@@ -75,8 +79,49 @@ def account_detail(request, account_id):
             'account': account,
             'total_expent_bs': total_expent_bs,
             'total_expent_dollar': total_expent_dollar,
-            'payments_list': payments_list
+            'payments_list': payments_list,
+            'date_start': date_start,
+            'date_end': today,
         })
+
+def detail_search(request, account_id):
+    account = Account.objects.get(pk=account_id)
+    payments_list = Payment.objects.filter(account=account)
+
+    date_start = request.POST['date_start']
+    date_end = request.POST['date_end']
+    if date_start != '':
+        date_start_iso = datetime.date.fromisoformat(date_start)
+        payments_list = payments_list.filter(date__gte=date_start_iso)
+
+    if date_end != '':
+        date_end_iso = datetime.date.fromisoformat(date_end)
+        payments_list = payments_list.filter(date__lte=date_end_iso)
+    search_field = request.POST['search_field']
+    payments_list = payments_list.filter(
+    Q(transfer_id__contains=search_field) | 
+    Q(description__contains=search_field)
+    )        
+    total_expent_bs = 0
+    total_expent_dollar = 0
+    for payment in payments_list:
+        total_expent_bs += payment.amount_bs
+        total_expent_dollar += payment.amount_dollar
+
+    today = datetime.date.today().isoformat()
+    date_start = today[:8] + '01'
+    request = reset_messages(request)    
+    return render(request, 'accounts/account_detail.html',{
+        'account': account,
+        'total_expent_bs': total_expent_bs,
+        'total_expent_dollar': total_expent_dollar,
+        'payments_list': payments_list,
+        'search_field': search_field,
+        'date_start': date_start,
+        'date_end': today,
+        'date_start': str(date_start_iso),
+        'date_end': str(date_end_iso),
+    })
 
 def update_account(request, account_id):
     account = Account.objects.get(pk=account_id)

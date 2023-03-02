@@ -14,6 +14,8 @@ urlpatterns = [
 
     #/accounts/id/detail
     path('<str:account_id>/detail', views.account_detail, name='account_detail'),
+    #/accounts/id/detail-search
+    path('<str:account_id>/detail-search', views.detail_search, name='detail_search'),
 
     #account/account-id/update
     path('<str:account_id>/update/', views.update_account, name='update_account'),
