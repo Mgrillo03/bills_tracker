@@ -68,8 +68,6 @@ def account_detail(request, account_id):
         payments_list = Payment.objects.filter(account=account)
         total_expent_bs = 0
         total_expent_dollar = 0
-        print(account.name)
-        print(payments_list[0].total_dollar)
         for payment in payments_list:
             total_expent_bs += payment.amount_bs
             total_expent_dollar += payment.amount_dollar
