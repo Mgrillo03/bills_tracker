@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Delete {{request.user.username}}</h1>
+
+
+    <form action="{% url 'users:user_deleted' %}" method="post">
+        {% csrf_token %}
+        <label for="username">username</label><br>
+        <input type="text" name="username" value="{{user.username}}" readonly><br>
+        
+        <label for="first_name">Nombre</label><br>
+        <input type="text" name="first_name" value="{{user.first_name}}" readonly><br>
+
+        <label for="last_name">Apellido</label><br>
+        <input type="text" name="last_name" value="{{user.last_name }}" readonly><br>
+
+        <label for="email">Email</label><br>
+        <input type="email" name="email" value="{{user.email}}" readonly><br>
+
+        <h3>Estas a punto de eliminar permanentemente el usuario, esto no se puede desahacer</h3>
+        <h4>Seguro que deseas continuar?</h4>
+
+        <label for="password">password</label><br>
+        <input type="password" name="password" placeholder="*********" minlength="8" required><br>
+
+        <input type="submit" value="DELETE">
+    </form>
+    
+    {{ request.session.error_message }} <br>
+    
+    <a href="{% url 'users:user_detail'  %}">Cancelar</a><br>
+</body>
+</html>

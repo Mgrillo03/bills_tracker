@@ -18,29 +18,41 @@
     <header>
         <nav class="navbar">
             <figure class="mobile-menu-link">
-            <img src="{% static 'bills/images/menu.png'  %}" alt="menu" class="menu">
+              <img src="{% static 'bills/images/menu.png'  %}" alt="menu" class="menu">
             </figure>
             <ul class="main-nav">
-                <li><a href="{% url 'bills:index'%}" class="bill-nav">Facturas</a></li>
-                <li><a href="{% url 'payments:index'%}" class="payment-nav">Pagos</a></li>
-                <li><a href="{% url 'providers:index'%}" class="provider-nav">Proveedores</a></li>                
-                <li><a href="{% url 'accounts:index'%}" class="account-nav">Cuentas</a></li>                
+              <li><a href="{% url 'bills:index'%}" class="bill-nav">Facturas</a></li>
+              <li><a href="{% url 'payments:index'%}" class="payment-nav">Pagos</a></li>
+              <li><a href="{% url 'providers:index'%}" class="provider-nav">Proveedores</a></li>                
+              <li><a href="{% url 'accounts:index'%}" class="account-nav">Cuentas</a></li>                
             </ul>
-            <div class="mobile-menu inactive">
+            <div class="user-menu">
+              <p>{{request.user.first_name}} </p>
+              <img src="{% static 'bills/images/arrow.png'  %}" alt="menu">
+              <div class="dropdown-menu inactive">
                 <ul>
-                  <li>
-                    <a href="{% url 'bills:index'%}" class="bill-mob-nav">Facturas</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'payments:index'%}" class="payment-mob-nav">Pagos</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'providers:index'%}" class="provider-mob-nav">Proveedores</a>
-                  </li>
-                  <li>
-                    <a href="{% url 'accounts:index'%}" class="account-mob-nav">Cuentas</a>
-                  </li>
+                  <li><a href="{% url 'users:index'%}">Usuarios</a></li>
+                  <li><a href="{% url 'users:user_detail'%}">Detalle</a></li>
+                  <li><a href="{% url 'users:update_user'%}">Actualizar Datos</a></li>                
+                  <li><a href="{% url 'users:logout'%}">Logout</a></li> 
                 </ul>
+            </div>
+            </div>
+            <div class="mobile-menu inactive">
+              <ul>
+                <li>
+                  <a href="{% url 'bills:index'%}" class="bill-mob-nav">Facturas</a>
+                </li>
+                <li>
+                  <a href="{% url 'payments:index'%}" class="payment-mob-nav">Pagos</a>
+                </li>
+                <li>
+                  <a href="{% url 'providers:index'%}" class="provider-mob-nav">Proveedores</a>
+                </li>
+                <li>
+                  <a href="{% url 'accounts:index'%}" class="account-mob-nav">Cuentas</a>
+                </li>
+              </ul>
               </div>
         </nav>
     </header>

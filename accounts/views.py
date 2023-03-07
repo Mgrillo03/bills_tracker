@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
-from bills.views import reset_messages
+
+from bills.views import reset_messages, staff_member_required
 
 from .models import Account
 from payments.models import Payment
@@ -17,6 +19,8 @@ def check_name(name,list):
             return False
     return True
 
+
+@login_required
 def index(request):
     accounts_list = Account.objects.all()
     request = reset_messages(request)
@@ -24,6 +28,8 @@ def index(request):
         'accounts_list':accounts_list,
     })
 
+
+@login_required
 def search(request):
     search_field = request.POST['search_field']
     accounts_list = accounts_list.filter(
@@ -37,10 +43,14 @@ def search(request):
         'search_field': search_field
     })
 
+@staff_member_required
+@login_required
 def new_account(request):
     request = reset_messages(request)
     return render(request, 'accounts/new_account.html',{})
 
+@staff_member_required
+@login_required
 def new_account_save(request):
     accounts_list = Account.objects.all()
     name = request.POST['name']
@@ -58,6 +68,8 @@ def new_account_save(request):
 
     return redirect('accounts:index')
 
+
+@login_required
 def account_detail(request, account_id):
     request = reset_messages(request)
     try:
@@ -84,6 +96,7 @@ def account_detail(request, account_id):
             'date_end': today,
         })
 
+@login_required
 def detail_search(request, account_id):
     account = Account.objects.get(pk=account_id)
     payments_list = Payment.objects.filter(account=account)
@@ -123,11 +136,15 @@ def detail_search(request, account_id):
         'date_end': str(date_end_iso),
     })
 
+@staff_member_required
+@login_required
 def update_account(request, account_id):
     account = Account.objects.get(pk=account_id)
     request = reset_messages(request)
     return render(request,'accounts/update_account.html',{'account':account})
 
+@staff_member_required
+@login_required
 def update_account_save(request, account_id):
     accounts_list = Account.objects.all().exclude(pk=account_id)
     new_account_name = request.POST['name']
@@ -147,6 +164,8 @@ def update_account_save(request, account_id):
         request.session['message_shown'] = False
         return redirect('accounts:update_account', account_id)
 
+@staff_member_required
+@login_required
 def delete_account(request,account_id):
     request = reset_messages(request)
     account = Account.objects.get(pk=account_id)
@@ -156,6 +175,8 @@ def delete_account(request,account_id):
         'accounts_list':accounts_list,
         })    
 
+@staff_member_required
+@login_required
 def delete_account_save(request,account_id):
     request = reset_messages(request)
     account = Account.objects.get(pk=account_id)

@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+
 
 from .models import Payment
 from providers.models import Provider
 from bills.models import Bill
-from bills.views import reset_messages, format_number
+from bills.views import reset_messages, format_number, staff_member_required
 from accounts.models import Account
 
 import datetime
 
+@login_required
 def index(request):
     request = reset_messages(request)
     payments_list = Payment.objects.all().order_by('-date')
@@ -16,6 +19,7 @@ def index(request):
         'payments_list':payments_list
         })
 
+@login_required
 def search(request):
     search_field = request.POST['search_field']
     provider_list = Provider.objects.filter(
@@ -57,6 +61,8 @@ def search(request):
         'only_partial': only_partial
     })
 
+@staff_member_required
+@login_required
 def new_payment(request):
     request = reset_messages(request)
     bills_list = Bill.objects.filter(paid='False')
@@ -68,6 +74,8 @@ def new_payment(request):
         'accounts_list': accounts_list,
     })
 
+@staff_member_required
+@login_required
 def new_payment_show_bill(request):
     try:
         bill_id = request.POST['bill_id'].split('-',1)
@@ -90,6 +98,8 @@ def new_payment_show_bill(request):
 
             })
 
+@staff_member_required
+@login_required
 def new_payment_show_bill_id(request,bill_id):
     try:
         bill = Bill.objects.get(pk=bill_id)
@@ -110,6 +120,8 @@ def new_payment_show_bill_id(request,bill_id):
             'accounts_list': accounts_list,
             })
 
+@staff_member_required
+@login_required
 def new_payment_save(request):
     try:
         bill = Bill.objects.get(pk=request.POST['bill_selected'])
@@ -159,6 +171,7 @@ def new_payment_save(request):
         request.session['message_shown'] = False
         return redirect('payments:index')
 
+@login_required
 def payment_detail(request, payment_id):
     try:
         payment = Payment.objects.get(pk=payment_id)
@@ -177,6 +190,8 @@ def payment_detail(request, payment_id):
             'total_paid': total_paid,            
             })
 
+@staff_member_required
+@login_required
 def update_payment(request, payment_id):
     try:
         payment = Payment.objects.get(pk=payment_id)
@@ -194,6 +209,8 @@ def update_payment(request, payment_id):
             'accounts_list': accounts_list,
         })
 
+@staff_member_required
+@login_required
 def update_payment_save(request, payment_id):
     try:
         account = Account.objects.get(name=request.POST['account_name'])
@@ -258,6 +275,8 @@ def update_payment_save(request, payment_id):
         request.session['message_shown'] = False
         return redirect('payments:payment_detail',payment_id)
 
+@staff_member_required
+@login_required
 def delete_payment(request, payment_id):
     try:
         payment = Payment.objects.get(pk=payment_id)
@@ -273,6 +292,8 @@ def delete_payment(request, payment_id):
             'payments_list':payments_list,
             })
 
+@staff_member_required
+@login_required
 def delete_payment_save(request, payment_id):
     request = reset_messages(request)
     payment = Payment.objects.get(pk=payment_id)

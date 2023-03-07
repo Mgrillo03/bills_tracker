@@ -13,11 +13,14 @@ const body = document.querySelector('.bills');
 const navBar = document.querySelector('.navbar');
 const bottomMenu = document.querySelector('.hint');
 const asideMenu = document.querySelector('.mobile-menu');
+const userMenu = document.querySelector('.user-menu');
+const dropdownMenu = document.querySelector('.dropdown-menu');
 
 
 menuBill.addEventListener('click', toggleBottomMenu);
 menuMobile.addEventListener('click', toggleAsideMenu);
 window.addEventListener('load',toggleNavSelected);
+userMenu.addEventListener('click', toggleUserMenu);
 
 
 
@@ -69,3 +72,7 @@ function toggleNavSelected(){
 function numericFilter(txb) {
     txb.value = txb.value.replace(/[^\0-9]/ig, "");
  }
+
+function toggleUserMenu(){
+    dropdownMenu.classList.toggle('inactive')
+}

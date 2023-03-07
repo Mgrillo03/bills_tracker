@@ -10,6 +10,10 @@
     <div class="title">
         <p>Facturas</p>
     </div>
+    {% if request.session.message %}
+        {{request.session.message}}
+    {% endif %}
+    
     <div class="search">
         <form action="{% url 'bills:search' %}" method="post">
             {% csrf_token %}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Sing Up</h1>
+    <form action="{% url 'users:singup_next' %}" method="post">
+        {% csrf_token %}
+        <label for="username">username</label><br>
+        <input type="text" name="username" placeholder="username" required><br>
+        
+        <label for="first_name">Nombre</label><br>
+        <input type="text" name="first_name" placeholder="name" required><br>
+
+        <label for="last_name">Apellido</label><br>
+        <input type="text" name="last_name" placeholder="last name" required><br>
+
+        <label for="email">Email</label><br>
+        <input type="email" name="email" placeholder="email@ejemplo.com" required><br>
+
+        <label for="password">password</label><br>
+        <input type="password" name="password" placeholder="*********" minlength="8" required><br>
+        
+        <label for="confirm_password">Confirm password</label><br>
+        <input type="password" name="confirm_password" placeholder="*********" minlength="8" required><br>
+
+        <label for="is_staff">Admin:</label>
+        <input type="checkbox" name="is_taff" value="True">
+
+        <input type="submit" value="sing up">
+
+
+    </form>
+    {{ request.session.error_message }} <br>
+
+    <a href="{% url 'users:index' %}">Cancelar</a>
+</body>
+</html>
