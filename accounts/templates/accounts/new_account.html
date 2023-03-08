@@ -13,7 +13,6 @@
         <form action="{% url 'accounts:account_created' %}" method="post">
             {% csrf_token %}
             <div class="form-data-payment form-data-account">
-                <input type="hidden" name="bill_selected" value="{{bill_selected.pk}}">
                 <div>
                     <label for="name">Nombre</label>                        
                     <input type="text" name="name" placeholder="name" required>
@@ -24,7 +23,7 @@
                 </div>
    
                 <div class="create-buttons">
-                    <a href="{% url 'accounts:index' %}" class="link-secondary-button" >Cancelar</a>
+                    <a href="{% url 'accounts:index' %}" class="link-secondary-button" >Volver</a>
                     <input type="submit" value="Crear" class="link-primary-button">
                 </div>       
             </div>            

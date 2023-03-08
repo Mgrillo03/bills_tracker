@@ -32,8 +32,8 @@
               <div class="dropdown-menu inactive">
                 <ul>
                   <li><a href="{% url 'users:index'%}">Usuarios</a></li>
-                  <li><a href="{% url 'users:user_detail'%}">Detalle</a></li>
-                  <li><a href="{% url 'users:update_user'%}">Actualizar Datos</a></li>                
+                  <li><a href="{% url 'users:user_detail' request.user.id %}">Detalle</a></li>
+                  <li><a href="{% url 'users:update_user' request.user.id %}">Actualizar Datos</a></li>                
                   <li><a href="{% url 'users:logout'%}">Logout</a></li> 
                 </ul>
             </div>

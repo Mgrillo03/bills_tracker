@@ -1,28 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Index</h1><br>
-    {% for user in users_list %}
-    usuario: {{user.username}} - nombre:{{user.first_name}}<br>
-         <br>
-    {% endfor %}
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
 
-    {% if request.user.is_authenticated %}
-        <a href="{% url 'users:user_detail' %}">User</a><br>
-        <a href="{% url 'users:logout' %}">log out</a>        
-    {% else %}    
-        <a href="{% url 'users:mylogin'%}">log in</a><br>
-        <a href="{% url 'users:singup'%}">sing up</a><br>
+<body>
+ 
+<div class="place p-users"></div>
+<div class="bills">
+    <div class="title">
+        <p>Usuarios</p>
+    </div>
+    {% if request.session.message %}
+        {{request.session.message}}
     {% endif %}
 
+    <div class="bills-container">    
+
+        {% for user in users_list %}
+        <div class="bill-content bill-content-account">
+            
+            <div class="bill-body">
+                <div class="bill-body-sub-left-account">
+                    <div class="bill-detail bill-detail-account">
+                        <p>Nombre:</p>
+                        <p>{{user.first_name}} {{user.last_name}}</p>
+                    </div>
+                    <div class="bill-detail bill-detail-account">
+                        <p>Nickname:</p>
+                        <p>{{user.username}}</p>
+                    </div>
+                </div>
+
+                <div class="bill-body-sub-account">                    
+                    <div class="bill-detail bill-detail-account">
+                        <p>Email:</p>
+                        <p>{{user.email}}</p>
+                    </div>
+                    <div class="bill-detail bill-detail-account">
+                        <p></p>
+                        {% if user.is_staff %}
+                        <p class="paid">Administrador</p>
+                        {% else %}
+                        <p class="debt">Usuario</p>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+
+                <div class="bill-body-buttons">
+                    <a href="{% url 'users:user_detail'  user.id %}" class="link-primary-button">Detalle</a>
+                    <a href="{% url 'users:update_user'  user.id %}" class="link-secondary-button">Editar</a> 
+                </div>
+            </div>
+            <div class="bill-head bill-head-account">
+                <div class="bill-head-left">
+                    <p>{{account.nickname}}</p>                    
+                </div>
+                <div class="bill-head-right">
+                    <figure>
+                        <a href="{% url 'users:delete_user'  user.id %}">
+                            <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                        </a>
+                    </figure>
+                </div>
+            </div>
+        </div>
+         
+        {% endfor %}
+    </div>
+    <div class="add">
+        <div class="hint hint-user inactive">
+            <div>
+                <a href="{% url 'users:singup' %}">
+                <p>Usuario</p>
+                    <figure >                    
+                        <img src="{% static 'bills/images/user.png'  %}" alt="new-account" >
+                    </figure>
+                </a> 
+            </div>              
+        </div>
+        
+        <figure class="figure">            
+            <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+        </figure>
     
-    
-    
+    </div>
+</div>
+
+
 </body>
-</html>
+<script src="{% static 'bills/js/index.js' %}"></script>
+<script src="{% static 'bills/js/main.js' %}"></script>
+{% endblock %}

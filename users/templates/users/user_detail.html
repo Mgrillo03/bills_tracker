@@ -18,11 +18,11 @@
     {{request.session.message}} <br>
     <a href="{% url 'users:index'%}">inicio</a><br>
     <a href="{% url 'users:reset_password' %}">Change password</a><br>
-    <a href="{% url 'users:update_user'  %}">Update</a><br>
+    <a href="{% url 'users:update_user' user.id %}">Update</a><br>
     <br>
     <a href="{% url 'users:logout'%}">Logout</a><br>
     <br>
-    <a href="{% url 'users:delete_user'  %}">Delete</a><br>
+    <a href="{% url 'users:delete_user' user.id %}">Delete</a><br>
     
     <a href="{% url 'users:singup'%}">Crear usuario</a><br>
 

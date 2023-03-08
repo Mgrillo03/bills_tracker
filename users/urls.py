@@ -21,11 +21,11 @@ urlpatterns = [
 
 
     #users/detail/
-    path('detail/', views.user_detail, name='user_detail'),
+    path('<str:user_id>/detail/', views.user_detail, name='user_detail'),
     #users/user_id/updeate
-    path('update/', views.update_user, name='update_user'),
+    path('<str:user_id>/update/', views.update_user, name='update_user'),
     #users/user_id/success
-    path('update-saved/', views.update_user_save, name='update_user_save'),
+    path('<str:user_id>/update-saved/', views.update_user_save, name='update_user_save'),
 
     #users/logout
     path('logout/', views.auth_logout, name='logout'),
@@ -36,8 +36,8 @@ urlpatterns = [
     path('new-password/success/', views.auth_save_new_password, name='save_new_password'),
 
     #users/delete-user/
-    path('delete-user/', views.delete_user, name='delete_user'),
+    path('<str:user_id>/delete-user/', views.delete_user, name='delete_user'),
     #users/delete-user/
-    path('user-deleted/', views.delete_user_save, name='user_deleted'),
+    path('<str:user_id>/user-deleted/', views.delete_user_save, name='user_deleted'),
     
 ]

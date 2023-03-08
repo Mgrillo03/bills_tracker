@@ -7,10 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Delete {{request.user.username}}</h1>
+    <h1>Delete {{user.username}}</h1>
 
 
-    <form action="{% url 'users:user_deleted' %}" method="post">
+    <form action="{% url 'users:user_deleted' user.id%}" method="post">
         {% csrf_token %}
         <label for="username">username</label><br>
         <input type="text" name="username" value="{{user.username}}" readonly><br>
@@ -35,6 +35,6 @@
     
     {{ request.session.error_message }} <br>
     
-    <a href="{% url 'users:user_detail'  %}">Cancelar</a><br>
+    <a href="{% url 'users:user_detail' user.id %}">Cancelar</a><br>
 </body>
 </html>

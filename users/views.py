@@ -32,10 +32,14 @@ def index(request):
         'users_list' : users_list,
     })
 
+@staff_member_required
+@login_required
 def singup(request):
     request = reset_messages(request)
     return render(request,'users/singup.html',{})
 
+@staff_member_required
+@login_required
 def singup_next(request):
     users_list = User.objects.all()
     username = request.POST['username']
@@ -79,9 +83,9 @@ def singup_next(request):
         return redirect('users:singup')
 
 @login_required
-def user_detail(request):
+def user_detail(request, user_id):
     request = reset_messages(request)
-    user = User.objects.get(id=request.user.id)
+    user = User.objects.get(id=user_id)
     print(user.is_staff)
     return render(request, 'users/user_detail.html', {
         'user':user,
@@ -147,15 +151,15 @@ def auth_save_new_password(request):
 
 @staff_member_required
 @login_required
-def update_user(request):
-    user = User.objects.get(id=request.user.id)
+def update_user(request, user_id):
     request = reset_messages(request)
+    user = User.objects.get(id=user_id)
     return render(request,'users/update_user.html',{'user':user})
 
 @staff_member_required
 @login_required
-def update_user_save(request):
-    users_list = User.objects.all().exclude(pk=request.user.id)
+def update_user_save(request, user_id):
+    users_list = User.objects.all().exclude(pk=user_id)
     new_username = request.POST['username']
     new_username = new_username.lower()
     username_unique = check_username(new_username, users_list)
@@ -164,7 +168,7 @@ def update_user_save(request):
 
    
     if username_unique and email_unique:
-        user = User.objects.get(id=request.user.id)
+        user = User.objects.get(id=user_id)
         user.username = new_username
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
@@ -177,33 +181,33 @@ def update_user_save(request):
         user.save()
         request.session['success_message'] = 'Cambios guardados satisfactoriamente'
         request.session['message_shown'] = False
-        return redirect('users:update_user')
+        return redirect('users:update_user', user_id)
     elif not username_unique: 
         request.session['error_message'] = f'El username {new_username} no esta disponible'
         request.session['message_shown'] = False
-        return redirect('users:update_user')
+        return redirect('users:update_user', user_id)
     elif not email_unique:
         request.session['error_message'] = f'El email {email} no esta disponible'
         request.session['message_shown'] = False
-        return redirect('users:update_user')
+        return redirect('users:update_user', user_id)
 
 @staff_member_required
 @login_required
-def delete_user(request):
+def delete_user(request, user_id):
     request = reset_messages(request)
-    return render(request, 'users/delete_user.html',{})
+    user = User.objects.get(pk=user_id)
+    return render(request, 'users/delete_user.html',{'user':user})
 
 @staff_member_required
 @login_required
-def delete_user_save(request):
-    user = User.objects.get(pk=request.user)
+def delete_user_save(request, user_id):
+    user = User.objects.get(pk=user_id)
     password = request.POST['password']
     if user.check_password(password):
-        logout(request)
         user.delete()
         request.session['success_message'] = 'Usuario eliminado satisfactoriamente'
         request.session['message_shown'] = False        
-        return render(request, 'users/delete_user_saved.html',{})
+        return redirect('users:index')
     else:
         request.session['error_message'] = 'La contraseña es incorrecta'
         request.session['message_shown'] = False        
