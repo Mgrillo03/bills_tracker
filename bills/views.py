@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+
 
 
 from .models import Bill
@@ -7,6 +9,17 @@ from providers.models import Provider
 from payments.models import Payment
 
 import datetime
+
+def staff_member_required(view_func):
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_staff :
+            return view_func(request, *args, **kwargs)
+        else:
+            request.session['message'] = f'No tienes permisos para esta funcion'
+            request.session['message_shown'] = False
+            referer = request.META.get('HTTP_REFERER')
+            return redirect(referer or 'bills:index')
+    return wrapper
 
 def format_number(string):
     string = string.replace('.','')
@@ -40,13 +53,19 @@ def reset_messages(request):
     except KeyError:
         request.session['message_shown'] = False
         request.session['message'] = ''
+        request.session['success_message'] = ''
+        request.session['error_message'] = ''
+
     else:
         if not request.session['message_shown'] :
             request.session['message_shown'] = True
         else:
             request.session['message'] = ''
+            request.session['success_message'] = ''
+            request.session['error_message'] = ''
         return request
 
+@login_required
 def index(request):
     bills_list = Bill.objects.all().order_by('-overdue','paid','due_date')
     check_overdue_bill(bills_list)
@@ -55,6 +74,7 @@ def index(request):
         'bills_list': bills_list,
     })
 
+@login_required
 def search(request):
     date_start = request.POST['date_start']
     date_end = request.POST['date_end']
@@ -98,6 +118,8 @@ def search(request):
         'date_end': date_end
     })
 
+@staff_member_required
+@login_required
 def new_bill(request):
     request = reset_messages(request)
     providers_list = Provider.objects.all()
@@ -107,6 +129,8 @@ def new_bill(request):
         'date' : date,        
         })
 
+@staff_member_required
+@login_required
 def new_bill_show_provider(request):
     try:
         provider = Provider.objects.get(rif=request.POST['provider_rif'])
@@ -127,6 +151,8 @@ def new_bill_show_provider(request):
             'provider_selected':provider, 
             })
 
+@staff_member_required
+@login_required
 def new_bill_calc(request):
     try:
         provider = Provider.objects.get(rif=request.POST['provider_rif'])
@@ -213,6 +239,8 @@ def new_bill_calc(request):
             request.session['message_shown'] = False        
             return redirect('bills:new_bill')            
 
+@staff_member_required
+@login_required
 def new_bill_save(request):
     provider = Provider.objects.get(rif=request.POST['provider_rif'])
     emission_date = datetime.date.fromisoformat(request.POST['emission_date'])
@@ -250,6 +278,7 @@ def new_bill_save(request):
     request.session['message_shown'] = False
     return render(request,'bills/bill_created.html',{'bill':bill})    
 
+@login_required
 def bill_detail(request, bill_id):
     request = reset_messages(request)
     try:
@@ -265,6 +294,8 @@ def bill_detail(request, bill_id):
             'payments_list': payments_list,
         })
 
+@staff_member_required
+@login_required
 def update_bill(request, bill_id):
     bill = Bill.objects.get(pk=bill_id)
     emission_date = bill.emission_date.isoformat()
@@ -276,6 +307,8 @@ def update_bill(request, bill_id):
         'due_date':due_date,
         })
 
+@staff_member_required
+@login_required
 def update_bill_calc(request, bill_id):
     bill = Bill.objects.get(pk=bill_id)
     bills_list = Bill.objects.filter(provider=bill.provider).exclude(pk=bill_id)
@@ -354,6 +387,8 @@ def update_bill_calc(request, bill_id):
         request.session['message_shown'] = False        
         return redirect('bills:update_bill', bill_id)
 
+@staff_member_required
+@login_required
 def update_bill_save(request, bill_id):
     bill = Bill.objects.get(pk=bill_id)
     #update provider debt
@@ -392,6 +427,8 @@ def update_bill_save(request, bill_id):
     request.session['message_shown'] = False 
     return redirect('bills:bill_detail', bill_id)
 
+@staff_member_required
+@login_required
 def delete_bill(request,bill_id):
     request = reset_messages(request)
     bills_list = Bill.objects.all().order_by('paid','due_date')
@@ -401,6 +438,8 @@ def delete_bill(request,bill_id):
         'bills_list':bills_list
         })    
 
+@staff_member_required
+@login_required
 def delete_bill_save(request,bill_id):
     request = reset_messages(request)
     bill = Bill.objects.get(pk=bill_id)

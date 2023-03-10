@@ -9,6 +9,9 @@
         <div class="title">
             <p>Detalle de Factura</p>
         </div>
+        {% if request.session.message %}
+        {{request.session.message}}
+        {% endif %}
         <div class="general-details">
             <div class="general-details-left">
                 <div>

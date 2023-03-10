@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'bills.apps.BillsConfig',
     'payments.apps.PaymentsConfig',
     'accounts.apps.AccountsConfig',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +143,16 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+
+LOGIN_REDIRECT_URL = '/users/'
+LOGOUT_REDIRECT_URL = '/users'#"{% url 'users:index' %}"
+LOGIN_URL = "/users/login/"
+
+# EMAIL CONFIGURATION
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')

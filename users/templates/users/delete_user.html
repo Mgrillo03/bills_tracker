@@ -1,0 +1,148 @@
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+
+<body>
+ 
+<div class="place p-users"></div>
+<div class="bills">
+    <div class="title">
+        <p>Usuarios</p>
+    </div>
+    {% if request.session.message %}
+        {{request.session.message}}
+    {% endif %}
+
+    <div class="bills-container">    
+
+        {% for user in users_list %}
+        <div class="bill-content bill-content-account">            
+            <div class="bill-body">
+                <div class="bill-body-sub-left-account">
+                    <div class="bill-detail bill-detail-account">
+                        <p>Nombre:</p>
+                        <p>{{user.first_name}} {{user.last_name}}</p>
+                    </div>
+                    <div class="bill-detail bill-detail-account">
+                        <p>Nickname:</p>
+                        <p>{{user.username}}</p>
+                    </div>
+                </div>
+
+                <div class="bill-body-sub-account">                    
+                    <div class="bill-detail bill-detail-account">
+                        <p>Email:</p>
+                        <p>{{user.email}}</p>
+                    </div>
+                    <div class="bill-detail bill-detail-account">
+                        <p></p>
+                        {% if user.is_staff %}
+                        <p class="paid">Administrador</p>
+                        {% else %}
+                        <p class="debt">Usuario</p>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+
+                <div class="bill-body-buttons">
+                    <a href="{% url 'users:user_detail'  user.id %}" class="link-primary-button">Detalle</a>
+                    <a href="{% url 'users:update_user'  user.id %}" class="link-secondary-button">Editar</a>
+                    <a href="{% url 'users:reset_password'  user.id %}" class="link-secondary-button">Contraseña</a> 
+
+                </div>
+            </div>
+            <div class="bill-head bill-head-account">
+                <div class="bill-head-left">
+                    <p>{{account.nickname}}</p>                    
+                </div>
+                <div class="bill-head-right">
+                    <figure>
+                        <a href="{% url 'users:delete_user'  user.id %}">
+                            <img src="{% static 'bills/images/trash.png'  %}" alt="trash" class="trash">
+                        </a>
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="delete-menu ">
+            <div class="delete-content">    
+                <div class="second-title">
+                    <p>Estas a punto de eliminar el usuario  "{{user.first_name}} {{user.last_name}}" permanentemente</p>
+                </div> 
+                <p>Deseas continuar?</p> 
+                <div>
+                    <a href="{% url 'users:index' %}" class="link-secondary-button hide-delete-menu">No</a>
+                    <a href="{% url 'users:user_deleted' user.id %}" class="link-primary-button">Si</a>  
+                </div>
+            </div>
+        </div>
+         
+        {% endfor %}
+    </div>
+    <div class="add">
+        <div class="hint hint-user inactive">
+            <div>
+                <a href="{% url 'users:singup' %}">
+                <p>Usuario</p>
+                    <figure >                    
+                        <img src="{% static 'bills/images/user.png'  %}" alt="new-account" >
+                    </figure>
+                </a> 
+            </div>              
+        </div>
+        
+        <figure class="figure">            
+            <img src="{% static 'bills/images/plus.png'  %}" alt="new-bill">
+        </figure>
+    
+    </div>
+</div>
+
+</body>
+<script src="{% static 'bills/js/index.js' %}"></script>
+<script src="{% static 'bills/js/main.js' %}"></script>
+{% endblock %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Delete {{user.username}}</h1>
+
+
+    <form action="{% url 'users:user_deleted' user.id%}" method="post">
+        {% csrf_token %}
+        <label for="username">username</label><br>
+        <input type="text" name="username" value="{{user.username}}" readonly><br>
+        
+        <label for="first_name">Nombre</label><br>
+        <input type="text" name="first_name" value="{{user.first_name}}" readonly><br>
+
+        <label for="last_name">Apellido</label><br>
+        <input type="text" name="last_name" value="{{user.last_name }}" readonly><br>
+
+        <label for="email">Email</label><br>
+        <input type="email" name="email" value="{{user.email}}" readonly><br>
+
+        <h3>Estas a punto de eliminar permanentemente el usuario, esto no se puede desahacer</h3>
+        <h4>Seguro que deseas continuar?</h4>
+
+        <label for="password">password</label><br>
+        <input type="password" name="password" placeholder="*********" minlength="8" required><br>
+
+        <input type="submit" value="DELETE">
+    </form>
+    
+    {{ request.session.error_message }} <br>
+    
+    <a href="{% url 'users:user_detail' user.id %}">Cancelar</a><br>
+</body>
+</html>

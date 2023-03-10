@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 
-from bills.views import reset_messages, format_number
+from bills.views import reset_messages, format_number, staff_member_required
 
 from .models import Provider
 
@@ -15,6 +16,7 @@ def check_rif(rif,list):
             return False
     return True
 
+@login_required
 def index(request):
     providers_list = Provider.objects.all()
     request = reset_messages(request)    
@@ -22,7 +24,7 @@ def index(request):
         'providers_list':providers_list,
     })
 
-
+@login_required
 def search(request):
     search_field = request.POST['search_field']
     only_debt = request.POST.get('only_debt',False)    
@@ -44,10 +46,14 @@ def search(request):
         'only_debt': only_debt,
     })
 
+@staff_member_required
+@login_required
 def new_provider(request):
     request = reset_messages(request)
     return render(request, 'providers/new_provider.html',{})
 
+@staff_member_required
+@login_required
 def new_provider_save(request):
     providers_list = Provider.objects.all()
     rif = request.POST['rif']
@@ -68,6 +74,7 @@ def new_provider_save(request):
 
     return render(request,'providers/provider_created.html',{'provider':provider})
 
+@login_required
 def provider_detail(request, provider_id):
     request = reset_messages(request)
     try:
@@ -81,13 +88,15 @@ def provider_detail(request, provider_id):
             'provider': provider,
         })
 
-
+@staff_member_required
+@login_required
 def update_provider(request, provider_id):
     provider = Provider.objects.get(pk=provider_id)
     request = reset_messages(request)
     return render(request,'providers/update_provider.html',{'provider':provider})
 
-
+@staff_member_required
+@login_required
 def update_provider_save(request, provider_id):
     providers_list = Provider.objects.all().exclude(pk=provider_id)
     new_provider_rif = request.POST['rif']
@@ -113,6 +122,8 @@ def update_provider_save(request, provider_id):
         request.session['message_shown'] = False
         return redirect('providers:update_provider', provider_id)
 
+@staff_member_required
+@login_required
 def delete_provider(request,provider_id):
     request = reset_messages(request)
     provider = Provider.objects.get(pk=provider_id)
@@ -122,6 +133,8 @@ def delete_provider(request,provider_id):
         'providers_list':providers_list,
         })    
 
+@staff_member_required
+@login_required
 def delete_provider_save(request,provider_id):
     request = reset_messages(request)
     provider = Provider.objects.get(pk=provider_id)

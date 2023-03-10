@@ -8,6 +8,9 @@
     <div class="title">
         <p>Pagos</p>
     </div>
+    {% if request.session.message %}
+        {{request.session.message}}
+    {% endif %}
     <div class="search search-payment">
         <form action="{% url 'payments:search' %}" method="post">
             {% csrf_token %}

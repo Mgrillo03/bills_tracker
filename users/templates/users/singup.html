@@ -1,0 +1,58 @@
+{% extends 'bills/header.html' %}
+{% block content %}
+{% load static %}
+
+<div class="place n-bill"></div>
+<body>
+<div class="new-payment">
+    <div class="title">
+        <p>Nueva Cuenta</p>
+    </div>
+
+    <div class="form-body  form-body-user">
+        <form action="{% url 'users:singup_next' %}" method="post">
+            {% csrf_token %}
+            <div class="form-data-payment form-data-user">
+                <div>
+                    <label for="username">username</label>
+                    <input type="text" name="username" placeholder="username" required>
+                </div>
+                <div>
+                    <label for="first_name">Nombre</label>
+                    <input type="text" name="first_name" placeholder="name" required>
+                    
+                </div>
+                <div>
+                    <label for="last_name">Apellido</label>
+                    <input type="text" name="last_name" placeholder="last name" required>
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="email@ejemplo.com" required>
+                </div>
+                <div>
+                    <label for="password">password</label>
+                    <input type="password" name="password" placeholder="*********" minlength="8" required>
+                </div>
+                <div>
+                    <label for="confirm_password">Confirm password</label>
+                    <input type="password" name="confirm_password" placeholder="*********" minlength="8" required>
+                </div>
+                <div>
+                    <label for="is_staff">Admin:</label>
+                    <input type="checkbox" name="is_staff" value="True">
+                </div>
+   
+                <div class="create-buttons">
+                    <a href="{% url 'users:index' %}" class="link-secondary-button" >Volver</a>
+                    <input type="submit" value="Crear" class="link-primary-button">
+                </div>       
+            </div>            
+        </form>
+    </div>
+    {{ request.session.message }} 
+
+</div>
+</body>
+<script src="{% static 'bills/js/new_bill.js' %}"></script>
+{% endblock %}
