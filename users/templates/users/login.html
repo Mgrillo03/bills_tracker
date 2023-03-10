@@ -71,5 +71,9 @@
 </div>
 </form>
 {{ request.session.error_message }}<br>
+<<<<<<< HEAD
 <a href="{% url 'users:reset_password' request.user.id %}">Olvide Contraseña</a><br>
+=======
+<a href="{% url 'users:reset_password'%}">Olvide Contraseña</a><br>
+>>>>>>> 8e57cb5553a68b1868ae8b6d4cd8205bb83ccfe9
 <a href="{% url 'users:index'%}">inicio</a>

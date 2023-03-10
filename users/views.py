@@ -26,7 +26,7 @@ def check_email(email, users_list):
 @staff_member_required
 @login_required
 def index(request):    
-    #request = reset_messages(request)
+    request = reset_messages(request)
     users_list = User.objects.all()
     return render(request,'users/index.html',{
         'users_list' : users_list,
