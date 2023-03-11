@@ -221,7 +221,7 @@ def delete_user_save(request, user_id):
         request.session['message_shown'] = False        
         return redirect('users:index')
     else: 
-        request.session['error_message'] = 'No se puede eliminar el usuario donde esta loggeado'
+        request.session['error_message'] = 'No se puede eliminar el usuario de esta sesion'
         request.session['message_shown'] = False        
         return redirect('users:index')
    

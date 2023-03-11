@@ -1198,7 +1198,7 @@
         
         text-align: center;
         display: block;
-        background-color: red;
+        background-color: #ff4343;
         color: white;
         border-radius: 8px;
         padding: 15px;
@@ -1207,7 +1207,7 @@
         
         text-align: center;
         display: block;
-        background-color: rgb(2, 156, 2);
+        background-color: #31d086;
         color: white;
         border-radius: 8px;
         padding: 15px;

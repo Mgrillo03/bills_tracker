@@ -15,7 +15,7 @@ def staff_member_required(view_func):
         if request.user.is_staff :
             return view_func(request, *args, **kwargs)
         else:
-            request.session['message'] = f'No tienes permisos para esta funcion'
+            request.session['error_message'] = f'No tienes permisos para esta funcion'
             request.session['message_shown'] = False
             referer = request.META.get('HTTP_REFERER')
             return redirect(referer or 'bills:index')
@@ -138,7 +138,7 @@ def new_bill_show_provider(request):
         print('error')
 
         request = reset_messages(request)
-        request.session['message'] = 'Por favor seleccione un proveedor de la lista'
+        request.session['error_message'] = 'Por favor seleccione un proveedor de la lista'
         request.session['message_shown'] = False
         return redirect('bills:new_bill')
     else:
@@ -158,7 +158,7 @@ def new_bill_calc(request):
         provider = Provider.objects.get(rif=request.POST['provider_rif'])
     except (KeyError, Provider.DoesNotExist):
         request = reset_messages(request)
-        request.session['message'] = 'Por favor seleccione un proveedor de la lista'
+        request.session['error_message'] = 'Por favor seleccione un proveedor de la lista'
         request.session['message_shown'] = False
         return redirect('bills:new_bill')
     else:
@@ -235,7 +235,7 @@ def new_bill_calc(request):
             })
             
         else:
-            request.session['message'] = f'Ya existe una factura de este proveedor con el codigo: {bill_number}'
+            request.session['error_message'] = f'Ya existe una factura de este proveedor con el codigo: {bill_number}'
             request.session['message_shown'] = False        
             return redirect('bills:new_bill')            
 
@@ -274,7 +274,7 @@ def new_bill_save(request):
         rest_to_pay_dollar = format_number(request.POST['total_to_pay_dollar']),
         note = request.POST['note'],
     )
-    request.session['message'] = f'Factura N°{bill_number} creada existosamente'
+    request.session['success_message'] = f'Factura N°{bill_number} creada existosamente'
     request.session['message_shown'] = False
     return render(request,'bills/bill_created.html',{'bill':bill})    
 
@@ -284,7 +284,7 @@ def bill_detail(request, bill_id):
     try:
         bill = Bill.objects.get(pk=bill_id)
     except (KeyError, Bill.DoesNotExist):
-        request.session['message'] = 'No se encontro la factura'
+        request.session['error_message'] = 'No se encontro la factura'
         request.session['message_shown'] = False
         return redirect('bills:index')
     else:
@@ -383,7 +383,7 @@ def update_bill_calc(request, bill_id):
             })                  
 
     else : 
-        request.session['message'] = f'Ya existe una factura de este proveedor con el codigo: {new_bill_number}'
+        request.session['error_message'] = f'Ya existe una factura de este proveedor con el codigo: {new_bill_number}'
         request.session['message_shown'] = False        
         return redirect('bills:update_bill', bill_id)
 
@@ -423,7 +423,7 @@ def update_bill_save(request, bill_id):
     bill.note = request.POST['note']   
     bill.save()
     
-    request.session['message'] = 'Cambios guardados satisfactoriamente'
+    request.session['success_message'] = 'Cambios guardados satisfactoriamente'
     request.session['message_shown'] = False 
     return redirect('bills:bill_detail', bill_id)
 
@@ -446,6 +446,6 @@ def delete_bill_save(request,bill_id):
     bill.provider.dollar_debt = round(bill.provider.dollar_debt - bill.rest_to_pay_dollar,2)
     bill.provider.save()
     bill.delete()
-    request.session['message'] = 'Factura eliminado satisfactoriamente'
+    request.session['success_message'] = 'Factura eliminado satisfactoriamente'
     request.session['message_shown'] = False
     return redirect('bills:index')    
