@@ -68,12 +68,12 @@
         <div class="delete-menu ">
             <div class="delete-content">    
                 <div class="second-title">
-                    <p>Estas a punto de eliminar el usuario  "{{user.first_name}} {{user.last_name}}" permanentemente</p>
+                    <p>Estas a punto de eliminar el usuario  "{{user_d.first_name}} {{user_d.last_name}}" permanentemente</p>
                 </div> 
                 <p>Deseas continuar?</p> 
                 <div>
                     <a href="{% url 'users:index' %}" class="link-secondary-button hide-delete-menu">No</a>
-                    <a href="{% url 'users:user_deleted' user.id %}" class="link-primary-button">Si</a>  
+                    <a href="{% url 'users:user_deleted' user_d.id %}" class="link-primary-button">Si</a>  
                 </div>
             </div>
         </div>

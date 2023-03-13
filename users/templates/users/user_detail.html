@@ -17,7 +17,7 @@
     <br><br>
     {{request.session.message}} <br>
     <a href="{% url 'users:index'%}">inicio</a><br>
-    <a href="{% url 'users:reset_password' %}">Change password</a><br>
+    <a href="{% url 'users:reset_password' user.id %}">Change password</a><br>
     <a href="{% url 'users:update_user' user.id %}">Update</a><br>
     <br>
     <a href="{% url 'users:logout'%}">Logout</a><br>

@@ -207,7 +207,7 @@ def delete_user(request, user_id):
     users_list = User.objects.all()
     
     return render(request, 'users/delete_user.html',{
-        'user':user,
+        'user_d':user,
         'users_list': users_list
         })
 
