@@ -9,6 +9,17 @@
     <div class="title">
         <p>Cuentas</p>
     </div>
+    {% if request.session.error_message %}
+    <div class="error_message">
+        <p>{{request.session.error_message}}</p>
+    </div>
+    {% endif %}
+    {% if request.session.success_message %}
+    <div class="success_message">
+        <p>{{request.session.success_message}}</p>
+    </div>
+    {% endif %}
+    
     <div class="search ">
         <form action="{% url 'accounts:search' %}" method="post">
             {% csrf_token %}

@@ -116,6 +116,9 @@
     .dropdown-menu ul li a:hover{
         color: var(--secondary-pink);
     }
+    .dropdown-menu ul li:nth-child(4) a{
+        color:#ff4343;
+    }
 
     .mobile-menu{
         position: fixed;
@@ -301,6 +304,9 @@
         border: var(--primary-pink) 2px solid;
         text-decoration: none;
     }
+    .detail-users-buttons a{
+        margin-left: 5px;
+    }
     .form-data-payment div:nth-child(7) a{
         margin-top: 10px;
     }
@@ -421,6 +427,9 @@
         margin-bottom: 20px;
         margin-top: 20px;
         padding-top: 15px;
+    }
+    .detail-users-title{
+        margin-top: 70px;
     }
     .title p{
         color: var(--secondary-pink);
@@ -1202,6 +1211,8 @@
         color: white;
         border-radius: 8px;
         padding: 15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     .success_message{
         
@@ -1211,6 +1222,8 @@
         color: white;
         border-radius: 8px;
         padding: 15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 /* responsive */
     @media (max-width: 640px) {
@@ -1221,7 +1234,7 @@
             display: none;
         }
         nav{
-            justify-content: left;
+            justify-content: space-between;
         }
         .bills-container{
             width: 100%;
@@ -1233,12 +1246,18 @@
         .bill-content-account{
             height: 170px;
         }
+        .bill-content-users{
+            height: 260px;
+        }
         .bill-content-p{
             height: 350px;
             width: 90%;
         }
         .bill-body{
             flex-wrap: wrap;
+        }
+        .users-body{
+            flex-direction: column;
         }
         .bill-head{
             height: 70px;
@@ -1299,6 +1318,18 @@
         .link-secondary-button{
             width: 70px;
         }
+        .users-body-left{
+            width: 100%;
+        }
+        .users-head{
+            height: 40px;
+        }
+        .users-body-buttons{
+            width: 100%;
+        }
+        .users-body-buttons a:nth-child(3){
+            width: 120px;
+        }
 
 /*details responsive*/
         .details{
@@ -1314,6 +1345,13 @@
         }
         .title{
             width: 95%;
+        }
+        .users-title,
+        .detail-users-title{
+            height: auto;
+        }
+        .detail-users-title{
+            margin-top: 50px;
         }
         .general-details{
             margin-top: 50px;
@@ -1428,6 +1466,10 @@
         .form-body{
             width: 90%;
         }
+        .users-form-body{
+            width: 85%;
+            height: 370px;
+        }
         .form-body-payment{
             height: 550px;
         }
@@ -1438,6 +1480,10 @@
             height: 120px;
             flex-wrap: wrap;
             width: 100%;
+        }
+        .form-body-user{
+            width: 80%;
+            padding: 30px 20px 30px 20px;
         }
         .form-provider div{
             justify-content: center;

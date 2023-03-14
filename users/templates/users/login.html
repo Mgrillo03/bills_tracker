@@ -27,53 +27,17 @@
                     <a href="{% url 'users:index' %}" class="link-secondary-button" >Volver</a>
                     <input type="submit" value="Login" class="link-primary-button">
                 </div>       
+                {% if request.session.error_message %}
+   
             </div>            
         </form>
     </div>
-    {{ request.session.message }} 
+    <div class="error_message">
+        <p>{{request.session.error_message}}</p>
+    </div>
+    {% endif %}
 
 </div>
 </body>
 <script src="{% static 'bills/js/new_bill.js' %}"></script>
 {% endblock %}
-
-
-
-
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
-{% if error_message %}
-{{error_message}}
-{% endif %}
-
-<form method="post" action="{% url 'users:login_next' %}">
-{% csrf_token %}
-
-<label for="username">username</label><br>
-<input type="text" name="username" placeholder="username" required><br>
-
-<label for="password">password</label><br>
-<input type="password" name="password" placeholder="*********" minlength="8" required><br>
-
-<div>
-  <input type="submit" value="login" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</div>
-</form>
-{{ request.session.error_message }}<br>
-<<<<<<< HEAD
-<a href="{% url 'users:reset_password' request.user.id %}">Olvide Contraseña</a><br>
-=======
-<a href="{% url 'users:reset_password'%}">Olvide Contraseña</a><br>
->>>>>>> 8e57cb5553a68b1868ae8b6d4cd8205bb83ccfe9
-<a href="{% url 'users:index'%}">inicio</a>

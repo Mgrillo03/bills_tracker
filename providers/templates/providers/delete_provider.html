@@ -9,6 +9,18 @@
     <div class="title">
         <p>Proveedores</p>
     </div>
+
+    {% if request.session.error_message %}
+    <div class="error_message">
+        <p>{{request.session.error_message}}</p>
+    </div>
+    {% endif %}
+    {% if request.session.success_message %}
+    <div class="success_message">
+        <p>{{request.session.success_message}}</p>
+    </div>
+    {% endif %}
+    
     <div class="bills-container">    
 
         {% for provider in providers_list %}

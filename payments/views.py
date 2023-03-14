@@ -82,7 +82,7 @@ def new_payment_show_bill(request):
         bill = Bill.objects.get(pk=bill_id[1])
     except (KeyError, Bill.DoesNotExist):
         request = reset_messages(request)
-        request.session['message'] = 'Por favor seleccione una factura de la lista'
+        request.session['error_message'] = 'Por favor seleccione una factura de la lista'
         request.session['message_shown'] = False
         return redirect('payments:new_payment')
     else:
@@ -105,7 +105,7 @@ def new_payment_show_bill_id(request,bill_id):
         bill = Bill.objects.get(pk=bill_id)
     except (KeyError, Bill.DoesNotExist):
         request = reset_messages(request)
-        request.session['message'] = 'Por favor seleccione una factura de la lista'
+        request.session['error_message'] = 'Por favor seleccione una factura de la lista'
         request.session['message_shown'] = False
         return redirect('payments:new_payment')
     else:
@@ -128,7 +128,7 @@ def new_payment_save(request):
         account = Account.objects.get(name=request.POST['account_name'])
     except (KeyError, Bill.DoesNotExist):
         request = reset_messages(request)
-        request.session['message'] = 'Por favor seleccione elementos de la lista'
+        request.session['error_message'] = 'Por favor seleccione elementos de la lista'
         request.session['message_shown'] = False
         return redirect('payments:new_payment')
     else:
@@ -167,7 +167,7 @@ def new_payment_save(request):
             transfer_id = request.POST['transfer_id'],
             total_dollar = total_amount_dollar
         )
-        request.session['message'] = 'Pago creado de manera exitosa'
+        request.session['success_message'] = 'Pago creado de manera exitosa'
         request.session['message_shown'] = False
         return redirect('payments:index')
 
@@ -177,7 +177,7 @@ def payment_detail(request, payment_id):
         payment = Payment.objects.get(pk=payment_id)
     except (KeyError, Payment.DoesNotExist):
         request = reset_messages(request)
-        request.session['message'] = 'No se encontro el pago'
+        request.session['error_message'] = 'No se encontro el pago'
         request.session['message_shown'] = False
         return redirect('payments:index')
     else:
@@ -197,7 +197,7 @@ def update_payment(request, payment_id):
         payment = Payment.objects.get(pk=payment_id)
     except (KeyError, Payment.DoesNotExist):
         request = reset_messages(request)
-        request.session['message'] = 'No se encontro el pago'
+        request.session['error_message'] = 'No se encontro el pago'
         request.session['message_shown'] = False
         return redirect('payments:index')
     else:
@@ -216,7 +216,7 @@ def update_payment_save(request, payment_id):
         account = Account.objects.get(name=request.POST['account_name'])
     except (KeyError, Payment.DoesNotExist):
         request = reset_messages(request)
-        request.session['message'] = 'Por favor seleccione una cuenta de la lista'
+        request.session['error_message'] = 'Por favor seleccione una cuenta de la lista'
         request.session['message_shown'] = False
         return redirect('payments:update_payment')
     else:
@@ -271,7 +271,7 @@ def update_payment_save(request, payment_id):
         payment.total_dollar = new_total_amount_dollar
         payment.save()
         
-        request.session['message'] = 'Cambios guardados'
+        request.session['success_message'] = 'Cambios guardados'
         request.session['message_shown'] = False
         return redirect('payments:payment_detail',payment_id)
 
@@ -282,7 +282,7 @@ def delete_payment(request, payment_id):
         payment = Payment.objects.get(pk=payment_id)
     except (KeyError, Payment.DoesNotExist):
         request = reset_messages(request)
-        request.session['message'] = 'No se encontro el pago'
+        request.session['error_message'] = 'No se encontro el pago'
         request.session['message_shown'] = False
         return redirect('payments:index')
     else:
@@ -307,6 +307,6 @@ def delete_payment_save(request, payment_id):
     payment.bill.provider.save()
 
     payment.delete()
-    request.session['message'] = 'Pago eliminado'
+    request.session['success_message'] = 'Pago eliminado'
     request.session['message_shown'] = False
     return redirect('payments:index')

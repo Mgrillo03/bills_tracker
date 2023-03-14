@@ -67,10 +67,10 @@ def new_provider_save(request):
         taxtype = taxtype.replace('%','')
         dollar_debt = round(format_number(request.POST['dollar_debt']),2)
         provider = Provider.objects.create(name=name, rif=rif, nickname=nickname, taxtype=taxtype, dollar_debt=dollar_debt)
-        request.session['message'] = f'Usuario {name} creado existosamente'
+        request.session['success_message'] = f'Usuario {name} creado existosamente'
         request.session['message_shown'] = False
     else:
-        request.session['message'] = 'Ya existe un usuario con ese RIF'
+        request.session['error_message'] = 'Ya existe un usuario con ese RIF'
 
     return render(request,'providers/provider_created.html',{'provider':provider})
 
@@ -80,7 +80,7 @@ def provider_detail(request, provider_id):
     try:
         provider = Provider.objects.get(pk=provider_id)
     except (KeyError, Provider.DoesNotExist):
-        request.session['message'] = 'No se encontro el proveedor'
+        request.session['error_message'] = 'No se encontro el proveedor'
         request.session['message_shown'] = False
         return redirect('providers:index')
     else:
@@ -114,11 +114,11 @@ def update_provider_save(request, provider_id):
         ### crear pago cuando se modifique la deuda
 
         provider.save()
-        request.session['message'] = 'Cambios guardados satisfactoriamente'
+        request.session['success_message'] = 'Cambios guardados satisfactoriamente'
         request.session['message_shown'] = False
         return redirect('providers:update_provider', provider_id)
     else : 
-        request.session['message'] = f'El RIF {new_provider_rif} no esta disponible'
+        request.session['error_message'] = f'El RIF {new_provider_rif} no esta disponible'
         request.session['message_shown'] = False
         return redirect('providers:update_provider', provider_id)
 
@@ -139,7 +139,7 @@ def delete_provider_save(request,provider_id):
     request = reset_messages(request)
     provider = Provider.objects.get(pk=provider_id)
     provider.delete()
-    request.session['message'] = 'Proveedor eliminado satisfactoriamente'
+    request.session['success_message'] = 'Proveedor eliminado satisfactoriamente'
     request.session['message_shown'] = False
     return redirect('providers:index')    
 

@@ -8,6 +8,16 @@
     <div class="title">
         <p>Editar Factura</p>
     </div>
+    {% if request.session.error_message %}
+        <div class="error_message">
+            <p>{{request.session.error_message}}</p>
+        </div>
+        {% endif %}
+        {% if request.session.success_message %}
+        <div class="success_message">
+            <p>{{request.session.success_message}}</p>
+        </div>
+        {% endif %}
 
     <form action="{% url 'bills:new_bill_show_provider' %}" method="post">
     {% csrf_token %}

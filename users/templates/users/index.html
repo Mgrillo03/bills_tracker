@@ -9,11 +9,6 @@
     <div class="title">
         <p>Usuarios</p>
     </div>
-    {% if request.session.message %}
-        {{request.session.message}}
-        {{request.session.message}}
-        
-        {% endif %}
     {% if request.session.error_message %}
     <div class="error_message">
         <p>{{request.session.error_message}}</p>
@@ -28,10 +23,10 @@
     <div class="bills-container">    
 
         {% for user in users_list %}
-        <div class="bill-content bill-content-account">
+        <div class="bill-content bill-content-account bill-content-users">
             
-            <div class="bill-body">
-                <div class="bill-body-sub-left-account">
+            <div class="bill-body users-body">
+                <div class="bill-body-sub-left-account users-body-left">
                     <div class="bill-detail bill-detail-account">
                         <p>Nombre:</p>
                         <p>{{user.first_name}} {{user.last_name}}</p>
@@ -43,7 +38,7 @@
                 </div>
 
                 <div class="bill-body-sub-account">                    
-                    <div class="bill-detail bill-detail-account">
+                    <div class="bill-detail bill-detail-account bill-detail-users">
                         <p>Email:</p>
                         <p>{{user.email}}</p>
                     </div>
@@ -58,14 +53,14 @@
                     </div>
                 </div>
 
-                <div class="bill-body-buttons">
+                <div class="bill-body-buttons users-body-buttons">
                     <a href="{% url 'users:user_detail'  user.id %}" class="link-primary-button">Detalle</a>
                     <a href="{% url 'users:update_user'  user.id %}" class="link-secondary-button">Editar</a>
                     <a href="{% url 'users:reset_password'  user.id %}" class="link-secondary-button">Contraseña</a> 
 
                 </div>
             </div>
-            <div class="bill-head bill-head-account">
+            <div class="bill-head bill-head-account users-head">
                 <div class="bill-head-left">
                     <p>{{account.nickname}}</p>                    
                 </div>

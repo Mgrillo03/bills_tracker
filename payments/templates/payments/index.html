@@ -8,8 +8,15 @@
     <div class="title">
         <p>Pagos</p>
     </div>
-    {% if request.session.message %}
-        {{request.session.message}}
+    {% if request.session.error_message %}
+    <div class="error_message">
+        <p>{{request.session.error_message}}</p>
+    </div>
+    {% endif %}
+    {% if request.session.success_message %}
+    <div class="success_message">
+        <p>{{request.session.success_message}}</p>
+    </div>
     {% endif %}
     <div class="search search-payment">
         <form action="{% url 'payments:search' %}" method="post">

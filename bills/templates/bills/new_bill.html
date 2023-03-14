@@ -8,7 +8,12 @@
     <div class="title">
         <p>Nueva Factura</p>
     </div>
-
+    {% if request.session.error_message %}
+    <div class="error_message">
+        <p>{{request.session.error_message}}</p>
+    </div>
+    {% endif %}
+    
     <form action="{% url 'bills:new_bill_show_provider' %}" method="post">
     {% csrf_token %}
         <div class="form-body">

@@ -61,12 +61,13 @@ def new_account_save(request):
         name = request.POST['name']
         description = request.POST['description']
         account = Account.objects.create(name=name, description=description)
-        request.session['message'] = f'Cuenta {name} creada existosamente'
+        request.session['success_message'] = f'Cuenta {name} creada existosamente'
         request.session['message_shown'] = False
+        return redirect('accounts:index')
     else:
-        request.session['message'] = 'Ya existe una cuenta con ese nombre'
+        request.session['error_message'] = 'Ya existe una cuenta con ese nombre'
+        return redirect('accounts:new_account')
 
-    return redirect('accounts:index')
 
 
 @login_required
@@ -75,7 +76,7 @@ def account_detail(request, account_id):
     try:
         account = Account.objects.get(pk=account_id)
     except (KeyError, Account.DoesNotExist):
-        request.session['message'] = 'No se encontro el proveedor'
+        request.session['error_message'] = 'No se encontro el proveedor'
         request.session['message_shown'] = False
         return redirect('accounts:index')
     else:
@@ -156,11 +157,11 @@ def update_account_save(request, account_id):
         account.name = new_account_name
         account.description = request.POST['description']
         account.save()
-        request.session['message'] = 'Cambios guardados satisfactoriamente'
+        request.session['success_message'] = 'Cambios guardados satisfactoriamente'
         request.session['message_shown'] = False
         return redirect('accounts:update_account', account_id)
     else : 
-        request.session['message'] = f'El Nombre {new_account_name} no esta disponible'
+        request.session['error_message'] = f'El Nombre {new_account_name} no esta disponible'
         request.session['message_shown'] = False
         return redirect('accounts:update_account', account_id)
 
@@ -181,6 +182,6 @@ def delete_account_save(request,account_id):
     request = reset_messages(request)
     account = Account.objects.get(pk=account_id)
     account.delete()
-    request.session['message'] = 'Cuenta eliminada satisfactoriamente'
+    request.session['success_message'] = 'Cuenta eliminada satisfactoriamente'
     request.session['message_shown'] = False
     return redirect('accounts:index')    

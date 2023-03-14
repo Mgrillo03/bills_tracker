@@ -15,7 +15,7 @@ def staff_member_required(view_func):
         if request.user.is_staff :
             return view_func(request, *args, **kwargs)
         else:
-            request.session['error_message'] = f'No tienes permisos para esta funcion'
+            request.session['error_message'] = f'No tienes permisos para usar esta funcion'
             request.session['message_shown'] = False
             referer = request.META.get('HTTP_REFERER')
             return redirect(referer or 'bills:index')
@@ -276,7 +276,7 @@ def new_bill_save(request):
     )
     request.session['success_message'] = f'Factura N°{bill_number} creada existosamente'
     request.session['message_shown'] = False
-    return render(request,'bills/bill_created.html',{'bill':bill})    
+    return redirect('bills:index')
 
 @login_required
 def bill_detail(request, bill_id):
@@ -446,6 +446,6 @@ def delete_bill_save(request,bill_id):
     bill.provider.dollar_debt = round(bill.provider.dollar_debt - bill.rest_to_pay_dollar,2)
     bill.provider.save()
     bill.delete()
-    request.session['success_message'] = 'Factura eliminado satisfactoriamente'
+    request.session['success_message'] = 'Factura eliminada satisfactoriamente'
     request.session['message_shown'] = False
     return redirect('bills:index')    
