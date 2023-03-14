@@ -27,6 +27,7 @@
               <li><a href="{% url 'providers:index'%}" class="provider-nav">Proveedores</a></li>                
               <li><a href="{% url 'accounts:index'%}" class="account-nav">Cuentas</a></li>                
             </ul>
+            {% if request.user %}
             <div class="user-menu">
               <p>{{request.user.first_name}} </p>
               <img src="{% static 'bills/images/arrow.png'  %}" alt="menu">
@@ -37,8 +38,9 @@
                   <li><a href="{% url 'users:update_user' request.user.id %}">Actualizar Datos</a></li>                
                   <li><a href="{% url 'users:logout'%}">Salir</a></li> 
                 </ul>
+              </div>
             </div>
-            </div>
+            {% endif %}
             <div class="mobile-menu inactive">
               <ul>
                 <li>
