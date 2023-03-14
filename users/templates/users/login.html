@@ -27,11 +27,11 @@
                     <a href="{% url 'users:index' %}" class="link-secondary-button" >Volver</a>
                     <input type="submit" value="Login" class="link-primary-button">
                 </div>       
-                {% if request.session.error_message %}
-   
+                
             </div>            
         </form>
     </div>
+    {% if request.session.error_message %}
     <div class="error_message">
         <p>{{request.session.error_message}}</p>
     </div>
