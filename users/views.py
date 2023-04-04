@@ -114,9 +114,11 @@ def auth_login_next(request):
         
 
 def auth_logout(request):
-    logout(request)
     request = reset_messages(request)
-    return render(request, 'users/logout.html',{})
+    request.session['error_message'] = 'Sesion Cerrada'
+    request.session['message_shown'] = False
+    logout(request)
+    return redirect('users:mylogin')
 
 @staff_member_required
 @login_required

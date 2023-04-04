@@ -61,7 +61,6 @@ def search(request):
         'only_partial': only_partial
     })
 
-@staff_member_required
 @login_required
 def new_payment(request):
     request = reset_messages(request)
@@ -74,7 +73,6 @@ def new_payment(request):
         'accounts_list': accounts_list,
     })
 
-@staff_member_required
 @login_required
 def new_payment_show_bill(request):
     try:
@@ -98,7 +96,6 @@ def new_payment_show_bill(request):
 
             })
 
-@staff_member_required
 @login_required
 def new_payment_show_bill_id(request,bill_id):
     try:
@@ -120,7 +117,6 @@ def new_payment_show_bill_id(request,bill_id):
             'accounts_list': accounts_list,
             })
 
-@staff_member_required
 @login_required
 def new_payment_save(request):
     try:

@@ -118,7 +118,6 @@ def search(request):
         'date_end': date_end
     })
 
-@staff_member_required
 @login_required
 def new_bill(request):
     request = reset_messages(request)
@@ -129,7 +128,6 @@ def new_bill(request):
         'date' : date,        
         })
 
-@staff_member_required
 @login_required
 def new_bill_show_provider(request):
     try:
@@ -151,7 +149,6 @@ def new_bill_show_provider(request):
             'provider_selected':provider, 
             })
 
-@staff_member_required
 @login_required
 def new_bill_calc(request):
     try:
@@ -239,7 +236,6 @@ def new_bill_calc(request):
             request.session['message_shown'] = False        
             return redirect('bills:new_bill')            
 
-@staff_member_required
 @login_required
 def new_bill_save(request):
     provider = Provider.objects.get(rif=request.POST['provider_rif'])

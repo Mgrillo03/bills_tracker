@@ -46,13 +46,11 @@ def search(request):
         'only_debt': only_debt,
     })
 
-@staff_member_required
 @login_required
 def new_provider(request):
     request = reset_messages(request)
     return render(request, 'providers/new_provider.html',{})
 
-@staff_member_required
 @login_required
 def new_provider_save(request):
     providers_list = Provider.objects.all()
